@@ -1,0 +1,377 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: eGov Campaign Service
+  description: >
+    This module facilitates campaign management for egov.
+  contact:
+    name: Egovernments Foundation
+    email: contact@egovernments.org
+schemes:
+  - https
+basePath: /campaigns
+x-common-path: >-
+  https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml
+paths:
+  #########################################
+  /v1/_create:
+    post:
+      summary: Create a campaign.
+      description: Create's a campaign. On successful campaign creation, Ok response is returned.
+      parameters:
+        - name: campaignRequest
+          in: "body"
+          description: Details of the campaign and RequestInfo meta data.
+          required: true
+          schema:
+            $ref: '#/definitions/CampaignRequest'
+      responses:
+        '200':
+          description: Campaign created successfully.
+          schema:
+            $ref: '#/definitions/CampaignResponseWithResponseInfo'
+        '400':
+          description: Bad request
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+        '500':
+          description: Internal server error
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+      tags:
+        - Campaigns
+  /v1/_update:
+    post:
+      summary: Update A Campaign.
+      description: Update A Campaign, Ok response is returned.
+      parameters:
+        - name: campaignUpdateRequest
+          in: "body"
+          description: Details of the campaign and RequestInfo meta data.
+          required: true
+          schema:
+            $ref: '#/definitions/CampaignUpdateRequest'
+
+      responses:
+        '200':
+          description: Updated campaign successfully.
+          schema:
+            $ref: '#/definitions/CampaignResponseWithResponseInfo'
+        '400':
+          description: Bad request
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+        '500':
+          description: Internal server error
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+      tags:
+        - Campaigns
+  /v1/_search:
+    post:
+      summary: Search Campaigns.
+      description: Search Campaigns Ok response is returned.
+      parameters:
+        - name: campaignSearchRequest
+          in: "body"
+          description: Search Criteria for campaign and RequestInfo meta data.
+          required: true
+          schema:
+            $ref: '#/definitions/CampaignSearchRequest'
+      responses:
+        '200':
+          description: Feteched Search Campaigns.
+          schema:
+            $ref: '#/definitions/CampaignSearchResponse'
+        '400':
+          description: Bad request
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+        '500':
+          description: Internal server error
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+      tags:
+        - Campaigns
+#########################################
+definitions:
+  Campaign:
+    description: A representation of Campaign.
+    type: object
+    properties:
+      name:
+        type: string
+        example: 'LLIN 2022'
+      type:
+        type: string
+        example: 'LLIN'
+      beneficiaryType:
+        type: string
+        enum:
+          - HOUSEHOLD
+          - INDIVIDUAL
+          - STRUCTURE
+        example: 'HOUSEHOLD'
+      eligibilityCriteria:
+        type: string
+        example: 'INSTRUCTIONS'
+      deliveryMode:
+        type: string
+        enum:
+          - SEPARATE
+          - TOGETHER
+        example: 'SEPARATE'
+      startDate:
+        type: integer
+        format: int64
+        example: 1663218161
+      endDate:
+        type: integer
+        format: int64
+        example: 1663218161
+      deliveryStrategy:
+        type: string
+        enum:
+          - FIXED
+          - MOBILE
+        example: 'FIXED'
+      deliveryProcedure:
+        type: string
+        example: 'INSTRUCTIONS'
+      desiredTarget:
+        type: object
+        $ref: '#/definitions/CampaignTargets'
+      achievedTarget:
+        type: object
+        $ref: '#/definitions/CampaignTargets'
+      status:
+        type: string
+        enum:
+          - CREATED
+          - INPROGRESS
+          - COMPLETE
+          - ABANDONED
+        example: 'CREATED'
+      schedule:
+        type: object
+        $ref: '#/definitions/CampaignSchedule'
+      disease:
+        type: string
+        example: 'MALARIA'
+      resources:
+        type: array
+        items:
+          type: string
+          $ref: '#/definitions/Resource'
+      geography:
+        type: array
+        items:
+          type: string
+          $ref: '#/definitions/Geography'
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+
+  CampaignSchedule:
+    type: object
+    properties:
+      rounds:
+        type: integer
+        example: 2
+      durationBetweenRounds:
+        type: integer
+        example: 30
+      durationBetweenRoundsUnit:
+        type: string
+        example: 'DAY'
+        enum:
+          - DAY
+          - WEEK
+          - MONTH
+          - YEAR
+      recurring:
+        type: boolean
+        example: true
+      recurringFrequency:
+        type: integer
+        example: 10
+      recurringFrequencyUnit:
+        type: string
+        example: 'DAY'
+        enum:
+          - DAY
+          - WEEK
+          - MONTH
+          - YEAR
+
+  Resource:
+    type: object
+    properties:
+      id:
+        type: string
+        example: 'ID-1'
+      type:
+        type: string
+        example: 'BEDNET'
+      name:
+        type: string
+        example: 'LLIN'
+      quantityProcured:
+        type: integer
+        example: 100
+      quantityProcuredUnit:
+        type: string
+        example: 'BALE'
+        enum:
+          - BALE
+          - CARTONS
+          - VIALS
+
+  Geography:
+    type: object
+    properties:
+      id:
+        type: string
+        example: 'GEO-ID'
+      startDate:
+        type: integer
+        format: int64
+        example: 1663218161
+      endDate:
+        type: integer
+        format: int64
+        example: 1663218161
+      desiredTarget:
+        type: object
+        $ref: '#/definitions/CampaignTargets'
+      achievedTarget:
+        type: object
+        $ref: '#/definitions/CampaignTargets'
+
+  CampaignTargets:
+    type: object
+    properties:
+      teamTarget:
+        type: integer
+        example: 1000
+      coverageTarget:
+        type: integer
+        example: 80
+      populationTarget:
+        type: integer
+        example: 2000000
+
+  CampaignResponse:
+    type: object
+    allOf:
+      - type: object
+        properties:
+          id:
+            type: string
+            example: 'CAMPAIGN-ID-1'
+      - $ref: '#/definitions/Campaign'
+
+  #########################################
+  CampaignRequest:
+    description: >-
+      The request object, containing all necessary information for creating an campaign and the request body metadata
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+      campaign:
+        $ref: '#/definitions/Campaign'
+    required:
+      - Campaign
+
+  CampaignUpdateRequest:
+    description: >-
+      The request object, containing all necessary information for updating an campaign and the request body metadata
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+      campaign:
+        type: object
+        allOf:
+          - type: object
+            properties:
+              id:
+                type: string
+                example: 'CAMPAIGN-ID'
+          - $ref: '#/definitions/Campaign'
+    required:
+      - campaign
+
+  CampaignSearchRequest:
+    description: >-
+      The request object, containing all necessary information for updating an campaign and the request body metadata
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+      campaignSearchCriteria:
+        type: object
+        properties:
+          id:
+            type: string
+            example: 'CAMPAIGN-ID'
+          name:
+            type: string
+            example: 'LLIN 2022'
+          type:
+            type: string
+            example: 'LLIN'
+          status:
+            type: string
+            example: 'CREATED'
+          limit:
+            type: number
+            example: 0
+          offset:
+            type: number
+            example: 0
+    required:
+      - campaignSearchCriteria
+  RequestInfoWrapper:
+    description: >-
+      Wrapper for Request Info
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+
+
+  CampaignSearchResponse:
+    description: >-
+      The campaign response objecy.
+    properties:
+      responseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ResponseInfo
+      totalCount:
+        type: number
+        example: 1
+      campaigns:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/CampaignResponse'
+
+  CampaignResponseWithResponseInfo:
+    description: >-
+      The campaign response object.
+    properties:
+      responseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ResponseInfo
+      campaign:
+        $ref: '#/definitions/CampaignResponse'
+
+#########################################

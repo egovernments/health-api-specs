@@ -1,0 +1,583 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: eGov Registration Service
+  description: >
+    This module facilitates registration for egov.
+  contact:
+    name: Egovernments Foundation
+    email: contact@egovernments.org
+schemes:
+  - https
+basePath: /registration
+x-common-path: >-
+  https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml
+paths:
+  #########################################
+  /household/v1/_create:
+    post:
+      summary: Create a Household Registration.
+      description: Registers a Household. On successful Household Registered, Ok response is returned.
+      parameters:
+        - name: householdRegistrationRequest
+          in: "body"
+          description: Details of the household and RequestInfo meta data.
+          required: true
+          schema:
+            $ref: '#/definitions/HouseHoldRequest'
+      responses:
+        '200':
+          description: Household created successfully.
+          schema:
+            $ref: '#/definitions/HouseholdResponseWithResponseInfo'
+        '400':
+          description: Bad request
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+        '500':
+          description: Internal server error
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+      tags:
+        - Household Registration
+  /household/v1/_update:
+    post:
+      summary: Update A Household.
+      description: Update A Household, Ok response is returned.
+      parameters:
+        - name: householdRegistrationUpdateRequest
+          in: "body"
+          description: Details of the household registration and RequestInfo meta data.
+          required: true
+          schema:
+            $ref: '#/definitions/HouseholdUpdateRequest'
+      responses:
+        '200':
+          description: Updated Household Registration successfully.
+          schema:
+            $ref: '#/definitions/HouseholdResponseWithResponseInfo'
+        '400':
+          description: Bad request
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+        '500':
+          description: Internal server error
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+      tags:
+        - Household Registration
+  /household/v1/_search:
+    post:
+      summary: Search Household Registrations.
+      description: Search Household Registrations Ok response is returned.
+      parameters:
+        - name: householdSearchRequest
+          in: "body"
+          description: Search Criteria for Household and RequestInfo meta data.
+          required: true
+          schema:
+            $ref: '#/definitions/HouseholdSearchRequest'
+      responses:
+        '200':
+          description: Feteched Search Household.
+          schema:
+            $ref: '#/definitions/HouseholdRegistrationSearchResponse'
+        '400':
+          description: Bad request
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+        '500':
+          description: Internal server error
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+      tags:
+        - Household Registration
+
+  #########################################
+  /indiviudal/v1/_create:
+    post:
+      summary: Create a Individual Registration.
+      description: Registers a Individual. On successful Individual Registered, Ok response is returned.
+      parameters:
+        - name: individualRegistrationRequest
+          in: "body"
+          description: Details of the household and RequestInfo meta data.
+          required: true
+          schema:
+            $ref: '#/definitions/IndividualRequest'
+      responses:
+        '200':
+          description: Individual created successfully.
+          schema:
+            $ref: '#/definitions/IndividualResponseWithResponseInfo'
+        '400':
+          description: Bad request
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+        '500':
+          description: Internal server error
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+      tags:
+        - Individual Registration
+  /indiviudal/v1/_update:
+    post:
+      summary: Update An Individual.
+      description: Update An Individual, Ok response is returned.
+      parameters:
+        - name: individualRegistrationUpdateRequest
+          in: "body"
+          description: Details of the individual registration and RequestInfo meta data.
+          required: true
+          schema:
+            $ref: '#/definitions/IndividualUpdateRequest'
+      responses:
+        '200':
+          description: Updated Individual successfully.
+          schema:
+            $ref: '#/definitions/IndividualResponseWithResponseInfo'
+        '400':
+          description: Bad request
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+        '500':
+          description: Internal server error
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+      tags:
+        - Individual Registration
+  /indiviudal/v1/_search:
+    post:
+      summary: Search Individual Registrations.
+      description: Search Individual Registrations Ok response is returned.
+      parameters:
+        - name: individualSearchRequest
+          in: "body"
+          description: Search Criteria for Individual and RequestInfo meta data.
+          required: true
+          schema:
+            $ref: '#/definitions/IndividualSearchRequest'
+      responses:
+        '200':
+          description: Feteched Search Individual.
+          schema:
+            $ref: '#/definitions/IndividualRegistrationSearchResponse'
+        '400':
+          description: Bad request
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+        '500':
+          description: Internal server error
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+      tags:
+        - Individual Registration
+
+#########################################
+definitions:
+  HouseHoldRegistration:
+    description: A representation of Household.
+    type: object
+    properties:
+      campaignId:
+        type: string
+        example: 'CAMP-001'
+      noOfIndividuals:
+        type: integer
+        example: 4
+      address:
+        type: string
+        example: 'Address XYZ'
+      dateOfRegistration:
+        type: integer
+        format: int64
+        example: 1663218161
+      location:
+        $ref: '#/definitions/Location'
+      administrativeUnit:
+        type: string
+        example: 'SOLIMBO'
+      individuals:
+        type: array
+        items:
+          $ref: '#/definitions/Individuals'
+      additonalFields:
+        $ref: '#/definitions/AdditonalFields'
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+  IndividualRegistration:
+    description: A representation of Individual Registration.
+    type: object
+    properties:
+      campaignId:
+        type: string
+        example: 'CAMP-001'
+      name:
+        type: string
+        example: 'John Doe'
+      dateOfBirth:
+        type: integer
+        format: int64
+        example: 1663218161
+      gender:
+        type: string
+        example: "MALE"
+        enum:
+          - MALE
+          - FEMALE
+          - OTHERS
+      address:
+        type: string
+        example: 'Address XYZ'
+      dateOfRegistration:
+        type: integer
+        format: int64
+        example: 1663218161
+      location:
+        $ref: '#/definitions/Location'
+      administrativeUnit:
+        type: string
+        example: 'SOLIMBO'
+      identifiers:
+        type: array
+        items:
+          $ref: '#/definitions/Identifiers'
+      additonalFields:
+        $ref: '#/definitions/AdditonalFields'
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+  Individuals:
+    type: object
+    properties:
+      name:
+        type: string
+      dateOfBirth:
+        type: string
+        example: 'YYYYMMDD'
+      mode:
+        type: string
+        example: 'CREATE'
+        enum:
+          - CREATE
+          - UPDATE
+          - DELETE
+      gender:
+        type: string
+        example: 'MALE'
+        enum:
+          - MALE
+          - FEMALE
+          - OTHERS
+      isHead:
+        type: boolean
+        example: true
+      identifiers:
+        type: array
+        items:
+          $ref: '#/definitions/Identifiers'
+      additonalFields:
+        $ref: '#/definitions/AdditonalFields'
+  IndividualsResponse:
+    type: object
+    properties:
+      name:
+        type: string
+      dateOfBirth:
+        type: string
+        example: 'YYYYMMDD'
+      registrationId:
+        type: string
+        example: 'R-ID-1'
+      gender:
+        type: string
+        example: 'MALE'
+        enum:
+          - MALE
+          - FEMALE
+          - OTHERS
+      isHead:
+        type: boolean
+        example: true
+      identifiers:
+        type: array
+        items:
+          $ref: '#/definitions/Identifiers'
+      additonalFields:
+        $ref: '#/definitions/AdditonalFields'
+  Identifiers:
+    type: object
+    properties:
+      type:
+        type: string
+        example: 'SYSTEM_GENERATED'
+      identifierId:
+        type: string
+        example: 'ABCD-1212'
+  Location:
+    type: object
+    properties:
+      latitude:
+        type: integer
+        format: int64
+        example: 18.22
+      longitude:
+        type: integer
+        format: int64
+        example: 71.00
+      accuracy:
+        type: integer
+        format: int64
+        example: 9
+  AdditonalFields:
+    type: object
+    properties:
+      schema:
+        type: string
+        example: 'HOUSEHOLD'
+      version:
+        type: integer
+        example: 2
+      fields:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/Field'
+
+  Field:
+    type: object
+    properties:
+      key:
+        type: string
+        example: height
+      value:
+        type: string
+        example: 180
+
+  HouseholdResponse:
+    type: object
+    allOf:
+      - type: object
+        properties:
+          householdRegistrationId:
+            type: string
+            example: 'H-ID-1'
+      - $ref: '#/definitions/HouseHoldRegistration'
+      - type: object
+        properties:
+          individuals:
+            type: array
+            items:
+              $ref: '#/definitions/IndividualsResponse'
+
+  #########################################
+  HouseHoldRequest:
+    description: >-
+      The request object, containing all necessary information for creating an HouseHold Registration and the request body metadata
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+      householdRegistration:
+        $ref: '#/definitions/HouseHoldRegistration'
+    required:
+      - householdRegistration
+
+  HouseholdUpdateRequest:
+    description: >-
+      The request object, containing all necessary information for updating an HouseHold Registration and the request body metadata
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+      householdRegistration:
+        type: object
+        allOf:
+          - type: object
+            properties:
+              id:
+                type: string
+                example: 'CAMPAIGN-ID'
+              registrationId:
+                type: string
+                example: 'ID-1'
+              householdId:
+                type: string
+                example: "H-ID-1"
+          - $ref: '#/definitions/HouseHoldRegistration'
+    required:
+      - householdRegistration
+
+  IndividualSearchRequest:
+    description: >-
+      The request object, containing all necessary information for updating an Individual and the request body metadata
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+      individualRegistrationSearchCriteria:
+        type: object
+        properties:
+          campaignId:
+            type: string
+            example: 'H-ID'
+          registrationId:
+            type: string
+            example: 'ID-1'
+          name:
+            type: string
+            example: 'John Doe'
+          createdBy:
+            type: string
+            example: 'UUID'
+          limit:
+            type: integer
+            example: 5
+          offset:
+            type: integer
+            example: 5
+
+  HouseholdSearchRequest:
+    description: >-
+      The request object, containing all necessary information for updating an household Registration and the request body metadata
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+      householdRegistrationSearchCriteria:
+        type: object
+        properties:
+          householdId:
+            type: string
+            example: 'H-ID'
+          createdBy:
+            type: string
+            example: 'UUID'
+          limit:
+            type: integer
+            example: 5
+          offset:
+            type: integer
+            example: 5
+
+
+  RequestInfoWrapper:
+    description: >-
+      Wrapper for Request Info
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+
+
+  HouseholdRegistrationSearchResponse:
+    description: >-
+      The household Registration response objecy.
+    properties:
+      responseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ResponseInfo
+      totalCount:
+        type: number
+        example: 1
+      householdRegistration:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/HouseholdResponse'
+  HouseholdResponseWithResponseInfo:
+    description: >-
+      The household response object.
+    properties:
+      responseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ResponseInfo
+      householdRegistration:
+        $ref: '#/definitions/HouseholdResponse'
+
+  #########################################
+
+  IndividualRequest:
+    description: >-
+      The request object, containing all necessary information for creating an individual and the request body metadata
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+      individualRegistration:
+        $ref: '#/definitions/IndividualRegistration'
+    required:
+      - individualRegistration
+  IndividualResponse:
+    type: object
+    allOf:
+      - type: object
+        properties:
+          registrationId:
+            type: string
+            example: 'R-ID-1'
+      - $ref: '#/definitions/IndividualRegistration'
+      - type: object
+        properties:
+          individuals:
+            type: array
+            items:
+              $ref: '#/definitions/IndividualsResponse'
+  IndividualResponseWithResponseInfo:
+    description: >-
+      The individual response object.
+    properties:
+      responseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ResponseInfo
+      individualRegistration:
+        $ref: '#/definitions/IndividualResponse'
+  IndividualUpdateRequest:
+    description: >-
+      The request object, containing all necessary information for updating an individual and the request body metadata
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+      individualRegistration:
+        type: object
+        allOf:
+          - type: object
+            properties:
+              id:
+                type: string
+                example: 'CAMPAIGN-ID'
+              registrationId:
+                type: string
+                example: 'ID-1'
+          - $ref: '#/definitions/IndividualRegistration'
+    required:
+      - individualRegistration
+  IndividualRegistrationSearchResponse:
+    description: >-
+      The Individual response object.
+    properties:
+      responseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ResponseInfo
+      totalCount:
+        type: number
+        example: 1
+      individualRegistrations:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/IndividualResponse'

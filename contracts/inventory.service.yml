@@ -1,0 +1,489 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: eGov Inventory Registry Service
+  description: >
+    This module facilitates inventory for egov.
+  contact:
+    name: Egovernments Foundation
+    email: contact@egovernments.org
+schemes:
+  - https
+basePath: /inventory
+x-common-path: >-
+  https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml
+paths:
+  #########################################
+  /v1/_create:
+    post:
+      summary: Create a Inventory Log.
+      description: Creates Inventory Log On successful Inventory Log Ok response is returned.
+      parameters:
+        - name: inventoryLogCreateRegistryRequest
+          in: "body"
+          description: Details of the InventoryLogs and RequestInfo meta data.
+          required: true
+          schema:
+            $ref: '#/definitions/CreateInventoryLogRequest'
+      responses:
+        '200':
+          description: Inventory Log created successfully.
+          schema:
+            $ref: '#/definitions/InventoryLogResponseWithResponseInfo'
+        '400':
+          description: Bad request
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+        '500':
+          description: Internal server error
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+      tags:
+        - Inventory Logs
+  /v1/_update:
+    post:
+      summary: Update An Inventory Log.
+      description: Update An Inventory Log, Ok response is returned.
+      parameters:
+        - name: InventoryLogUpdateRequest
+          in: "body"
+          description: Details of the InventoryLog and RequestInfo meta data.
+          required: true
+          schema:
+            $ref: '#/definitions/InventoryUpdateRequest'
+      responses:
+        '200':
+          description: Updated Inventory Log successfully.
+          schema:
+            $ref: '#/definitions/InventoryLogResponseWithResponseInfo'
+        '400':
+          description: Bad request
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+        '500':
+          description: Internal server error
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+      tags:
+        - Inventory Logs
+  /v1/_search:
+    post:
+      summary: Search Inventory Log.
+      description: Search Inventory Log Ok response is returned.
+      parameters:
+        - name: inventoryLogsSearchCriteria
+          in: "body"
+          description: Search Criteria for Inventory Logs and RequestInfo meta data.
+          required: true
+          schema:
+            $ref: '#/definitions/InventorySearchCriteriaRequest'
+      responses:
+        '200':
+          description: Feteched Search InventoryLogs.
+          schema:
+            $ref: '#/definitions/InventorySearchResponse'
+        '400':
+          description: Bad request
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+        '500':
+          description: Internal server error
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+      tags:
+        - Inventory Logs
+
+  /reconciliation/v1/_create:
+    post:
+      summary: Create a Reconcillation Log.
+      description: Creates Reconcillation Log On successful Reconcillation Ok response is returned.
+      parameters:
+        - name: reconciliationRequest
+          in: "body"
+          description: Details of the Reconcillation Log and RequestInfo meta data.
+          required: true
+          schema:
+            $ref: '#/definitions/CreateReconcillationRequest'
+      responses:
+        '200':
+          description: Reconcillation Log created successfully.
+          schema:
+            $ref: '#/definitions/ReconciliationResponseWithResponseInfo'
+        '400':
+          description: Bad request
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+        '500':
+          description: Internal server error
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+      tags:
+        - Reconciliation
+  /reconciliation/v1/_search:
+    post:
+      summary: Search reconciliation Logs.
+      description: Search reconciliation Logs Ok response is returned.
+      parameters:
+        - name: reconciliationSearchCriteria
+          in: "body"
+          description: Search Criteria for reconciliation and RequestInfo meta data.
+          required: true
+          schema:
+            $ref: '#/definitions/ReconcillationSearchCriteria'
+      responses:
+        '200':
+          description: Feteched Search reconciliation Logs.
+          schema:
+            $ref: '#/definitions/ReconcillationSearchResponse'
+        '400':
+          description: Bad request
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+        '500':
+          description: Internal server error
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
+      tags:
+        - Reconciliation
+#########################################
+definitions:
+  InventoryLogRequest:
+    type: object
+    properties:
+      recievedFrom:
+        type: string
+        example: "WARE-HOUSE-2"
+      dispatchedTo:
+        type: string
+        example: "UUID"
+      warehouseId:
+        type: string
+        example: "WARE-HOUSE-3"
+      resource:
+        $ref: '#/definitions/Resource'
+      transactionType:
+        type: string
+        example: RECEIVED
+        enum:
+          - RECEIVED
+          - DISPATCHED
+      transactionReason:
+        type: string
+        example: "RETURNED REASON"
+      transactionDate:
+        type: integer
+        format: int64
+        example: 1663218161
+      additonalFields:
+        $ref: '#/definitions/AdditonalFields'
+
+  InventoryLogResponse:
+    type: object
+    properties:
+      inventoryLogId:
+        type: string
+        example: "UUID"
+      recievedFrom:
+        type: string
+        example: "WARE-HOUSE-2"
+      dispatchedTo:
+        type: string
+        example: "UUID"
+      warehouseId:
+        type: string
+        example: "WARE-HOUSE-3"
+      resource:
+        $ref: '#/definitions/Resource'
+      transactionType:
+        type: string
+        example: RECEIVED
+        enum:
+          - RECEIVED
+          - DISPATCHED
+      transactionReason:
+        type: string
+        example: "RETURNED REASON"
+      transactionDate:
+        type: integer
+        format: int64
+        example: 1663218161
+      additonalFields:
+        $ref: '#/definitions/AdditonalFields'
+  InventoryLogUpdateRequest:
+    type: object
+    properties:
+      inventoryLogId:
+        type: string
+        example: "UUID"
+      recievedFrom:
+        type: string
+        example: "WARE-HOUSE-2"
+      dispatchedTo:
+        type: string
+        example: "UUID"
+      warehouseId:
+        type: string
+        example: "WARE-HOUSE-3"
+      resource:
+        $ref: '#/definitions/Resource'
+      transactionType:
+        type: string
+        example: RECEIVED
+        enum:
+          - RECEIVED
+          - DISPATCHED
+      transactionReason:
+        type: string
+        example: "RETURNED REASON"
+      transactionDate:
+        type: integer
+        format: int64
+        example: 1663218161
+      additonalFields:
+        $ref: '#/definitions/AdditonalFields'
+
+  AdditonalFields:
+    type: object
+    properties:
+      schema:
+        type: string
+        example: 'INVENTORY'
+      version:
+        type: integer
+        example: 2
+      fields:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/Field'
+  Field:
+    type: object
+    properties:
+      key:
+        type: string
+        example: Vehicle Number
+      value:
+        type: string
+        example: MH12AB1212
+  Resource:
+    type: object
+    properties:
+      resourceId:
+        type: string
+        example: 'ID-1'
+      type:
+        type: string
+        example: 'BEDNET'
+      name:
+        type: string
+        example: 'LLIN'
+      quantity:
+        type: integer
+        example: 100
+      quantityUnit:
+        type: string
+        example: 'BALE'
+        enum:
+          - BALE
+          - CARTONS
+          - VIALS
+
+  InventoryUpdateRequest:
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+      inventoryLog:
+        $ref: '#/definitions/InventoryLogUpdateRequest'
+  CreateInventoryLogRequest:
+    description: >-
+      The request object, containing all necessary information for creating an Inventory Log and the request body metadata
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+      inventoryLog:
+        $ref: '#/definitions/InventoryLogRequest'
+    required:
+      - inventoryLog
+  InventoryLogResponseWithResponseInfo:
+    description: >-
+      The request object, containing all necessary information for creating an Inventory Log and the request body metadata
+    properties:
+      responseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ResponseInfo
+      inventoryLog:
+        allOf:
+          - type: object
+            properties:
+              inventoryLogId:
+                type: string
+                example: "UUID"
+          - $ref: '#/definitions/InventoryLogRequest'
+    required:
+      - inventoryLog
+
+  InventorySearchCriteriaRequest:
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+      inventorySearchCriteria:
+        type: object
+        properties:
+          inventoryLogId:
+            type: string
+            example: "UUID"
+          recievedFrom:
+            type: string
+            example: "WARE-HOUSE-2"
+          dispatchedTo:
+            type: string
+            example: "UUID"
+          warehouseId:
+            type: string
+            example: "WARE-HOUSE-3"
+          resource:
+            $ref: '#/definitions/Resource'
+          transactionType:
+            type: string
+            example: RECEIVED
+            enum:
+              - RECEIVED
+              - DISPATCHED
+          transactionReason:
+            type: string
+            example: "RETURNED REASON"
+          transactionDate:
+            type: integer
+            format: int64
+            example: 1663218161
+
+  InventorySearchResponse:
+    description: >-
+      The search response object.
+    properties:
+      responseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ResponseInfo
+      totalCount:
+        type: integer
+        example: 0
+      inventoryLogs:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/InventoryLogResponse'
+    required:
+      - inventoryLog
+  ReconcillationSearchResponse:
+    description: >-
+      The search response object.
+    properties:
+      responseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ResponseInfo
+      totalCount:
+        type: integer
+        example: 0
+      reconcillationLogs:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/ReconciliationResponseObject'
+    required:
+      - inventoryLog
+  ReconcillationRequest:
+    type: object
+    properties:
+      warehouseId:
+        type: string
+        example: "WARE-HOUSE-2"
+      campaignId:
+        type: string
+        example: "CAMP-ID"
+      dateOfReconciliation:
+        type: integer
+        format: int64
+        example: 1663218161
+      calculatedCount:
+        type: integer
+        example: 200
+      physicallyRecordedCount:
+        type: integer
+        example: 122
+      resource:
+        $ref: '#/definitions/Resource'
+      comment:
+        type: string
+        example: RECEIVED
+      transactionReason:
+        type: string
+        example: "100 Entry Missing"
+  CreateReconcillationRequest:
+    description: >-
+      The request object, containing all necessary information for creating an Inventory Log and the request body metadata
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+      reconciliationLog:
+        $ref: '#/definitions/ReconcillationRequest'
+    required:
+      - reconciliationLog
+  ReconciliationResponseObject:
+    allOf:
+      - type: object
+        properties:
+          reconciliationId:
+            type: string
+            example: "1212"
+      - $ref: '#/definitions/ReconcillationRequest'
+  ReconciliationResponseWithResponseInfo:
+    description: >-
+      The request object, containing all necessary information for creating an Reconcillation and the request body metadata
+    properties:
+      responseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ResponseInfo
+      reconciliationLog:
+        $ref: '#/definitions/ReconcillationRequest'
+
+  ReconcillationSearchCriteria:
+    description: >-
+      The request object, containing all necessary information for creating an Reconcillation and the request body metadata
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+      reconcillationSearchCriteria:
+        type: object
+        properties:
+          warehouseId:
+            type: string
+            example: "WARE-HOUSE-2"
+          dateOfReconciliation:
+            type: integer
+            format: int64
+            example: 1663218161
+          resource:
+            $ref: '#/definitions/Resource'
+          limit:
+            type: integer
+            example: 5
+          offset:
+            type: integer
+            example: 5
+    required:
+      - reconcillationSearchCriteria
