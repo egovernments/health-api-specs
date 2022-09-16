@@ -101,171 +101,6 @@ paths:
         - Campaigns
 #########################################
 definitions:
-  Campaign:
-    description: A representation of Campaign.
-    type: object
-    properties:
-      name:
-        type: string
-        example: 'LLIN 2022'
-      type:
-        type: string
-        example: 'LLIN'
-      beneficiaryType:
-        type: string
-        enum:
-          - HOUSEHOLD
-          - INDIVIDUAL
-          - STRUCTURE
-        example: 'HOUSEHOLD'
-      eligibilityCriteria:
-        type: string
-        example: 'INSTRUCTIONS'
-      deliveryMode:
-        type: string
-        enum:
-          - SEPARATE
-          - TOGETHER
-        example: 'SEPARATE'
-      startDate:
-        type: integer
-        format: int64
-        example: 1663218161
-      endDate:
-        type: integer
-        format: int64
-        example: 1663218161
-      deliveryStrategy:
-        type: string
-        enum:
-          - FIXED
-          - MOBILE
-        example: 'FIXED'
-      deliveryProcedure:
-        type: string
-        example: 'INSTRUCTIONS'
-      desiredTarget:
-        type: object
-        $ref: '#/definitions/CampaignTargets'
-      achievedTarget:
-        type: object
-        $ref: '#/definitions/CampaignTargets'
-      status:
-        type: string
-        enum:
-          - CREATED
-          - INPROGRESS
-          - COMPLETE
-          - ABANDONED
-        example: 'CREATED'
-      schedule:
-        type: object
-        $ref: '#/definitions/CampaignSchedule'
-      disease:
-        type: string
-        example: 'MALARIA'
-      resources:
-        type: array
-        items:
-          type: string
-          $ref: '#/definitions/Resource'
-      geography:
-        type: array
-        items:
-          type: string
-          $ref: '#/definitions/Geography'
-      auditDetails:
-        $ref: >-
-          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
-
-  CampaignSchedule:
-    type: object
-    properties:
-      rounds:
-        type: integer
-        example: 2
-      durationBetweenRounds:
-        type: integer
-        example: 30
-      durationBetweenRoundsUnit:
-        type: string
-        example: 'DAY'
-        enum:
-          - DAY
-          - WEEK
-          - MONTH
-          - YEAR
-      recurring:
-        type: boolean
-        example: true
-      recurringFrequency:
-        type: integer
-        example: 10
-      recurringFrequencyUnit:
-        type: string
-        example: 'DAY'
-        enum:
-          - DAY
-          - WEEK
-          - MONTH
-          - YEAR
-
-  Resource:
-    type: object
-    properties:
-      id:
-        type: string
-        example: 'ID-1'
-      type:
-        type: string
-        example: 'BEDNET'
-      name:
-        type: string
-        example: 'LLIN'
-      quantityProcured:
-        type: integer
-        example: 100
-      quantityProcuredUnit:
-        type: string
-        example: 'BALE'
-        enum:
-          - BALE
-          - CARTONS
-          - VIALS
-
-  Geography:
-    type: object
-    properties:
-      id:
-        type: string
-        example: 'GEO-ID'
-      startDate:
-        type: integer
-        format: int64
-        example: 1663218161
-      endDate:
-        type: integer
-        format: int64
-        example: 1663218161
-      desiredTarget:
-        type: object
-        $ref: '#/definitions/CampaignTargets'
-      achievedTarget:
-        type: object
-        $ref: '#/definitions/CampaignTargets'
-
-  CampaignTargets:
-    type: object
-    properties:
-      teamTarget:
-        type: integer
-        example: 1000
-      coverageTarget:
-        type: integer
-        example: 80
-      populationTarget:
-        type: integer
-        example: 2000000
 
   CampaignResponse:
     type: object
@@ -275,7 +110,7 @@ definitions:
           id:
             type: string
             example: 'CAMPAIGN-ID-1'
-      - $ref: '#/definitions/Campaign'
+      - $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/Campaign'
 
   #########################################
   CampaignRequest:
@@ -286,7 +121,7 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
       campaign:
-        $ref: '#/definitions/Campaign'
+        $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/Campaign'
     required:
       - Campaign
 
@@ -305,7 +140,7 @@ definitions:
               id:
                 type: string
                 example: 'CAMPAIGN-ID'
-          - $ref: '#/definitions/Campaign'
+          - $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/Campaign'
     required:
       - campaign
 
