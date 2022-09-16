@@ -640,3 +640,28 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
+  Delivery:
+    type: object
+    properties:
+      campaignId:
+        type: string
+        example: "ID-1"
+      registrationId:
+        type: string
+        example: "R-ID-1"
+      warehouseId:
+        type: string
+        example: "WARE-HOUSE-3"
+      resources:
+        type: array
+        items:
+          $ref: '#/definitions/Resource'
+      deliveredBy:
+        type: string
+        example: "UUID"
+      deliveryDate:
+        type: integer
+        format: int64
+        example: 1663218161
+      additonalFields:
+        $ref: '#/definitions/AdditonalFields'
