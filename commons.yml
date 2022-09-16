@@ -448,3 +448,28 @@ definitions:
       value:
         type: string
         example: 180
+
+  ChecklistSubmission:
+    type: object
+    properties:
+      campaignId:
+        type: string
+        example: "ID-1"
+      administrativeUnit:
+        type: string
+        example: "SOLIMBO"
+      submittedAt:
+        type: integer
+        format: int64
+        example: 1663218161
+      schema:
+        type: string
+        example: "CHECKLIST_NAME"
+      version:
+        type: integer
+        example: 2
+      fields:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/Field'
