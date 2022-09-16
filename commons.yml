@@ -337,3 +337,114 @@ definitions:
           $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/Identifiers'
       additonalFields:
         $ref: '#/definitions/AdditonalFields'
+
+  IndividualRegistration:
+    description: A representation of Individual Registration.
+    type: object
+    properties:
+      campaignId:
+        type: string
+        example: 'CAMP-001'
+      name:
+        type: string
+        example: 'John Doe'
+      dateOfBirth:
+        type: integer
+        format: int64
+        example: 1663218161
+      gender:
+        type: string
+        example: "MALE"
+        enum:
+          - MALE
+          - FEMALE
+          - OTHERS
+      address:
+        type: string
+        example: 'Address XYZ'
+      dateOfRegistration:
+        type: integer
+        format: int64
+        example: 1663218161
+      location:
+        $ref: '#/definitions/Location'
+      administrativeUnit:
+        type: string
+        example: 'SOLIMBO'
+      identifiers:
+        type: array
+        items:
+          $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/Identifiers'
+      additonalFields:
+        $ref: '#/definitions/AdditonalFields'
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+
+  IndividualsResponse:
+    type: object
+    properties:
+      name:
+        type: string
+      dateOfBirth:
+        type: string
+        example: 'YYYYMMDD'
+      registrationId:
+        type: string
+        example: 'R-ID-1'
+      gender:
+        type: string
+        example: 'MALE'
+        enum:
+          - MALE
+          - FEMALE
+          - OTHERS
+      isHead:
+        type: boolean
+        example: true
+      identifiers:
+        type: array
+        items:
+          $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/Identifiers'
+      additonalFields:
+        $ref: '#/definitions/AdditonalFields'
+
+  Location:
+    type: object
+    properties:
+      latitude:
+        type: integer
+        format: int64
+        example: 18.22
+      longitude:
+        type: integer
+        format: int64
+        example: 71.00
+      accuracy:
+        type: integer
+        format: int64
+        example: 9
+  AdditonalFields:
+    type: object
+    properties:
+      schema:
+        type: string
+        example: 'HOUSEHOLD'
+      version:
+        type: integer
+        example: 2
+      fields:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/Field'
+
+  Field:
+    type: object
+    properties:
+      key:
+        type: string
+        example: height
+      value:
+        type: string
+        example: 180
