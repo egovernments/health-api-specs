@@ -101,31 +101,7 @@ paths:
 
 #########################################
 definitions:
-  Delivery:
-    type: object
-    properties:
-      campaignId:
-        type: string
-        example: "ID-1"
-      registrationId:
-        type: string
-        example: "R-ID-1"
-      warehouseId:
-        type: string
-        example: "WARE-HOUSE-3"
-      resources:
-        type: array
-        items:
-          $ref: '#/definitions/Resource'
-      deliveredBy:
-        type: string
-        example: "UUID"
-      deliveryDate:
-        type: integer
-        format: int64
-        example: 1663218161
-      additonalFields:
-        $ref: '#/definitions/AdditonalFields'
+
   CreateDeliveryRequest:
     description: >-
       The request object, containing all necessary information for creating an delivery and the request body metadata
@@ -134,13 +110,13 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
       delivery:
-        $ref: '#/definitions/Delivery'
+        $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/Delivery'
     required:
       - delivery
 
   DeliveryResponse:
     allOf:
-      - $ref: '#/definitions/Delivery'
+      - $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/Delivery'
       - type: object
         properties:
           deliveryId:
@@ -158,36 +134,13 @@ definitions:
         $ref: '#/definitions/DeliveryResponse'
   DeliveryUpdateRequest:
     allOf:
-      - $ref: '#/definitions/Delivery'
+      - $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/Delivery'
       - type: object
         properties:
           deliveryId:
             type: string
             example: "UUID"
 
-  AdditonalFields:
-    type: object
-    properties:
-      schema:
-        type: string
-        example: 'INVENTORY'
-      version:
-        type: integer
-        example: 2
-      fields:
-        type: array
-        items:
-          type: object
-          $ref: '#/definitions/Field'
-  Field:
-    type: object
-    properties:
-      key:
-        type: string
-        example: Vehicle Number
-      value:
-        type: string
-        example: MH12AB1212
   Resource:
     type: object
     properties:
