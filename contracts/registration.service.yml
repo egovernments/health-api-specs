@@ -205,159 +205,20 @@ definitions:
         format: int64
         example: 1663218161
       location:
-        $ref: '#/definitions/Location'
+        $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/Location'
       administrativeUnit:
         type: string
         example: 'SOLIMBO'
       individuals:
         type: array
         items:
-          $ref: '#/definitions/Individuals'
+          $ref: 'https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/Individuals'
       additonalFields:
-        $ref: '#/definitions/AdditonalFields'
+        $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/AdditonalFields'
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
-  IndividualRegistration:
-    description: A representation of Individual Registration.
-    type: object
-    properties:
-      campaignId:
-        type: string
-        example: 'CAMP-001'
-      name:
-        type: string
-        example: 'John Doe'
-      dateOfBirth:
-        type: integer
-        format: int64
-        example: 1663218161
-      gender:
-        type: string
-        example: "MALE"
-        enum:
-          - MALE
-          - FEMALE
-          - OTHERS
-      address:
-        type: string
-        example: 'Address XYZ'
-      dateOfRegistration:
-        type: integer
-        format: int64
-        example: 1663218161
-      location:
-        $ref: '#/definitions/Location'
-      administrativeUnit:
-        type: string
-        example: 'SOLIMBO'
-      identifiers:
-        type: array
-        items:
-          $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/Identifiers'
-      additonalFields:
-        $ref: '#/definitions/AdditonalFields'
-      auditDetails:
-        $ref: >-
-          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
-  Individuals:
-    type: object
-    properties:
-      name:
-        type: string
-      dateOfBirth:
-        type: string
-        example: 'YYYYMMDD'
-      mode:
-        type: string
-        example: 'CREATE'
-        enum:
-          - CREATE
-          - UPDATE
-          - DELETE
-      gender:
-        type: string
-        example: 'MALE'
-        enum:
-          - MALE
-          - FEMALE
-          - OTHERS
-      isHead:
-        type: boolean
-        example: true
-      identifiers:
-        type: array
-        items:
-          $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/Identifiers'
-      additonalFields:
-        $ref: '#/definitions/AdditonalFields'
-  IndividualsResponse:
-    type: object
-    properties:
-      name:
-        type: string
-      dateOfBirth:
-        type: string
-        example: 'YYYYMMDD'
-      registrationId:
-        type: string
-        example: 'R-ID-1'
-      gender:
-        type: string
-        example: 'MALE'
-        enum:
-          - MALE
-          - FEMALE
-          - OTHERS
-      isHead:
-        type: boolean
-        example: true
-      identifiers:
-        type: array
-        items:
-          $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/Identifiers'
-      additonalFields:
-        $ref: '#/definitions/AdditonalFields'
 
-  Location:
-    type: object
-    properties:
-      latitude:
-        type: integer
-        format: int64
-        example: 18.22
-      longitude:
-        type: integer
-        format: int64
-        example: 71.00
-      accuracy:
-        type: integer
-        format: int64
-        example: 9
-  AdditonalFields:
-    type: object
-    properties:
-      schema:
-        type: string
-        example: 'HOUSEHOLD'
-      version:
-        type: integer
-        example: 2
-      fields:
-        type: array
-        items:
-          type: object
-          $ref: '#/definitions/Field'
-
-  Field:
-    type: object
-    properties:
-      key:
-        type: string
-        example: height
-      value:
-        type: string
-        example: 180
 
   HouseholdResponse:
     type: object
@@ -373,7 +234,7 @@ definitions:
           individuals:
             type: array
             items:
-              $ref: '#/definitions/IndividualsResponse'
+              $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/IndividualsResponse'
 
   #########################################
   HouseHoldRequest:
@@ -510,7 +371,7 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
       individualRegistration:
-        $ref: '#/definitions/IndividualRegistration'
+        $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/IndividualRegistration'
     required:
       - individualRegistration
   IndividualResponse:
@@ -521,13 +382,13 @@ definitions:
           registrationId:
             type: string
             example: 'R-ID-1'
-      - $ref: '#/definitions/IndividualRegistration'
+      - $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/IndividualRegistration'
       - type: object
         properties:
           individuals:
             type: array
             items:
-              $ref: '#/definitions/IndividualsResponse'
+              $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/IndividualsResponse'
   IndividualResponseWithResponseInfo:
     description: >-
       The individual response object.
@@ -555,7 +416,7 @@ definitions:
               registrationId:
                 type: string
                 example: 'ID-1'
-          - $ref: '#/definitions/IndividualRegistration'
+          - $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/IndividualRegistration'
     required:
       - individualRegistration
   IndividualRegistrationSearchResponse:
