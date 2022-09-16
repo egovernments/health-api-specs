@@ -74,30 +74,6 @@ paths:
 
 #########################################
 definitions:
-  ChecklistSubmission:
-    type: object
-    properties:
-      campaignId:
-        type: string
-        example: "ID-1"
-      administrativeUnit:
-        type: string
-        example: "SOLIMBO"
-      submittedAt:
-        type: integer
-        format: int64
-        example: 1663218161
-      schema:
-        type: string
-        example: "CHECKLIST_NAME"
-      version:
-        type: integer
-        example: 2
-      fields:
-        type: array
-        items:
-          type: object
-          $ref: '#/definitions/Field'
 
   CreateSubmissionRequest:
     description: >-
@@ -107,13 +83,13 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
       submission:
-        $ref: '#/definitions/ChecklistSubmission'
+        $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/ChecklistSubmission'
     required:
       - submission
 
   ChecklistSubmissionResponse:
     allOf:
-      - $ref: '#/definitions/ChecklistSubmission'
+      - $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/ChecklistSubmission'
       - type: object
         properties:
           submissionId:
@@ -129,18 +105,6 @@ definitions:
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ResponseInfo
       submission:
         $ref: '#/definitions/ChecklistSubmissionResponse'
-
-
-  Field:
-    type: object
-    properties:
-      key:
-        type: string
-        example: Vehicle Number
-      value:
-        type: string
-        example: MH12AB1212
-
 
   SubmissionSearchCriteriaRequest:
     properties:
@@ -187,6 +151,3 @@ definitions:
           $ref: '#/definitions/ChecklistSubmissionResponse'
     required:
       - deliveries
-
-
-
