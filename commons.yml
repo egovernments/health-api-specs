@@ -305,3 +305,35 @@ definitions:
       identifierId:
         type: string
         example: 'ABCD-1212'
+
+  Individuals:
+    type: object
+    properties:
+      name:
+        type: string
+      dateOfBirth:
+        type: string
+        example: 'YYYYMMDD'
+      mode:
+        type: string
+        example: 'CREATE'
+        enum:
+          - CREATE
+          - UPDATE
+          - DELETE
+      gender:
+        type: string
+        example: 'MALE'
+        enum:
+          - MALE
+          - FEMALE
+          - OTHERS
+      isHead:
+        type: boolean
+        example: true
+      identifiers:
+        type: array
+        items:
+          $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/Identifiers'
+      additonalFields:
+        $ref: '#/definitions/AdditonalFields'

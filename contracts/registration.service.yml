@@ -254,7 +254,7 @@ definitions:
       identifiers:
         type: array
         items:
-          $ref: '#/definitions/Identifiers'
+          $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/Identifiers'
       additonalFields:
         $ref: '#/definitions/AdditonalFields'
       auditDetails:
@@ -288,7 +288,7 @@ definitions:
       identifiers:
         type: array
         items:
-          $ref: '#/definitions/Identifiers'
+          $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/Identifiers'
       additonalFields:
         $ref: '#/definitions/AdditonalFields'
   IndividualsResponse:
@@ -315,18 +315,10 @@ definitions:
       identifiers:
         type: array
         items:
-          $ref: '#/definitions/Identifiers'
+          $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/Identifiers'
       additonalFields:
         $ref: '#/definitions/AdditonalFields'
-  Identifiers:
-    type: object
-    properties:
-      type:
-        type: string
-        example: 'SYSTEM_GENERATED'
-      identifierId:
-        type: string
-        example: 'ABCD-1212'
+
   Location:
     type: object
     properties:
