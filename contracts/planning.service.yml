@@ -77,6 +77,9 @@ definitions:
   PlanningRequest:
     type: object
     properties:
+      tenantId:
+        type: string
+        description: tenantid for the tenant
       url:
         type: string
         example: "https://fileserver.com/uuid"
@@ -109,6 +112,9 @@ definitions:
       planning:
         type: object
         properties:
+          tenantId:
+            type: string
+            description: tenantid for the tenant
           completed:
             type: integer
             example: 12
@@ -122,6 +128,9 @@ definitions:
   PlanningTemplateRequest:
     type: object
     properties:
+      tenantId:
+        type: string
+        description: tenantid for the tenant
       level:
         type: string
         example: "province"
@@ -151,6 +160,9 @@ definitions:
       planning:
         type: object
         properties:
+          tenantId:
+            type: string
+            description: tenantid for the tenant
           templateUrl:
             type: string
             example: "https://fileserver.com/uuid"
