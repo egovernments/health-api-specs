@@ -187,39 +187,6 @@ paths:
 
 #########################################
 definitions:
-  HouseHoldRegistration:
-    description: A representation of Household.
-    type: object
-    properties:
-      campaignId:
-        type: string
-        example: 'CAMP-001'
-      noOfIndividuals:
-        type: integer
-        example: 4
-      address:
-        type: string
-        example: 'Address XYZ'
-      dateOfRegistration:
-        type: integer
-        format: int64
-        example: 1663218161
-      location:
-        $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/Location'
-      administrativeUnit:
-        type: string
-        example: 'SOLIMBO'
-      individuals:
-        type: array
-        items:
-          $ref: 'https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/Individuals'
-      additonalFields:
-        $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/AdditonalFields'
-      auditDetails:
-        $ref: >-
-          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
-
-
   HouseholdResponse:
     type: object
     allOf:
@@ -228,7 +195,7 @@ definitions:
           householdRegistrationId:
             type: string
             example: 'H-ID-1'
-      - $ref: '#/definitions/HouseHoldRegistration'
+      - $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/HouseHoldRegistration'
       - type: object
         properties:
           individuals:
@@ -245,7 +212,7 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
       householdRegistration:
-        $ref: '#/definitions/HouseHoldRegistration'
+        $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/HouseHoldRegistration'
     required:
       - householdRegistration
 
@@ -270,7 +237,7 @@ definitions:
               householdId:
                 type: string
                 example: "H-ID-1"
-          - $ref: '#/definitions/HouseHoldRegistration'
+          - $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/HouseHoldRegistration'
     required:
       - householdRegistration
 
