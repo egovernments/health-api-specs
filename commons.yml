@@ -342,6 +342,9 @@ definitions:
     description: A representation of Individual Registration.
     type: object
     properties:
+      tenantId:
+        type: string
+        example: 'tenantA'
       campaignId:
         type: string
         example: 'CAMP-001'
@@ -452,6 +455,9 @@ definitions:
   ChecklistSubmission:
     type: object
     properties:
+      tenantId:
+        type: string
+        example: 'tenantA'
       campaignId:
         type: string
         example: "ID-1"
@@ -543,6 +549,9 @@ definitions:
   Resource:
     type: object
     properties:
+      tenantId:
+        type: string
+        example: 'tenantA'
       id:
         type: string
         example: 'ID-1'
@@ -567,6 +576,9 @@ definitions:
     description: A representation of Campaign.
     type: object
     properties:
+      tenantId:
+        type: string
+        example: 'tenantA'
       name:
         type: string
         example: 'LLIN 2022'
@@ -643,6 +655,9 @@ definitions:
   Delivery:
     type: object
     properties:
+      tenantId:
+        type: string
+        example: 'tenantA'
       campaignId:
         type: string
         example: "ID-1"
