@@ -680,3 +680,38 @@ definitions:
         example: 1663218161
       additonalFields:
         $ref: '#/definitions/AdditonalFields'
+
+  HouseHoldRegistration:
+    description: A representation of Household.
+    type: object
+    properties:
+      tenantId:
+        type: string
+        example: 'tenantA'
+      campaignId:
+        type: string
+        example: 'CAMP-001'
+      noOfIndividuals:
+        type: integer
+        example: 4
+      address:
+        type: string
+        example: 'Address XYZ'
+      dateOfRegistration:
+        type: integer
+        format: int64
+        example: 1663218161
+      location:
+        $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/Location'
+      administrativeUnit:
+        type: string
+        example: 'SOLIMBO'
+      individuals:
+        type: array
+        items:
+          $ref: 'https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/Individuals'
+      additonalFields:
+        $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/AdditonalFields'
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
