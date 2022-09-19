@@ -160,6 +160,9 @@ definitions:
   InventoryLogRequest:
     type: object
     properties:
+      tenantId:
+        type: string
+        description: tenantid for the tenant
       recievedFrom:
         type: string
         example: "WARE-HOUSE-2"
@@ -190,6 +193,9 @@ definitions:
   InventoryLogResponse:
     type: object
     properties:
+      tenantId:
+        type: string
+        description: tenantid for the tenant
       inventoryLogId:
         type: string
         example: "UUID"
@@ -222,6 +228,9 @@ definitions:
   InventoryLogUpdateRequest:
     type: object
     properties:
+      tenantId:
+        type: string
+        description: tenantid for the tenant
       inventoryLogId:
         type: string
         example: "UUID"
@@ -278,6 +287,9 @@ definitions:
   Resource:
     type: object
     properties:
+      tenantId:
+        type: string
+        description: tenantid for the tenant
       resourceId:
         type: string
         example: 'ID-1'
@@ -400,13 +412,17 @@ definitions:
       reconcillationLogs:
         type: array
         items:
-          type: object
-          $ref: '#/definitions/ReconciliationResponseObject'
+          allOf:
+            - $ref: '#/definitions/ReconciliationResponseObject'
+
     required:
       - inventoryLog
   ReconcillationRequest:
     type: object
     properties:
+      tenantId:
+        type: string
+        description: tenantid for the tenant
       warehouseId:
         type: string
         example: "WARE-HOUSE-2"
