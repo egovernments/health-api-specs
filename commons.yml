@@ -608,6 +608,9 @@ definitions:
           - BALE
           - CARTONS
           - VIALS
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
   Campaign:
     description: A representation of Campaign.
