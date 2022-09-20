@@ -587,6 +587,28 @@ definitions:
           - CARTONS
           - VIALS
 
+  DeliveryResource:
+    type: object
+    properties:
+      resourceId:
+        type: string
+        example: 'ID-1'
+      quantityToBeDelivered:
+        type: integer
+        example: 100
+      reasonIfNotDelivered:
+        type: string
+      isDelivered:
+        type: boolean
+        example: true
+      quantityDelivered:
+        type: string
+        example: 'BALE'
+        enum:
+          - BALE
+          - CARTONS
+          - VIALS
+
   Campaign:
     description: A representation of Campaign.
     type: object
@@ -688,7 +710,7 @@ definitions:
       resources:
         type: array
         items:
-          $ref: '#/definitions/Resource'
+          $ref: '#/definitions/DeliveryResource'
       deliveredBy:
         type: string
         example: "UUID"
@@ -698,7 +720,16 @@ definitions:
         example: 1663218161
       additionalFields:
         $ref: '#/definitions/additionalFields'
-
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+      status:
+        type: string
+        example: 'DELIVERED'
+        enum:
+          - DELIVERED
+          - PARTIAL
+          - UNDELIVERED
   HouseHoldRegistration:
     description: A representation of Household.
     type: object

@@ -1,12 +1,9 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: eGov Delivery Registry Service
+  title: Delivery Registry Service
   description: >
-    This module facilitates Delivery for egov.
-  contact:
-    name: Egovernments Foundation
-    email: contact@egovernments.org
+    This module facilitates Delivery.
 schemes:
   - https
 basePath: /delivery
@@ -196,6 +193,9 @@ definitions:
             type: integer
             format: int64
             example: 1663218161
+          clientReferenceId:
+            type: string
+            example: "GUID"
           limit:
             type: integer
             example: 0
