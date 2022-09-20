@@ -369,6 +369,9 @@ definitions:
         type: integer
         format: int64
         example: 1663218161
+      clientReferenceId:
+        type: string
+        example: 'GUID'
       location:
         $ref: '#/definitions/Location'
       administrativeUnit:
@@ -461,24 +464,36 @@ definitions:
       campaignId:
         type: string
         example: "ID-1"
+      boundaryId:
+        type: string
+        example: 'Boundary-Id'
       administrativeUnit:
         type: string
         example: "SOLIMBO"
-      submittedAt:
+      performedAt:
         type: integer
         format: int64
         example: 1663218161
-      schema:
+      schemaId:
         type: string
         example: "CHECKLIST_NAME"
       version:
         type: integer
         example: 2
-      fields:
+      responses:
         type: array
         items:
           type: object
           $ref: '#/definitions/Field'
+      clientReferenceId:
+        type: string
+        example: 'GUID'
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+      additionalFields:
+        $ref: '#/definitions/additionalFields'
+
 
   CampaignTargets:
     type: object
@@ -655,6 +670,9 @@ definitions:
   Delivery:
     type: object
     properties:
+      clientReferenceId:
+        type: string
+        example: 'GUID'
       tenantId:
         type: string
         example: 'tenantA'
@@ -691,6 +709,9 @@ definitions:
       campaignId:
         type: string
         example: 'CAMP-001'
+      clientReferenceId:
+        type: string
+        example: 'GUID'
       noOfIndividuals:
         type: integer
         example: 4
