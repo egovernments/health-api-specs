@@ -22,7 +22,6 @@ parameters:
     required: false
     schema:
       $ref: '#/definitions/RequestInfo'
-
   tenantId:
     name: tenantId
     in: query
@@ -764,9 +763,8 @@ definitions:
       individuals:
         type: array
         items:
-          $ref: 'https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/Individuals'
+          $ref: '#/definitions/Individuals'
       additionalFields:
         $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/additionalFields'
       auditDetails:
-        $ref: >-
-          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+        $ref: 'https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails'

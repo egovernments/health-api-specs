@@ -251,6 +251,9 @@ definitions:
       individualRegistrationSearchCriteria:
         type: object
         properties:
+          clientReferenceId:
+            type: string
+            example: "GUID"
           campaignId:
             type: string
             example: 'H-ID'
@@ -280,6 +283,9 @@ definitions:
       householdRegistrationSearchCriteria:
         type: object
         properties:
+          clientReferenceId:
+            type: string
+            example: "GUID"
           householdId:
             type: string
             example: 'H-ID'
