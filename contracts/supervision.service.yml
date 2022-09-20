@@ -122,6 +122,9 @@ definitions:
             type: integer
             format: int64
             example: 1663218161
+          clientReferenceId:
+            type: string
+            example: "GUID"
           administrativeUnit:
             type: string
             example: "SOLIMBO"
