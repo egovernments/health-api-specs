@@ -163,18 +163,13 @@ definitions:
       tenantId:
         type: string
         description: tenantid for the tenant
-      recievedFrom:
+      campaignId:
+        type: string
+        example: "CAMP-ID"
+      transactionPartyId:
         type: string
         example: "WARE-HOUSE-2"
-      dispatchedTo:
-        type: string
-        example: "UUID"
-      warehouseId:
-        type: string
-        example: "WARE-HOUSE-3"
-      resource:
-        $ref: '#/definitions/Resource'
-      transactionType:
+      transactionPartyType:
         type: string
         example: RECEIVED
         enum:
@@ -187,9 +182,19 @@ definitions:
         type: integer
         format: int64
         example: 1663218161
-      additonalFields:
+      warehouseId:
+        type: string
+        example: "WARE-HOUSE-3"
+      resource:
+        $ref: '#/definitions/Resource'
+      clientReferenceId:
+        type: string
+        example: "GUID"
+      additionalFields:
         $ref: '#/definitions/AdditonalFields'
-
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
   InventoryLogResponse:
     type: object
     properties:
@@ -199,18 +204,13 @@ definitions:
       inventoryLogId:
         type: string
         example: "UUID"
-      recievedFrom:
+      campaignId:
+        type: string
+        example: "CAMP-ID"
+      transactionPartyId:
         type: string
         example: "WARE-HOUSE-2"
-      dispatchedTo:
-        type: string
-        example: "UUID"
-      warehouseId:
-        type: string
-        example: "WARE-HOUSE-3"
-      resource:
-        $ref: '#/definitions/Resource'
-      transactionType:
+      transactionPartyType:
         type: string
         example: RECEIVED
         enum:
@@ -223,29 +223,32 @@ definitions:
         type: integer
         format: int64
         example: 1663218161
-      additonalFields:
+      warehouseId:
+        type: string
+        example: "WARE-HOUSE-3"
+      resource:
+        $ref: '#/definitions/Resource'
+      clientReferenceId:
+        type: string
+        example: "GUID"
+      additionalFields:
         $ref: '#/definitions/AdditonalFields'
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
   InventoryLogUpdateRequest:
     type: object
     properties:
       tenantId:
         type: string
         description: tenantid for the tenant
-      inventoryLogId:
+      campaignId:
         type: string
-        example: "UUID"
-      recievedFrom:
+        example: "CAMP-ID"
+      transactionPartyId:
         type: string
         example: "WARE-HOUSE-2"
-      dispatchedTo:
-        type: string
-        example: "UUID"
-      warehouseId:
-        type: string
-        example: "WARE-HOUSE-3"
-      resource:
-        $ref: '#/definitions/Resource'
-      transactionType:
+      transactionPartyType:
         type: string
         example: RECEIVED
         enum:
@@ -258,8 +261,19 @@ definitions:
         type: integer
         format: int64
         example: 1663218161
-      additonalFields:
+      warehouseId:
+        type: string
+        example: "WARE-HOUSE-3"
+      resource:
+        $ref: '#/definitions/Resource'
+      clientReferenceId:
+        type: string
+        example: "GUID"
+      additionalFields:
         $ref: '#/definitions/AdditonalFields'
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
   AdditonalFields:
     type: object
@@ -293,10 +307,10 @@ definitions:
       resourceId:
         type: string
         example: 'ID-1'
-      type:
+      resourceType:
         type: string
         example: 'BEDNET'
-      name:
+      resourceName:
         type: string
         example: 'LLIN'
       quantity:
@@ -309,7 +323,9 @@ definitions:
           - BALE
           - CARTONS
           - VIALS
-
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
   InventoryUpdateRequest:
     properties:
       requestInfo:
@@ -357,15 +373,15 @@ definitions:
           inventoryLogId:
             type: string
             example: "UUID"
-          recievedFrom:
+          transactionPartyId:
             type: string
             example: "WARE-HOUSE-2"
-          dispatchedTo:
-            type: string
-            example: "UUID"
           warehouseId:
             type: string
             example: "WARE-HOUSE-3"
+          campaignId:
+            type: string
+            example: "CAMP-ID"
           resource:
             $ref: '#/definitions/Resource'
           transactionType:
@@ -374,13 +390,11 @@ definitions:
             enum:
               - RECEIVED
               - DISPATCHED
-          transactionReason:
-            type: string
-            example: "RETURNED REASON"
           transactionDate:
             type: integer
             format: int64
             example: 1663218161
+
 
   InventorySearchResponse:
     description: >-
