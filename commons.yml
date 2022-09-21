@@ -528,37 +528,6 @@ definitions:
         type: object
         $ref: '#/definitions/CampaignTargets'
 
-  CampaignSchedule:
-    type: object
-    properties:
-      rounds:
-        type: integer
-        example: 2
-      durationBetweenRounds:
-        type: integer
-        example: 30
-      durationBetweenRoundsUnit:
-        type: string
-        example: 'DAY'
-        enum:
-          - DAY
-          - WEEK
-          - MONTH
-          - YEAR
-      recurring:
-        type: boolean
-        example: true
-      recurringFrequency:
-        type: integer
-        example: 10
-      recurringFrequencyUnit:
-        type: string
-        example: 'DAY'
-        enum:
-          - DAY
-          - WEEK
-          - MONTH
-          - YEAR
 
   Resource:
     type: object
@@ -634,12 +603,9 @@ definitions:
       eligibilityCriteria:
         type: string
         example: 'INSTRUCTIONS'
-      deliveryMode:
-        type: string
-        enum:
-          - SEPARATE
-          - TOGETHER
-        example: 'SEPARATE'
+      isRegistrationAndDeliveryCombined:
+        type: boolean
+        example: true
       startDate:
         type: integer
         format: int64
@@ -657,12 +623,8 @@ definitions:
       deliveryProcedure:
         type: string
         example: 'INSTRUCTIONS'
-      desiredTarget:
+      additionalFields:
         type: object
-        $ref: '#/definitions/CampaignTargets'
-      achievedTarget:
-        type: object
-        $ref: '#/definitions/CampaignTargets'
       status:
         type: string
         enum:
@@ -671,22 +633,19 @@ definitions:
           - COMPLETE
           - ABANDONED
         example: 'CREATED'
-      schedule:
-        type: object
-        $ref: '#/definitions/CampaignSchedule'
+      campaignSchedules:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/CampaignSchedule'
+      campaignRounds:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/CampaignRound'
       disease:
         type: string
         example: 'MALARIA'
-      resources:
-        type: array
-        items:
-          type: string
-          $ref: '#/definitions/Resource'
-      geography:
-        type: array
-        items:
-          type: string
-          $ref: '#/definitions/Geography'
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
@@ -768,3 +727,308 @@ definitions:
         $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/additionalFields'
       auditDetails:
         $ref: 'https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails'
+
+  #########################################
+
+  CampaignRound:
+    type: object
+    properties:
+      campaignId:
+        type: string
+        example: '1'
+      startDate:
+        type: integer
+        format: int64
+        example: EPOCH
+      endDate:
+        type: integer
+        format: int64
+        example: EPOCH
+      desiredTargets:
+        type: object
+        properties:
+          desiredTeamTarget:
+            type: integer
+            example: 100
+          desiredCoverageTarget:
+            type: integer
+            example: 0.8
+          desiredPopulationTarget:
+            type: integer
+            example: 1000
+      achievedTargets:
+        type: object
+        properties:
+          achievedTeamTarget:
+            type: integer
+            example: 100
+          achievedCoverageTarget:
+            type: integer
+            example: 0.8
+          achievedPopulationTarget:
+            type: integer
+            example: 1000
+      status:
+        type: string
+        example: "INPROGRESS"
+      boundaryId:
+        type: string
+        example: "ID"
+      additionalFields:
+        type: object
+      tenantId:
+        type: string
+        example: "tenantA"
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+
+  CampaignRoundResponse:
+    type: object
+    allOf:
+      - type: object
+        properties:
+          campaignRoundId:
+            type: string
+            example: 'CAMPAIGN-ROUND-ID-1'
+      - $ref: '#/definitions/CampaignRound'
+
+  CampaignRoundRequest:
+    description: >-
+      The request object, containing all necessary information for creating an campaign round and the request body metadata
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+      campaignRound:
+        $ref: '#/definitions/CampaignRound'
+    required:
+      - campaignRound
+
+  CampaignRoundUpdateRequest:
+    description: >-
+      The request object, containing all necessary information for creating an campaign round and the request body metadata
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+      campaignRound:
+        allOf:
+          - type: object
+            properties:
+              campaignRoundId:
+                type: string
+                example: 'CAMPAIGN-ROUND-ID-1'
+          - $ref: '#/definitions/CampaignRound'
+    required:
+      - campaignRound
+
+  CampaignRoundResponseWithResponseInfo:
+    description: >-
+      The campaign response object.
+    properties:
+      responseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ResponseInfo
+      campaignRound:
+        $ref: '#/definitions/CampaignRoundResponse'
+
+  CampaignRoundSearchRequest:
+    description: >-
+      The request object, containing all necessary information for updating an campaign and the request body metadata
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+      campaignSearchCriteria:
+        type: object
+        properties:
+          campaignId:
+            type: string
+            example: 'CAMPAIGN-ID'
+          campaignRoundId:
+            type: string
+            example: 'round-id'
+          startDate:
+            type: integer
+            format: int64
+            example: 'EPOCH'
+          endDate:
+            type: integer
+            format: int64
+            example: 'EPOCH'
+          status:
+            type: string
+            example: 'INPROGRESS'
+          boundaryId:
+            type: string
+            example: 'boundary-id'
+          limit:
+            type: number
+            example: 0
+          offset:
+            type: number
+            example: 0
+    required:
+      - campaignSearchCriteria
+
+  CampaignRoundSearchResponse:
+    description: >-
+      The campaign rounf response object.
+    properties:
+      responseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ResponseInfo
+      totalCount:
+        type: number
+        example: 1
+      campaignRounds:
+        type: array
+        items:
+          type: object
+          allOf:
+            - type: object
+              properties:
+                campaignRoundId:
+                  type: string
+                  example: 'CAMPAIGN-ROUND-ID-1'
+            - $ref: '#/definitions/CampaignRound'
+
+  #########################################
+
+  CampaignSchedule:
+    type: object
+    properties:
+      campaignId:
+        type: string
+        example: '1'
+      startDate:
+        type: integer
+        format: int64
+        example: EPOCH
+      endDate:
+        type: integer
+        format: int64
+        example: EPOCH
+      noOfRounds:
+        type: integer
+        example: 4
+      durationBetweenRounds:
+        type: integer
+        example: 30
+      isRecurring:
+        type: boolean
+        example: true
+      recurringFrequency:
+        type: integer
+        example: 4
+      durationAndFrequencyUnit:
+        type: string
+        example: 'DAYS'
+      additionalFields:
+        type: object
+      tenantId:
+        type: string
+        example: "tenantA"
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+
+  CampaignScheduleResponse:
+    type: object
+    allOf:
+      - type: object
+        properties:
+          campaignScheduleId:
+            type: string
+            example: 'CAMPAIGN-SCHEDULE-ID-1'
+      - $ref: '#/definitions/CampaignSchedule'
+
+  CampaignScheduleRequest:
+    description: >-
+      The request object, containing all necessary information for creating an campaign round and the request body metadata
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+      campaignSchedule:
+        $ref: '#/definitions/CampaignSchedule'
+    required:
+      - campaignSchedule
+
+  CampaignScheduleUpdateRequest:
+    description: >-
+      The request object, containing all necessary information for creating an campaign round and the request body metadata
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+      campaignSchedule:
+        allOf:
+          - type: object
+            properties:
+              campaignScheduleId:
+                type: string
+                example: 'CAMPAIGN-SCHEDULE-ID-1'
+          - $ref: '#/definitions/CampaignSchedule'
+    required:
+      - campaignSchedule
+
+  CampaignScheduleResponseWithResponseInfo:
+    description: >-
+      The campaign response object.
+    properties:
+      responseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ResponseInfo
+      campaignRound:
+        $ref: '#/definitions/CampaignScheduleResponse'
+
+  CampaignScheduleSearchRequest:
+    description: >-
+      The request object, containing all necessary information for updating an campaign and the request body metadata
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+      campaignScheduleSearchCriteria:
+        type: object
+        properties:
+          campaignId:
+            type: string
+            example: 'CAMPAIGN-ID'
+          campaignScheduleId:
+            type: string
+            example: 'schedule-id'
+          startDate:
+            type: integer
+            format: int64
+            example: 'EPOCH'
+          endDate:
+            type: integer
+            format: int64
+            example: 'EPOCH'
+          limit:
+            type: number
+            example: 0
+          offset:
+            type: number
+            example: 0
+    required:
+      - campaignScheduleSearchCriteria
+
+  CampaignScheduleSearchResponse:
+    description: >-
+      The campaign round response object.
+    properties:
+      responseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ResponseInfo
+      totalCount:
+        type: number
+        example: 1
+      campaignRounds:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/CampaignScheduleResponse'
