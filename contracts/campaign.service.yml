@@ -284,6 +284,32 @@ definitions:
             type: string
             example: 'CAMPAIGN-ID-1'
       - $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/Campaign'
+      - type: object
+        properties:
+          campaignSchedules:
+            type: array
+            items:
+              type: object
+              allOf:
+                - type: object
+                  properties:
+                    campaignScheduleId:
+                      type: string
+                      example: 'CAMPAIGN-SCHEDULE-ID-1'
+                - $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/CampaignSchedule'
+      - type: object
+        properties:
+          campaignRounds:
+            type: array
+            items:
+              type: object
+              allOf:
+                - type: object
+                  properties:
+                    campaignRoundId:
+                      type: string
+                      example: 'CAMPAIGN-ROUND-ID-1'
+                - $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/CampaignRound'
 
   #########################################
   CampaignRequest:
