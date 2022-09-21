@@ -358,7 +358,7 @@ definitions:
 
   CampaignSearchResponse:
     description: >-
-      The campaign response objecy.
+      The campaign response object.
     properties:
       responseInfo:
         $ref: >-
@@ -528,7 +528,7 @@ definitions:
 
   CampaignRoundSearchResponse:
     description: >-
-      The campaign rounf response objecy.
+      The campaign rounf response object.
     properties:
       responseInfo:
         $ref: >-
@@ -673,7 +673,7 @@ definitions:
 
   CampaignScheduleSearchResponse:
     description: >-
-      The campaign rounf response objecy.
+      The campaign round response object.
     properties:
       responseInfo:
         $ref: >-

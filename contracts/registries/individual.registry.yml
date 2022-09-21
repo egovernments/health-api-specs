@@ -247,7 +247,7 @@ definitions:
 
   IndividualRegistrationSearchResponse:
     description: >-
-      The Individual response objecy.
+      The Individual response object.
     properties:
       responseInfo:
         $ref: >-

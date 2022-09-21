@@ -311,7 +311,7 @@ definitions:
 
   HouseholdRegistrationSearchResponse:
     description: >-
-      The household Registration response objecy.
+      The household Registration response object.
     properties:
       responseInfo:
         $ref: >-
