@@ -82,7 +82,7 @@ paths:
             $ref: '#/definitions/CampaignSearchRequest'
       responses:
         '200':
-          description: Feteched Search Campaigns.
+          description: Fetched Search Campaigns.
           schema:
             $ref: '#/definitions/CampaignSearchResponse'
         '400':
@@ -169,7 +169,7 @@ paths:
             $ref: '#/definitions/CampaignScheduleSearchRequest'
       responses:
         '200':
-          description: Feteched Search Campaign schedule.
+          description: Fetched Search Campaign schedule.
           schema:
             $ref: '#/definitions/CampaignScheduleSearchResponse'
         '400':
@@ -256,7 +256,7 @@ paths:
             $ref: '#/definitions/CampaignRoundSearchRequest'
       responses:
         '200':
-          description: Feteched Search Campaign rounds.
+          description: Fetched Search Campaign rounds.
           schema:
             $ref: '#/definitions/CampaignRoundSearchResponse'
         '400':

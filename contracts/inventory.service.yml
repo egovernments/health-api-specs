@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title:  Inventory Registry Service
+  title:  Campaign Inventory Service
   description: >
     This module facilitates inventory.
 schemes:
@@ -11,7 +11,7 @@ x-common-path: >-
   https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml
 paths:
   #########################################
-  /v1/_create:
+  /log/v1/_create:
     post:
       summary: Create a Inventory Log.
       description: Creates Inventory Log On successful Inventory Log Ok response is returned.
@@ -39,7 +39,7 @@ paths:
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
       tags:
         - Inventory Logs
-  /v1/_update:
+  /log/v1/_update:
     post:
       summary: Update An Inventory Log.
       description: Update An Inventory Log, Ok response is returned.
@@ -67,7 +67,7 @@ paths:
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ErrorRes
       tags:
         - Inventory Logs
-  /v1/_search:
+  /log/v1/_search:
     post:
       summary: Search Inventory Log.
       description: Search Inventory Log Ok response is returned.
@@ -80,7 +80,7 @@ paths:
             $ref: '#/definitions/InventorySearchCriteriaRequest'
       responses:
         '200':
-          description: Feteched Search InventoryLogs.
+          description: Fetched Search InventoryLogs.
           schema:
             $ref: '#/definitions/InventorySearchResponse'
         '400':
@@ -98,18 +98,18 @@ paths:
 
   /reconciliation/v1/_create:
     post:
-      summary: Create a Reconcillation Log.
-      description: Creates Reconcillation Log On successful Reconcillation Ok response is returned.
+      summary: Create a Reconciliation Log.
+      description: Creates Reconciliation Log On successful Reconciliation Ok response is returned.
       parameters:
         - name: reconciliationRequest
           in: "body"
-          description: Details of the Reconcillation Log and RequestInfo meta data.
+          description: Details of the Reconciliation Log and RequestInfo meta data.
           required: true
           schema:
-            $ref: '#/definitions/CreateReconcillationRequest'
+            $ref: '#/definitions/CreateReconciliationRequest'
       responses:
         '200':
-          description: Reconcillation Log created successfully.
+          description: Reconciliation Log created successfully.
           schema:
             $ref: '#/definitions/ReconciliationResponseWithResponseInfo'
         '400':
@@ -134,12 +134,12 @@ paths:
           description: Search Criteria for reconciliation and RequestInfo meta data.
           required: true
           schema:
-            $ref: '#/definitions/ReconcillationSearchCriteria'
+            $ref: '#/definitions/ReconciliationSearchCriteria'
       responses:
         '200':
-          description: Feteched Search reconciliation Logs.
+          description: Fetched Search reconciliation Logs.
           schema:
-            $ref: '#/definitions/ReconcillationSearchResponse'
+            $ref: '#/definitions/ReconciliationSearchResponse'
         '400':
           description: Bad request
           schema:
@@ -410,7 +410,7 @@ definitions:
           $ref: '#/definitions/InventoryLogResponse'
     required:
       - inventoryLog
-  ReconcillationSearchResponse:
+  ReconciliationSearchResponse:
     description: >-
       The search response object.
     properties:
@@ -420,7 +420,7 @@ definitions:
       totalCount:
         type: integer
         example: 0
-      reconcillationLogs:
+      reconciliationLogs:
         type: array
         items:
           allOf:
@@ -428,7 +428,7 @@ definitions:
 
     required:
       - inventoryLog
-  ReconcillationRequest:
+  ReconciliationRequest:
     type: object
     properties:
       tenantId:
@@ -464,7 +464,7 @@ definitions:
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
-  CreateReconcillationRequest:
+  CreateReconciliationRequest:
     description: >-
       The request object, containing all necessary information for creating an Inventory Log and the request body metadata
     properties:
@@ -472,7 +472,7 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
       reconciliationLog:
-        $ref: '#/definitions/ReconcillationRequest'
+        $ref: '#/definitions/ReconciliationRequest'
     required:
       - reconciliationLog
   ReconciliationResponseObject:
@@ -482,25 +482,25 @@ definitions:
           reconciliationId:
             type: string
             example: "1212"
-      - $ref: '#/definitions/ReconcillationRequest'
+      - $ref: '#/definitions/ReconciliationRequest'
   ReconciliationResponseWithResponseInfo:
     description: >-
-      The request object, containing all necessary information for creating an Reconcillation and the request body metadata
+      The request object, containing all necessary information for creating an Reconciliation and the request body metadata
     properties:
       responseInfo:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ResponseInfo
       reconciliationLog:
-        $ref: '#/definitions/ReconcillationRequest'
+        $ref: '#/definitions/ReconciliationRequest'
 
-  ReconcillationSearchCriteria:
+  ReconciliationSearchCriteria:
     description: >-
-      The request object, containing all necessary information for creating an Reconcillation and the request body metadata
+      The request object, containing all necessary information for creating an Reconciliation and the request body metadata
     properties:
       requestInfo:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
-      reconcillationSearchCriteria:
+      reconciliationSearchCriteria:
         type: object
         properties:
           warehouseId:
@@ -522,4 +522,4 @@ definitions:
             type: integer
             example: 5
     required:
-      - reconcillationSearchCriteria
+      - reconciliationSearchCriteria

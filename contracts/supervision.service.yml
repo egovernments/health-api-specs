@@ -1,9 +1,9 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: Supervision Service
+  title: Campaign Supervision Service
   description: >
-    This module facilitates Supervision.
+    This module facilitates Supervision of a campaign by enabling supervisors to submit checklists.
 
 schemes:
   - https
@@ -54,7 +54,7 @@ paths:
             $ref: '#/definitions/SubmissionSearchCriteriaRequest'
       responses:
         '200':
-          description: Feteched Search Checklist.
+          description: Fetched Search Checklist.
           schema:
             $ref: '#/definitions/SubmissionSearchResponse'
         '400':

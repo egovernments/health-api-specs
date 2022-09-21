@@ -1,12 +1,12 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: eGov Individual Registry Service
+  title: Individual Registry
   description: >
-    This module facilitates individual registry for egov.
+    This module facilitates maintenance of an Individual registry.
   contact:
-    name: Egovernments Foundation
-    email: contact@egovernments.org
+    name: Digit Health Campaign
+    email: info@egovernments.org
 schemes:
   - https
 basePath: /individual
@@ -16,8 +16,8 @@ paths:
   #########################################
   /v1/_create:
     post:
-      summary: Create a Individual Registry.
-      description: Registers a Individual. On successful Individual Registered, Ok response is returned.
+      summary: Create Individual
+      description: Adds an Individual to the Individual Registry. On successful Individual Registration, Ok response is returned.
       parameters:
         - name: individualCreateRegistryRequest
           in: "body"
@@ -44,8 +44,8 @@ paths:
         - Individual Registry
   /v1/_update:
     post:
-      summary: Update A Individual Registry.
-      description: Update A Individual Registry, Ok response is returned.
+      summary: Update Individual
+      description: Update an Individual in the Registry, Ok response is returned.
       parameters:
         - name: indiviualRegistryUpdateRequest
           in: "body"
@@ -83,7 +83,7 @@ paths:
             $ref: '#/definitions/IndividualSearchRequest'
       responses:
         '200':
-          description: Feteched Search Individual.
+          description: Fetched Search Individual.
           schema:
             $ref: '#/definitions/IndividualRegistrationSearchResponse'
         '400':

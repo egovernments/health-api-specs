@@ -1,7 +1,7 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: Planning Service
+  title: Campaign Planning Service
   description: >
     This module facilitates Planning.
 schemes:
@@ -13,7 +13,7 @@ paths:
   #########################################
   /v1/_create:
     post:
-      summary: Submit a Planning Request.
+      summary: Submit a Campaign Plan.
       description: Submits a Planning Request Ok response is returned.
       parameters:
         - name: submitPlanRequest
@@ -42,7 +42,7 @@ paths:
 
   /template/v1/_create:
     post:
-      summary: Create Template.
+      summary: Create Campaign Plan Template.
       description: Search Template Ok response is returned.
       parameters:
         - name: createTemplateRequest

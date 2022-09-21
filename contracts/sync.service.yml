@@ -3,7 +3,7 @@ info:
   version: 1.0.0
   title: Sync Service
   description: >
-    This module facilitates syncing for offline.
+    This module facilitates syncing of health campaign data for offline applications.
 schemes:
   - https
 basePath: /sync
@@ -51,7 +51,7 @@ paths:
             $ref: '#/definitions/SyncStatusRequest'
       responses:
         '200':
-          description: Feteched Sync Status.
+          description: Fetched Sync Status.
           schema:
             $ref: '#/definitions/SyncStatuResponseeWithResponseInfo'
         '400':
@@ -70,7 +70,7 @@ paths:
   /forms/v1/_search:
     post:
       summary: Sync Forms.
-      description: Latest Forms are feteched.
+      description: Latest Forms are fetched.
       parameters:
         - name: formSyncRequest
           in: "body"

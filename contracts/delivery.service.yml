@@ -1,9 +1,9 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: Delivery Registry Service
+  title: Campaign Delivery Service
   description: >
-    This module facilitates Delivery.
+    This module facilitates Delivery of campaign resources to registered beneficiaries.
 schemes:
   - https
 basePath: /delivery
@@ -80,7 +80,7 @@ paths:
             $ref: '#/definitions/DeliverySearchCriteriaRequest'
       responses:
         '200':
-          description: Feteched Search Delivery.
+          description: Fetched Search Delivery.
           schema:
             $ref: '#/definitions/DeliverySearchResponse'
         '400':

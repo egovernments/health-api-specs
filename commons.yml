@@ -1,10 +1,10 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: Common Object Definitions
-  description: Definitions of common objects used across the modules. These objects will/may be commonly used by all eGov API deicitions. There are no paths defined in this spec as these objects cannot be used solely on their own.
+  title: Health Campaign Common Object Definitions
+  description: Definitions of common objects used across the modules. These objects will/may be commonly used by all Health Campaign API definitions. There are no paths defined in this spec as these objects cannot be used solely on their own.
   contact:
-    name:  eGov
+    name:  Digit Health Campaign
     email: info@egovernments.org
 host: phoenix-qa.egovernments.org
 
@@ -78,7 +78,7 @@ definitions:
         $ref: '#/definitions/additionalFields'
 
   IndividualRegistration:
-    description: A representation of Individual Registration.
+    description: A representation of Individual Registration to a Campaign.
     type: object
     properties:
       tenantId:
