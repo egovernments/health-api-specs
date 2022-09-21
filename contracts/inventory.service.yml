@@ -447,6 +447,9 @@ definitions:
         type: integer
         format: int64
         example: 1663218161
+      clientReferenceId:
+        type: string
+        example: "GUID"
       calculatedCount:
         type: integer
         example: 200
@@ -461,6 +464,9 @@ definitions:
       transactionReason:
         type: string
         example: "100 Entry Missing"
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
   CreateReconcillationRequest:
     description: >-
       The request object, containing all necessary information for creating an Inventory Log and the request body metadata
@@ -507,6 +513,9 @@ definitions:
             type: integer
             format: int64
             example: 1663218161
+          clientReferenceId:
+            type: string
+            example: "GUID"
           resource:
             $ref: '#/definitions/Resource'
           limit:
