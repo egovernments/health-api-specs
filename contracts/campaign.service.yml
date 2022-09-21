@@ -104,17 +104,17 @@ paths:
       summary: Create a campaign schedule.
       description: Create's a campaign schedule. On successful campaign schedule creation, Ok response is returned.
       parameters:
-        - name: campaignRequest
+        - name: campaignScheduleRequest
           in: "body"
           description: Details of the campaign schedule and RequestInfo meta data.
           required: true
           schema:
-            $ref: '#/definitions/CampaignRequest'
+            $ref: '#/definitions/CampaignScheduleRequest'
       responses:
         '200':
           description: Campaign schedule created successfully.
           schema:
-            $ref: '#/definitions/CampaignResponseWithResponseInfo'
+            $ref: '#/definitions/CampaignScheduleResponseWithResponseInfo'
         '400':
           description: Bad request
           schema:
@@ -132,18 +132,18 @@ paths:
       summary: Update A Campaign schedule.
       description: Update A Campaign, schedule Ok response is returned.
       parameters:
-        - name: campaignUpdateRequest
+        - name: campaignScheduleUpdateRequest
           in: "body"
           description: Details of the campaign schedule and RequestInfo meta data.
           required: true
           schema:
-            $ref: '#/definitions/CampaignUpdateRequest'
+            $ref: '#/definitions/CampaignScheduleUpdateRequest'
 
       responses:
         '200':
           description: Updated campaign schedule successfully.
           schema:
-            $ref: '#/definitions/CampaignResponseWithResponseInfo'
+            $ref: '#/definitions/CampaignScheduleResponseWithResponseInfo'
         '400':
           description: Bad request
           schema:
@@ -166,12 +166,12 @@ paths:
           description: Search Criteria for campaign schedule and RequestInfo meta data.
           required: true
           schema:
-            $ref: '#/definitions/CampaignSearchRequest'
+            $ref: '#/definitions/CampaignScheduleSearchRequest'
       responses:
         '200':
           description: Feteched Search Campaign schedule.
           schema:
-            $ref: '#/definitions/CampaignSearchResponse'
+            $ref: '#/definitions/CampaignScheduleSearchResponse'
         '400':
           description: Bad request
           schema:
@@ -384,7 +384,6 @@ definitions:
 
   #########################################
 
-
   CampaignRound:
     type: object
     properties:
@@ -526,6 +525,7 @@ definitions:
             example: 0
     required:
       - campaignSearchCriteria
+
   CampaignRoundSearchResponse:
     description: >-
       The campaign rounf response objecy.
@@ -547,3 +547,142 @@ definitions:
                   type: string
                   example: 'CAMPAIGN-ROUND-ID-1'
             - $ref: '#/definitions/CampaignRound'
+
+  #########################################
+
+  CampaignSchedule:
+    type: object
+    properties:
+      campaignId:
+        type: string
+        example: '1'
+      startDate:
+        type: integer
+        format: int64
+        example: EPOCH
+      endDate:
+        type: integer
+        format: int64
+        example: EPOCH
+      noOfRounds:
+        type: integer
+        example: 4
+      durationBetweenRounds:
+        type: integer
+        example: 30
+      isRecurring:
+        type: boolean
+        example: true
+      recurringFrequency:
+        type: integer
+        example: 4
+      durationAndFrequencyUnit:
+        type: string
+        example: 'DAYS'
+      additionalFields:
+        type: object
+      tenantId:
+        type: string
+        example: "tenantA"
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+
+  CampaignScheduleResponse:
+    type: object
+    allOf:
+      - type: object
+        properties:
+          campaignScheduleId:
+            type: string
+            example: 'CAMPAIGN-SCHEDULE-ID-1'
+      - $ref: '#/definitions/CampaignSchedule'
+
+  CampaignScheduleRequest:
+    description: >-
+      The request object, containing all necessary information for creating an campaign round and the request body metadata
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+      campaignSchedule:
+        $ref: '#/definitions/CampaignSchedule'
+    required:
+      - campaignSchedule
+
+  CampaignScheduleUpdateRequest:
+    description: >-
+      The request object, containing all necessary information for creating an campaign round and the request body metadata
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+      campaignSchedule:
+        allOf:
+          - type: object
+            properties:
+              campaignScheduleId:
+                type: string
+                example: 'CAMPAIGN-SCHEDULE-ID-1'
+          - $ref: '#/definitions/CampaignSchedule'
+    required:
+      - campaignSchedule
+
+  CampaignScheduleResponseWithResponseInfo:
+    description: >-
+      The campaign response object.
+    properties:
+      responseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ResponseInfo
+      campaignRound:
+        $ref: '#/definitions/CampaignScheduleResponse'
+
+  CampaignScheduleSearchRequest:
+    description: >-
+      The request object, containing all necessary information for updating an campaign and the request body metadata
+    properties:
+      requestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/RequestInfo
+      campaignScheduleSearchCriteria:
+        type: object
+        properties:
+          campaignId:
+            type: string
+            example: 'CAMPAIGN-ID'
+          campaignScheduleId:
+            type: string
+            example: 'schedule-id'
+          startDate:
+            type: integer
+            format: int64
+            example: 'EPOCH'
+          endDate:
+            type: integer
+            format: int64
+            example: 'EPOCH'
+          limit:
+            type: number
+            example: 0
+          offset:
+            type: number
+            example: 0
+    required:
+      - campaignScheduleSearchCriteria
+
+  CampaignScheduleSearchResponse:
+    description: >-
+      The campaign rounf response objecy.
+    properties:
+      responseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/ResponseInfo
+      totalCount:
+        type: number
+        example: 1
+      campaignRounds:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/CampaignScheduleResponse'
