@@ -1,12 +1,9 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: eGov Inventory Registry Service
+  title:  Inventory Registry Service
   description: >
-    This module facilitates inventory for egov.
-  contact:
-    name: Egovernments Foundation
-    email: contact@egovernments.org
+    This module facilitates inventory.
 schemes:
   - https
 basePath: /inventory

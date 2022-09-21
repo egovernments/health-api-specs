@@ -1,12 +1,9 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: eGov Registration Service
+  title: Registration Service
   description: >
-    This module facilitates registration for egov.
-  contact:
-    name: Egovernments Foundation
-    email: contact@egovernments.org
+    This module facilitates registration.
 schemes:
   - https
 basePath: /registration

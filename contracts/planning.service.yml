@@ -1,12 +1,9 @@
 swagger: '2.0'
 info:
   version: 1.0.0
-  title: eGov Planning Service
+  title: Planning Service
   description: >
-    This module facilitates Planning for egov.
-  contact:
-    name: Egovernments Foundation
-    email: contact@egovernments.org
+    This module facilitates Planning.
 schemes:
   - https
 basePath: /planning
