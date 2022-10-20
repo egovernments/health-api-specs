@@ -140,6 +140,7 @@ paths:
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
   /campaign/delivery/v1/_create:
     post:
       summary: >-
@@ -301,6 +302,7 @@ definitions:
         example: 'ABCD-1212'
 
   Individual:
+    description: A representation of an Individual.
     type: object
     properties:
       id:
@@ -315,6 +317,7 @@ definitions:
         maxLength: 64
         description: Unique client generated GUID
       name:
+        #TODO: shouldn't we split this into familyName, givenName, otherNames like in https://schema.org/Person
         type: string
       dateOfBirth:
         type: string
@@ -337,8 +340,45 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/IndividualId'
+      #TODO: Add reference to location hierarchy type and location id here?
       additionalFields:
         $ref: '#/definitions/additionalFields'
+
+  Household:
+    description: A representation of Household.
+    type: object
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: true
+      clientReferenceId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique client generated GUID
+      tenantId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique tenant of the system
+        example: 'tenantA'
+      noOfIndividual:
+        type: integer
+        example: 4
+        description: total no of individuals in a house
+      address:
+        $ref: '#/definitions/Address'
+      individuals:
+        type: array
+        items:
+          $ref: '#/definitions/Individual'
+      additionalFields:
+        $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/additionalFields'
+      auditDetails:
+        $ref: 'https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails'
 
   CampaignRegistration:
     description: A representation of Beneficiary Registration to a Campaign.
@@ -374,6 +414,10 @@ definitions:
         example: 1663218161
       additionalFields:
         $ref: '#/definitions/additionalFields'
+      channel:
+        type: string
+        minLength: 2
+        maxLength: 64
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
@@ -644,6 +688,10 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Resource'
+      channel:
+        type: string
+        minLength: 2
+        maxLength: 64
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
@@ -681,6 +729,10 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Target'
+      channel:
+        type: string
+        minLength: 2
+        maxLength: 64
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
@@ -723,6 +775,13 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Target'
+      channel:
+        type: string
+        minLength: 2
+        maxLength: 64
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
   CampaignStaff:
     description: This object defines the mapping of a system staff user to a campaign for a certain period.
@@ -761,6 +820,13 @@ definitions:
         type: integer
         format: int64
         description: End date of user operations against this campaign
+      channel:
+        type: string
+        minLength: 2
+        maxLength: 64
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
   Delivery:
     type: object
@@ -809,6 +875,10 @@ definitions:
         default: 1
       additionalFields:
         $ref: '#/definitions/additionalFields'
+      channel:
+        type: string
+        minLength: 2
+        maxLength: 64
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
@@ -819,42 +889,6 @@ definitions:
           - DELIVERED
           - PARTIAL
           - UNDELIVERED
-
-  Household:
-    description: A representation of Household.
-    type: object
-    properties:
-      id:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique system generated GUID
-        readOnly: true
-      clientReferenceId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique client generated GUID
-      tenantId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique tenant of the system
-        example: 'tenantA'
-      noOfIndividual:
-        type: integer
-        example: 4
-        description: total no of individuals in a house
-      address:
-        $ref: '#/definitions/Address'
-      individuals:
-        type: array
-        items:
-          $ref: '#/definitions/Individual'
-      additionalFields:
-        $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/additionalFields'
-      auditDetails:
-        $ref: 'https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails'
 
   #########################################
 #TODO: Omit objects in API response to lower network utilisation?
