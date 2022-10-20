@@ -1,0 +1,1056 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Health Campaign Management System
+  contact:
+    name:  Digit Health Campaign
+    email: info@egovernments.org
+host: phoenix-qa.egovernments.org
+
+schemes:
+  - https
+
+paths:
+  /campaign/v1/_create:
+    post:
+      summary: >-
+        Create a new Campaign
+      description: >-
+        Create a new Campaign
+      parameters:
+        - name: campaign
+          in: body
+          description: Details for the new Campaign.
+          required: true
+          schema:
+            $ref: '#/definitions/CampaignRequest'
+      tags:
+        - Campaign
+      responses:
+        '202':
+          description: Employee request accepted for creation.
+          schema:
+            $ref: '#/definitions/CampaignResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /campaign/v1/_update:
+    post:
+      summary: >-
+        Update the details of a existing Campaign
+      description: >-
+        Update the details of a existing Campaign
+      parameters:
+        - name: campaign
+          in: body
+          description: Details for the new Campaign.
+          required: true
+          schema:
+            $ref: '#/definitions/CampaignRequest'
+      tags:
+        - Campaign
+      responses:
+        '202':
+          description: Employee request accepted for creation.
+          schema:
+            $ref: '#/definitions/CampaignResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /campaign/boundary/v1/_create:
+    post:
+      summary: >-
+        Link Boundary to Campaign
+      description: >-
+        Link Boundary to Campaign
+      parameters:
+        - name: CampaignBoundary
+          in: body
+          description: Capture linkage of Campaign and boundary.
+          required: true
+          schema:
+            $ref: '#/definitions/CampaignBoundaryRequest'
+      tags:
+        - Campaign
+      responses:
+        '202':
+          description:  Campaign Boundary request has been accepted for creation.
+          schema:
+            $ref: '#/definitions/CampaignBoundaryResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /campaign/staff/v1/_create:
+    post:
+      summary: >-
+        Link Staff users to Campaign
+      description: >-
+        Link Staff users to Campaign
+      parameters:
+        - name: CampaignStaff
+          in: body
+          description: Capture linkage of Campaign and staff user.
+          required: true
+          schema:
+            $ref: '#/definitions/CampaignStaffRequest'
+      tags:
+        - Campaign
+      responses:
+        '202':
+          description:  Campaign Staff request has been accepted for creation.
+          schema:
+            $ref: '#/definitions/CampaignStaffResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /campaign/registration/v1/_create:
+    post:
+      summary: >-
+        Register for Campaign
+      description: >-
+        Register for Campaign
+      parameters:
+        - name: CampaignRegistration
+          in: body
+          description: Register beneficiary to a campaign.
+          required: true
+          schema:
+            $ref: '#/definitions/CampaignRegistrationRequest'
+      tags:
+        - Campaign
+      responses:
+        '202':
+          description:  Campaign Registration request has been accepted for creation.
+          schema:
+            $ref: '#/definitions/CampaignRegistrationResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /campaign/delivery/v1/_create:
+    post:
+      summary: >-
+        Delivery Request
+      description: >-
+        Delivery Request
+      parameters:
+        - name: Delivery
+          in: body
+          description: Capture delivery details of resource to beneficiary for a campaign
+          required: true
+          schema:
+            $ref: '#/definitions/DeliveryRequest'
+      tags:
+        - Campaign
+      responses:
+        '202':
+          description:  Delivery request has been accepted for creation.
+          schema:
+            $ref: '#/definitions/DeliveryResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /individual/v1/_create:
+    post:
+      summary: >-
+        Create/Add a new Individual
+      description: >-
+        Create a new Individual
+      parameters:
+        - name: Individual
+          in: body
+          description: Capture details of Individual.
+          required: true
+          schema:
+            $ref: '#/definitions/IndividualRequest'
+      tags:
+        - Individual
+      responses:
+        '202':
+          description:  Individual request has been accepted for creation.
+          schema:
+            $ref: '#/definitions/IndividualResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /individual/v1/_update:
+    post:
+      summary: >-
+        Update the details of a existing Individual
+      description: >-
+        Update the details of a existing Individual
+      parameters:
+        - name: Individual
+          in: body
+          description: Details for the new Campaign.
+          required: true
+          schema:
+            $ref: '#/definitions/IndividualRequest'
+      tags:
+        - Individual
+      responses:
+        '202':
+          description: Individual request accepted for creation.
+          schema:
+            $ref: '#/definitions/IndividualResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /household/v1/_create:
+    post:
+      summary: >-
+        Create/Add a new household
+      description: >-
+        Create a new household
+      parameters:
+        - name: Household
+          in: body
+          description: Capture details of Household.
+          required: true
+          schema:
+            $ref: '#/definitions/HouseholdRequest'
+      tags:
+        - Household
+      responses:
+        '202':
+          description:  Household request has been accepted for creation.
+          schema:
+            $ref: '#/definitions/HouseholdResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /household/v1/_update:
+    post:
+      summary: >-
+        Update the details of a existing household
+      description: >-
+        Update the details of a existing household
+      parameters:
+        - name: Household
+          in: body
+          description: Details for existing household.
+          required: true
+          schema:
+            $ref: '#/definitions/HouseholdRequest'
+      tags:
+        - Household
+      responses:
+        '202':
+          description: Household request accepted for creation.
+          schema:
+            $ref: '#/definitions/HouseholdResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+
+parameters:
+  tenantId:
+    name: tenantId
+    in: query
+    description: Unique id for a tenant.
+    required: true
+    type: string
+    format: varchar
+
+  lastChangedSince:
+    name: lastChangedSince
+    description: |
+      epoch of the time since when the changes on the object should be picked up. Search results from this parameter should include both newly created objects since this time as well as any modified objects since this time. This criterion is included to help polling clients to get the changes in system since a last time they synchronized with the platform.
+    in: query
+    required: false
+    type: integer
+    format: int64
+
+
+definitions:
+
+  IndividualId:
+    type: object
+    properties:
+      type:
+        type: string
+        example: 'SYSTEM_GENERATED'
+      idNumber:
+        type: string
+        example: 'ABCD-1212'
+
+  Individual:
+    type: object
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: true
+      clientReferenceId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique client generated GUID
+      name:
+        type: string
+      dateOfBirth:
+        type: string
+        example: 'YYYYMMDD'
+      mode:
+        type: string
+        example: 'CREATE'
+        enum:
+          - CREATE
+          - UPDATE
+          - DELETE
+      gender:
+        type: string
+        example: 'MALE'
+        enum:
+          - MALE
+          - FEMALE
+          - OTHERS
+      identifiers:
+        type: array
+        items:
+          $ref: '#/definitions/IndividualId'
+      additionalFields:
+        $ref: '#/definitions/additionalFields'
+
+  CampaignRegistration:
+    description: A representation of Beneficiary Registration to a Campaign.
+    type: object
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: true
+      clientReferenceId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique client generated GUID
+      tenantId:
+        type: string
+        example: 'tenantA'
+      campaignId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique ID from Campaign
+      beneficiaryId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique ID from corresponding beneficiary registry
+      dateOfRegistration:
+        type: integer
+        format: int64
+        example: 1663218161
+      additionalFields:
+        $ref: '#/definitions/additionalFields'
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+  
+  
+  
+
+  additionalFields:
+    type: object
+    properties:
+      schema:
+        type: string
+        example: 'HOUSEHOLD'
+      version:
+        type: integer
+        example: 2
+      fields:
+        type: array
+        items:
+          type: object
+          $ref: '#/definitions/Field'
+
+  Field:
+    type: object
+    properties:
+      key:
+        type: string
+        example: height
+      value:
+        type: string
+        example: 180
+
+  Resource:
+    type: object
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: true
+      tenantId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique tenant of the system
+        example: 'tenantA'
+
+      type:
+        type: string
+        description: Define the type of resource
+        example: Bednets|Tablet
+      name:
+        type: string
+        description: Capture name of the resource
+        example: Paracetamol
+      unit:
+        type: string
+        example: 'BALE'
+        enum:
+          - BALE
+          - CARTONS
+          - VIALS
+
+
+  Target:
+    type: object
+    properties:
+      beneficiaryType:
+        type: string
+        minLength: 2
+        maxLength: 64
+        example: 'ID-1'
+      totalNo:
+        type: integer
+      targetNo:
+        type: integer
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+  
+
+  DeliveryResource:
+    type: object
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: true
+      tenantId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique tenant of the system
+        example: 'tenantA'
+      resourceId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        example: 'ID-1'
+      reasonIfNotDelivered:
+        type: string
+      isDelivered:
+        type: boolean
+        example: true
+      quantity:
+        type: string
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+  
+
+  Address:
+    type: object
+    description: |
+      Representation of a address. Indiavidual APIs may choose to extend from this using allOf if more details needed to be added in their case.
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: true
+      tenantId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique tenant of the system
+        example: 'tenantA'
+      doorNo:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: House number or door number
+      latitude:
+        type: number
+        format: double
+        description: latitude of the address
+      longitude:
+        type: number
+        format: double
+        description: longitude of the address
+      type:
+        type: string
+        description: Type of address.
+        items:
+          type: string
+          enum:
+            - PERMANENT
+            - CORRESPONDENCE
+      addressLine1:
+        description: Apartment, Block, Street of the address
+        type: string
+        minLength: 2
+        maxLength: 256
+      addressLine2:
+        description: Locality, Area, Zone, Ward of the address
+        type: string
+        minLength: 2
+        maxLength: 256
+      landmark:
+        description: additional landmark to help locate the address
+        type: string
+        minLength: 2
+        maxLength: 256
+      city:
+        description: City of the address. Can be represented by the tenantid itself
+        type: string
+      pincode:
+        type: string
+        description: PIN code of the address. Indian pincodes will usually be all numbers.
+      buildingName:
+        type: string
+        description: Name of the building
+        maxLength: 64
+        minLength: 2
+      street:
+        type: string
+        description: Street Name
+        maxLength: 64
+        minLength: 2
+      locality:
+        $ref: 'https://raw.githubusercontent.com/egovernments/egov-services/master/docs/egov-location/contracts/v11-0-0.yml#/definitions/Boundary'
+
+  CampaignType:
+    description: This is the master data to capture the metadata of campaign
+    type: object
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: true
+      tenantId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique tenant of the system
+        example: 'tenantA'
+      name:
+        type: string
+        description: Name of campaign type
+        minLength: 2
+        maxLength: 64
+        example: 'LLIN'
+      code:
+        type: string
+        description: Unique code of campaign type
+        example: 'LLIN'
+        minLength: 2
+        maxLength: 64
+      boundaryHierarchyType:
+        type: string
+        description: Boundary hierarchy type (as defined in location service) followed for this campaign type
+        example: 'ADMINISTRATIVE'
+        minLength: 2
+        maxLength: 64
+      disease:
+        type: string
+        minLength: 2
+        maxLength: 64
+        example: 'MALARIA'
+      beneficiaryType:
+        type: string
+        description: beneficiary type
+        enum:
+          - HOUSEHOLD
+          - INDIVIDUAL
+          - STRUCTURE
+      eligibilityCriteria:
+        type: array
+        items:
+          type: string
+        maxItems: 10
+        description: Capture intructions for eligibility criteria
+        example: 'INSTRUCTIONS'
+      isRegistrationAndDeliveryCombined:
+        type: boolean
+        example: true
+      deliveryStrategy:
+        type: string
+        enum:
+          - FIXED
+          - MOBILE
+        example: 'FIXED'
+      deliveryProcedure:
+        type: array
+        items:
+          type: string
+        maxItems: 10
+        description: Capture instructions for delivery
+#      isRecurring: #Removing as recurring campaigns will be tracked as different campaigns of the same type
+#        type: boolean
+#        default: false
+      noOfRounds:
+        type: integer
+        default: 1
+        description: Number of times the intervention(s) need to be delivered to each beneficiary
+      durationBetweenRounds:
+        #TODO: Suggest to move out of scope since multi round is not required for v1 and we are not solving this fully as gap between all rounds does not need to be same. i.e. round1 to round2 - 4 days and round 2 to round 3 - 10 days
+        type: integer
+        default: 0
+        description: Time period (in days) between rounds
+      resources:
+        type: array
+        items:
+          $ref: '#/definitions/Resource'
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+
+  Campaign:
+    description: This object defines a campaign corresponding to a campaignType for a period
+    type: object
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: True
+      tenantId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique tenant of the system
+        example: 'tenantA'
+      campaignTypeID:
+        type: string
+        description: Unique id of campaign type master data
+        minLength: 2
+        maxLength: 64
+      startDate:
+        type: integer
+        format: int64
+        description: Campaign start date
+      endDate:
+        type: integer
+        format: int64
+        description: Campaign end date
+      targets:
+        type: array
+        items:
+          $ref: '#/definitions/Target'
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+
+  CampaignBoundary:
+    description: This object defines the mapping of a campaign to a geographical boundary against which planning and execution can occur.
+    type: object
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: True
+      tenantId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique tenant of the system
+        example: 'tenantA'
+      boundaryId:
+        type: string
+        description: Unique administrative locationid defined using location service in MDMS
+        minLength: 2
+        maxLength: 64
+      campaignId:
+        type: string
+        description: Campaign Id
+        minLength: 2
+        maxLength: 64
+      startDate:
+        type: integer
+        format: int64
+        description: Campaign start date in this boundary
+      endDate:
+        type: integer
+        format: int64
+        description: Campaign end date in this boundary
+      targets:
+        type: array
+        items:
+          $ref: '#/definitions/Target'
+
+  CampaignStaff:
+    description: This object defines the mapping of a system staff user to a campaign for a certain period.
+    type: object
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: True
+      tenantId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique tenant of the system
+        example: 'tenantA'
+      userId:
+        type: string
+        description: Unique userId defined using user service
+        minLength: 2
+        maxLength: 64
+      campaignId:
+        type: string
+        description: Campaign Id
+        minLength: 2
+        maxLength: 64
+      #TODO: What happens when this period falls outside the period for the campaign or the campaign boundary
+      #TODO: Could be multiple periods when the user needs to be active for a certain location
+      #TODO: User could have different active periods in different locations
+      startDate:
+        type: integer
+        format: int64
+        description: Start date of user operations against this campaign
+      endDate:
+        type: integer
+        format: int64
+        description: End date of user operations against this campaign
+
+  Delivery:
+    type: object
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: true
+      clientReferenceId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique client generated GUID
+      tenantId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique tenant of the system
+        example: 'tenantA'
+      campaignId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique campaignId
+      registrationId:
+        type: string
+        example: "R-ID-1"
+      resources:
+        type: array
+        items:
+          $ref: '#/definitions/DeliveryResource'
+      deliveredBy:
+        type: string
+        example: "UUID"
+
+      deliveryDate:
+        type: integer
+        format: int64
+        example: 1663218161
+      roundNo:
+        type: integer
+        description: Increse the count with each sucessfull delivery if it is multi round campaign
+        example: 1
+        default: 1
+      additionalFields:
+        $ref: '#/definitions/additionalFields'
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+      status:
+        type: string
+        example: 'DELIVERED'
+        enum:
+          - DELIVERED
+          - PARTIAL
+          - UNDELIVERED
+
+  Household:
+    description: A representation of Household.
+    type: object
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: true
+      clientReferenceId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique client generated GUID
+      tenantId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique tenant of the system
+        example: 'tenantA'
+      noOfIndividual:
+        type: integer
+        example: 4
+        description: total no of individuals in a house
+      address:
+        $ref: '#/definitions/Address'
+      individuals:
+        type: array
+        items:
+          $ref: '#/definitions/Individual'
+      additionalFields:
+        $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/additionalFields'
+      auditDetails:
+        $ref: 'https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails'
+
+  #########################################
+#TODO: Omit objects in API response to lower network utilisation?
+  CampaignRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      Campaign:
+        type: array
+        items:
+          $ref: '#/definitions/Campaign'
+    required:
+      - RequestInfo
+      - Campaign
+  CampaignResponse:
+    type: object
+    properties:
+      ResponseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
+      Campaign:
+        type: array
+        items:
+          $ref: '#/definitions/Campaign'
+    required:
+      - ResponseInfo
+      - Campaign
+
+  IndividualRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      Individual:
+        type: array
+        items:
+          $ref: '#/definitions/Individual'
+    required:
+      - RequestInfo
+      - Individual
+  IndividualResponse:
+    type: object
+    properties:
+      ResponseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
+      Individual:
+        type: array
+        items:
+          $ref: '#/definitions/Individual'
+    required:
+      - ResponseInfo
+      - Individual
+
+  HouseholdRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      Household:
+        type: array
+        items:
+          $ref: '#/definitions/Household'
+    required:
+      - RequestInfo
+      - Household
+  HouseholdResponse:
+    type: object
+    properties:
+      ResponseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
+      Household:
+        type: array
+        items:
+          $ref: '#/definitions/Household'
+    required:
+      - ResponseInfo
+      - Household
+  CampaignBoundaryRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      CampaignBoundary:
+        type: array
+        items:
+          $ref: '#/definitions/CampaignBoundary'
+    required:
+      - RequestInfo
+      - CampaignBoundary
+  CampaignBoundaryResponse:
+    type: object
+    properties:
+      ResponseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
+      CampaignBoundary:
+        type: array
+        items:
+          $ref: '#/definitions/CampaignBoundary'
+    required:
+      - ResponseInfo
+      - CampaignBoundary
+  CampaignStaffRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      CampaignStaff:
+        type: array
+        items:
+          $ref: '#/definitions/CampaignStaff'
+    required:
+      - RequestInfo
+      - CampaignStaff
+  CampaignStaffResponse:
+    type: object
+    properties:
+      ResponseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
+      CampaignStaff:
+        type: array
+        items:
+          $ref: '#/definitions/CampaignStaff'
+    required:
+      - ResponseInfo
+      - CampaignStaff
+  CampaignRegistrationRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      CampaignRegistration:
+        type: array
+        items:
+          $ref: '#/definitions/CampaignRegistration'
+    required:
+      - RequestInfo
+      - CampaignRegistration
+  CampaignRegistrationResponse:
+    type: object
+    properties:
+      ResponseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
+      Household:
+        type: array
+        items:
+          $ref: '#/definitions/CampaignRegistration'
+    required:
+      - ResponseInfo
+      - CampaignRegistration
+
+  DeliveryRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      Delivery:
+        type: array
+        items:
+          $ref: '#/definitions/Delivery'
+    required:
+      - RequestInfo
+      - Delivery
+  DeliveryResponse:
+    type: object
+    properties:
+      ResponseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
+      Delivery:
+        type: array
+        items:
+          $ref: '#/definitions/Delivery'
+    required:
+      - ResponseInfo
+      - Delivery
+
+
+
+
+
+
+
+  #########################################
+
+
+
