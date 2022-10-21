@@ -128,6 +128,11 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/CampaignRegistrationRequest'
+        - name: echoEntityInResponse
+          in: query
+          type: boolean
+          required: false
+          default: true
       tags:
         - Campaign
       responses:
@@ -154,6 +159,11 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/DeliveryRequest'
+        - name: echoEntityInResponse
+          in: query
+          type: boolean
+          required: false
+          default: true
       tags:
         - Campaign
       responses:
@@ -180,6 +190,11 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/IndividualRequest'
+        - name: echoEntityInResponse
+          in: query
+          type: boolean
+          required: false
+          default: true
       tags:
         - Individual
       responses:
@@ -205,6 +220,11 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/IndividualRequest'
+        - name: echoEntityInResponse
+          in: query
+          type: boolean
+          required: false
+          default: true
       tags:
         - Individual
       responses:
@@ -231,6 +251,11 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/HouseholdRequest'
+        - name: echoEntityInResponse
+          in: query
+          type: boolean
+          required: false
+          default: true
       tags:
         - Household
       responses:
@@ -329,7 +354,8 @@ definitions:
           - CREATE
           - UPDATE
           - DELETE
-      #TODO: Don't we also need address at individual level? System can't assume households are always created. If not entire address, we will need to have lat long at least
+      address:
+        $ref: '#/definitions/Address'
       gender:
         type: string
         example: 'MALE'
@@ -341,7 +367,6 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/IndividualId'
-      #TODO: Add reference to location hierarchy type and location id here?
       additionalFields:
         $ref: '#/definitions/additionalFields'
 
@@ -421,10 +446,7 @@ definitions:
         maxLength: 64
       auditDetails:
         $ref: >-
-          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
-  
-  
-  
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails  
 
   additionalFields:
     type: object
@@ -466,7 +488,6 @@ definitions:
         maxLength: 64
         description: Unique tenant of the system
         example: 'tenantA'
-
       type:
         type: string
         description: Define the type of resource
@@ -521,6 +542,11 @@ definitions:
         minLength: 2
         maxLength: 64
         example: 'ID-1'
+      roundNo:
+        type: integer
+        description: Round number for which the resource is being delivered
+        example: 1
+        default: 1
       reasonIfNotDelivered:
         type: string
       isDelivered:
@@ -675,18 +701,14 @@ definitions:
           type: string
         maxItems: 10
         description: Capture instructions for delivery
-#      isRecurring: #Removing as recurring campaigns will be tracked as different campaigns of the same type
-#        type: boolean
-#        default: false
       noOfRounds:
         type: integer
         default: 1
         description: Number of times the intervention(s) need to be delivered to each beneficiary
-      durationBetweenRounds:
-        #TODO: Suggest to move out of scope since multi round is not required for v1 and we are not solving this fully as gap between all rounds does not need to be same. i.e. round1 to round2 - 4 days and round 2 to round 3 - 10 days
-        type: integer
-        default: 0
-        description: Time period (in days) between rounds
+      rounds:
+        type: array
+        items:
+          $ref: '#/definitions/CampaignRound'
       resources:
         type: array
         items:
@@ -698,6 +720,31 @@ definitions:
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+
+  CampaignRound:
+    description: Defines the resources to be delivered in each round and gap to previous round
+    type: object
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: True
+      tenantId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique tenant of the system
+        example: 'tenantA'
+      gapToPreviousRound:
+        type: integer
+        default: 0
+        description: Time period (in days) to the previous round
+      resources:
+        type: object
+        items:
+          $ref: '#/definitions/Resource'
 
   Campaign:
     description: This object defines a campaign corresponding to a campaignType for a period
@@ -893,12 +940,6 @@ definitions:
         type: integer
         format: int64
         example: 1663218161
-      roundNo:
-      #TODO TBD if this belongs in DeliveryResource or here
-        type: integer
-        description: Increase the count with each successful delivery if it is multi round campaign
-        example: 1
-        default: 1
       additionalFields:
         $ref: '#/definitions/additionalFields'
       channel:
@@ -970,7 +1011,6 @@ definitions:
           $ref: '#/definitions/Individual'
     required:
       - ResponseInfo
-      - Individual
 
   HouseholdRequest:
     type: object
@@ -997,7 +1037,7 @@ definitions:
           $ref: '#/definitions/Household'
     required:
       - ResponseInfo
-      - Household
+
   CampaignBoundaryRequest:
     type: object
     properties:
@@ -1011,6 +1051,7 @@ definitions:
     required:
       - RequestInfo
       - CampaignBoundary
+
   CampaignBoundaryResponse:
     type: object
     properties:
@@ -1024,6 +1065,7 @@ definitions:
     required:
       - ResponseInfo
       - CampaignBoundary
+
   CampaignStaffRequest:
     type: object
     properties:
@@ -1037,6 +1079,7 @@ definitions:
     required:
       - RequestInfo
       - CampaignStaff
+
   CampaignStaffResponse:
     type: object
     properties:
@@ -1050,6 +1093,7 @@ definitions:
     required:
       - ResponseInfo
       - CampaignStaff
+
   CampaignRegistrationRequest:
     type: object
     properties:
@@ -1075,7 +1119,6 @@ definitions:
           $ref: '#/definitions/CampaignRegistration'
     required:
       - ResponseInfo
-      - CampaignRegistration
 
   DeliveryRequest:
     type: object
@@ -1102,8 +1145,6 @@ definitions:
           $ref: '#/definitions/Delivery'
     required:
       - ResponseInfo
-      - Delivery
-
 
 
 
