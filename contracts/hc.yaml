@@ -150,7 +150,7 @@ paths:
       parameters:
         - name: Delivery
           in: body
-          description: Capture delivery details of resource to beneficiary for a campaign
+          description: Capture delivery details of resource(s) to beneficiary for a campaign
           required: true
           schema:
             $ref: '#/definitions/DeliveryRequest'
@@ -639,8 +639,9 @@ definitions:
         example: 'ADMINISTRATIVE'
         minLength: 2
         maxLength: 64
-      disease:
+      purpose:
         type: string
+        description: Purpose for which the campaign is being run
         minLength: 2
         maxLength: 64
         example: 'MALARIA'
@@ -664,9 +665,10 @@ definitions:
       deliveryStrategy:
         type: string
         enum:
-          - FIXED
-          - MOBILE
-        example: 'FIXED'
+          - CAMP
+          - DOOR_TO_DOOR
+          - BENEFICIARY_APPOINTMENT
+        example: 'DOOR_TO_DOOR'
       deliveryProcedure:
         type: array
         items:
@@ -726,10 +728,17 @@ definitions:
         type: integer
         format: int64
         description: Campaign end date
-      targets:
-        type: array
-        items:
-          $ref: '#/definitions/Target'
+      status:
+        type: string
+        description: Overall status of the campaign
+        enum:
+          - INITIATED
+          - PLANNED
+          - STARTED
+          - PAUSED
+          - CANCELLED
+          - COMPLETED
+        example: 'PLANNED'
       channel:
         type: string
         minLength: 2
@@ -764,6 +773,16 @@ definitions:
         description: Campaign Id
         minLength: 2
         maxLength: 64
+      status:
+        type: string
+        description: Status of the campaign for this boundary
+        enum:
+          - INITIATED
+          - PLANNED
+          - STARTED
+          - PAUSED
+          - CANCELLED
+          - COMPLETED
       startDate:
         type: integer
         format: int64
@@ -843,6 +862,11 @@ definitions:
         minLength: 2
         maxLength: 64
         description: Unique client generated GUID
+      registrationClientReferenceId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique client generated GUID for the registration
       tenantId:
         type: string
         minLength: 2
@@ -870,8 +894,9 @@ definitions:
         format: int64
         example: 1663218161
       roundNo:
+      #TODO TBD if this belongs in DeliveryResource or here
         type: integer
-        description: Increse the count with each sucessfull delivery if it is multi round campaign
+        description: Increase the count with each successful delivery if it is multi round campaign
         example: 1
         default: 1
       additionalFields:
