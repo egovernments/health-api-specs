@@ -92,9 +92,9 @@ paths:
   /campaign/staff/v1/_create:
     post:
       summary: >-
-        Link Staff users to Campaign
+        Link Staff users to Campaign for a certain time period
       description: >-
-        Link Staff users to Campaign
+        Link Staff users to Campaign for a certain time period
       parameters:
         - name: CampaignStaff
           in: body
@@ -329,6 +329,7 @@ definitions:
           - CREATE
           - UPDATE
           - DELETE
+      #TODO: Don't we also need address at individual level? System can't assume households are always created. If not entire address, we will need to have lat long at least
       gender:
         type: string
         example: 'MALE'
