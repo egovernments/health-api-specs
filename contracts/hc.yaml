@@ -294,6 +294,61 @@ paths:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
 
+  /facility/v1/_create:
+    post:
+      summary: >-
+        Create/Add a new facility
+      description: >-
+        Create a new facility
+      parameters:
+        - name: Facility
+          in: body
+          description: Capture details of Facility.
+          required: true
+          schema:
+            $ref: '#/definitions/FacilityRequest'
+        - name: echoEntityInResponse
+          in: query
+          type: boolean
+          required: false
+          default: true
+      tags:
+        - Facility
+      responses:
+        '202':
+          description:  Facility request has been accepted for creation.
+          schema:
+            $ref: '#/definitions/FacilityResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /facility/v1/_update:
+    post:
+      summary: >-
+        Update the details of a existing facility
+      description: >-
+        Update the details of a existing facility
+      parameters:
+        - name: Facility
+          in: body
+          description: Details for existing facility.
+          required: true
+          schema:
+            $ref: '#/definitions/FacilityRequest'
+      tags:
+        - Facility
+      responses:
+        '202':
+          description: Facility request accepted for creation.
+          schema:
+            $ref: '#/definitions/FacilityResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
 
 parameters:
   tenantId:
@@ -628,7 +683,7 @@ definitions:
         description: Street Name
         maxLength: 64
         minLength: 2
-      locality:
+      locality: #TODO does this need to be an array since an entity could be associated with different hierarchies
         $ref: 'https://raw.githubusercontent.com/egovernments/egov-services/master/docs/egov-location/contracts/v11-0-0.yml#/definitions/Boundary'
 
   CampaignType:
@@ -935,7 +990,6 @@ definitions:
       deliveredBy:
         type: string
         example: "UUID"
-
       deliveryDate:
         type: integer
         format: int64
@@ -957,8 +1011,37 @@ definitions:
           - PARTIAL
           - UNDELIVERED
 
+  Facility:
+    type: object
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: true
+      isPermanent:
+        type: boolean
+        default: true
+      usage:
+        type: string
+        example: 'STORAGE_WAREHOUSE'
+        enum:
+          - STORAGE_WAREHOUSE
+          - MEDICAL_FACILITY
+          - SEWAGE_TREATMENT_PLANT
+      storageCapacity:
+        type: integer
+        description: Physical storage capacity of the facility in cubic meters
+      address:
+        $ref: '#/definitions/Address'
+      additionalFields:
+        $ref: '#/definitions/additionalFields'
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+
   #########################################
-#TODO: Omit objects in API response to lower network utilisation?
   CampaignRequest:
     type: object
     properties:
@@ -1035,6 +1118,32 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Household'
+    required:
+      - ResponseInfo
+
+  FacilityRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      Facility:
+        type: array
+        items:
+          $ref: '#/definitions/Facility'
+    required:
+      - RequestInfo
+      - Facility
+  FacilityResponse:
+    type: object
+    properties:
+      ResponseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
+      Facility:
+        type: array
+        items:
+          $ref: '#/definitions/Facility'
     required:
       - ResponseInfo
 
