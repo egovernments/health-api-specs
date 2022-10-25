@@ -115,6 +115,32 @@ paths:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
 
+  /campaign/facility/v1/_create:
+    post:
+      summary: >-
+        Link Facilities to Campaign
+      description: >-
+        Link Facilities to Campaign
+      parameters:
+        - name: CampaignFacility
+          in: body
+          description: Capture linkage of Campaign and facility.
+          required: true
+          schema:
+            $ref: '#/definitions/CampaignFacilityRequest'
+      tags:
+        - Campaign
+      responses:
+        '202':
+          description:  Campaign Staff request has been accepted for creation.
+          schema:
+            $ref: '#/definitions/CampaignStaffResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
   /campaign/registration/v1/_create:
     post:
       summary: >-
@@ -171,6 +197,32 @@ paths:
           description:  Delivery request has been accepted for creation.
           schema:
             $ref: '#/definitions/DeliveryResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /campaign/supervision/log/v1/_create:
+    post:
+      summary: >-
+        Log a supervision activity performed against a campaign
+      description: >-
+        Log a supervision activity performed against a campaign
+      parameters:
+        - name: CampaignSupervisionLog
+          in: body
+          description: Capture campaign supervision log.
+          required: true
+          schema:
+            $ref: '#/definitions/CampaignSupervisionLogRequest'
+      tags:
+        - Campaign
+      responses:
+        '202':
+          description:  Campaign Supervision Log has been accepted for creation.
+          schema:
+            $ref: '#/definitions/CampaignSupervisionLogResponse'
         '400':
           description: Invalid Input body.
           schema:
@@ -950,6 +1002,36 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
+  CampaignFacility:
+    description: This object defines the mapping of a facility to a campaign.
+    type: object
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: True
+      tenantId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique tenant of the system
+        example: 'tenantA'
+      facilityId:
+        type: string
+        description: Unique facilityId defined using facility service
+        minLength: 2
+        maxLength: 64
+      campaignId:
+        type: string
+        description: Campaign Id
+        minLength: 2
+        maxLength: 64
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+
   Delivery:
     type: object
     properties:
@@ -1040,6 +1122,36 @@ definitions:
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+
+  CampaignSupervisionLog:
+    type: object
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: true
+      clientReferenceId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique client generated GUID
+      campaignId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique ID from Campaign
+      address:
+        $ref: '#/definitions/Address'
+      additionalFields:
+        $ref: '#/definitions/additionalFields'
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+
+
+
 
   #########################################
   CampaignRequest:
@@ -1188,7 +1300,6 @@ definitions:
     required:
       - RequestInfo
       - CampaignStaff
-
   CampaignStaffResponse:
     type: object
     properties:
@@ -1202,6 +1313,33 @@ definitions:
     required:
       - ResponseInfo
       - CampaignStaff
+
+  CampaignFacilityRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      CampaignFacility:
+        type: array
+        items:
+          $ref: '#/definitions/CampaignFacility'
+    required:
+      - RequestInfo
+      - CampaignFacility
+  CampaignFacilityResponse:
+    type: object
+    properties:
+      ResponseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
+      CampaignFacility:
+        type: array
+        items:
+          $ref: '#/definitions/CampaignFacility'
+    required:
+      - ResponseInfo
+      - CampaignFacility
 
   CampaignRegistrationRequest:
     type: object
@@ -1255,7 +1393,32 @@ definitions:
     required:
       - ResponseInfo
 
+  CampaignSupervisionLogRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      CampaignSupervisionLog:
+        type: array
+        items:
+          $ref: '#/definitions/CampaignSupervisionLog'
+    required:
+      - RequestInfo
+      - CampaignSupervisionLog
 
+  CampaignSupervisionLogResponse:
+    type: object
+    properties:
+      ResponseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
+      CampaignSupervisionLog:
+        type: array
+        items:
+          $ref: '#/definitions/CampaignSupervisionLog'
+    required:
+      - ResponseInfo
 
 
 
