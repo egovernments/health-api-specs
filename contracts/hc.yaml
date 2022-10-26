@@ -1150,8 +1150,161 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
+  Inventory: #TODO Replace Resource with Inventory
+    type: object
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: true
+      tenantId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique tenant of the system
+        example: 'tenantA'
+      type:
+        type: string
+        description: Define the type of inventory
+        example: 'DRUG'
+        enum:
+          - MEDICINE
+          - VACCINE
+          - SPRAY
+          - BEDNET
+          - EDUCATIONAL_MATERIAL
+      name:
+        type: string
+        description: Capture name of the resource
+        example: Paracetamol
+      manufacturer:
+        type: string
+        description: Capture manufacturer of inventory item
+        example: 'J&J'
+      #TODO: store base unit here and add multiplier to SKU?
+      additionalFields:
+        $ref: '#/definitions/additionalFields'
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
+  SKU:
+    type: object
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: true
+      tenantId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique tenant of the system
+        example: 'tenantA'
+      inventoryId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Inventory item for which this SKU is being created
+      name:
+        type: string
+        description: Capture name of the SKU
+        example: Paracetamol 200mg
+      variant:
+        type: string
+        description: Capture SKU variant
+        example: '200'
+      variantUnit:
+        type: string
+        example: 'MG'
+        enum:
+          - BALE
+          - CARTONS
+          - VIALS
+          - MG
+          - ML
+      additionalFields:
+        $ref: '#/definitions/additionalFields'
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
+  InventorySKUTransferLog:
+    type: object
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: true
+      clientReferenceId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique client generated GUID
+      tenantId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique tenant of the system
+        example: 'tenantA'
+      facilityId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Id of the facility where quantities of the SKU is being transferred
+        example: 'tenantA'
+      skuId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: SKU that is being transferred
+      referenceId:
+        type: string
+        example: "C-1"
+        description: Reference entity for which the inventory is being transferred
+      referenceIdType:
+        type: string
+        example: "CAMPAIGN"
+        minLength: 2
+        maxLength: 64
+        description: Type of entity type that referenceId refers to
+      transactionType:
+        type: string
+        minLength: 2
+        maxLength: 64
+        enum:
+          - RECEIVED
+          - DISPATCHED
+      transactionReason:
+        type: string
+        minLength: 2
+        maxLength: 64
+        enum:
+          - RECEIVED
+          - RETURNED
+          - LOSS
+      transactingPartyId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Id of the party from/to which the SKU is being transferred
+      transactingPartyType:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Type of entity that transactingPartyId refers to
+        example: 'WAREHOUSE'
+      additionalFields:
+        $ref: '#/definitions/additionalFields'
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
   #########################################
   CampaignRequest:
