@@ -402,6 +402,84 @@ paths:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
 
+  /inventory/v1/_create:
+    post:
+      summary: >-
+        Create/Add a new inventory item
+      description: >-
+        Create a new inventory item
+      parameters:
+        - name: Inventory
+          in: body
+          description: Capture details of Inventory.
+          required: true
+          schema:
+            $ref: '#/definitions/InventoryRequest'
+      tags:
+        - Inventory
+      responses:
+        '202':
+          description:  Inventory request has been accepted for creation.
+          schema:
+            $ref: '#/definitions/InventoryResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /inventory/sku/v1/_create:
+    post:
+      summary: >-
+        Create/Add a new SKU for an inventory item
+      description: >-
+        Create a new SKU for an inventory item
+      parameters:
+        - name: InventorySKU
+          in: body
+          description: Capture details of Inventory SKU.
+          required: true
+          schema:
+            $ref: '#/definitions/InventorySKURequest'
+      tags:
+        - Inventory
+      responses:
+        '202':
+          description:  Inventory SKU request has been accepted for creation.
+          schema:
+            $ref: '#/definitions/InventorySKUResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /inventory/sku/transfer/v1/_create:
+    post:
+      summary: >-
+        Create/Add a new record for transfer of an SKU
+      description: >-
+        Create a new log record for transfer of an SKU
+      parameters:
+        - name: InventorySKUTransferLog
+          in: body
+          description: Capture details of Inventory SKU transfer.
+          required: true
+          schema:
+            $ref: '#/definitions/InventorySKUTransferLogRequest'
+      tags:
+        - Inventory
+      responses:
+        '202':
+          description:  Inventory SKU transfer log request has been accepted for creation.
+          schema:
+            $ref: '#/definitions/InventorySKUTransferLogResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
 parameters:
   tenantId:
     name: tenantId
@@ -1573,9 +1651,89 @@ definitions:
     required:
       - ResponseInfo
 
+  InventoryRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      Inventory:
+        type: array
+        items:
+          $ref: '#/definitions/Inventory'
+    required:
+      - RequestInfo
+      - Inventory
 
+  InventoryResponse:
+    type: object
+    properties:
+      ResponseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
+      Inventory:
+        type: array
+        items:
+          $ref: '#/definitions/Inventory'
+    required:
+      - ResponseInfo
+      - Inventory
 
+  InventorySKURequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      InventorySKU:
+        type: array
+        items:
+          $ref: '#/definitions/SKU'
+    required:
+      - RequestInfo
+      - InventorySKU
 
+  InventorySKUResponse:
+    type: object
+    properties:
+      ResponseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
+      InventorySKU:
+        type: array
+        items:
+          $ref: '#/definitions/SKU'
+    required:
+      - ResponseInfo
+      - InventorySKU
+
+  InventorySKUTransferLogRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      InventorySKUTransferLog:
+        type: array
+        items:
+          $ref: '#/definitions/InventorySKUTransferLog'
+    required:
+      - RequestInfo
+      - InventorySKUTransferLog
+
+  InventorySKUTransferLogResponse:
+    type: object
+    properties:
+      ResponseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
+      InventorySKUTransferLog:
+        type: array
+        items:
+          $ref: '#/definitions/InventorySKUTransferLog'
+    required:
+      - ResponseInfo
+      - InventorySKUTransferLog
   #########################################
 
 
