@@ -1210,13 +1210,11 @@ definitions:
         minLength: 2
         maxLength: 64
         description: Unique client generated GUID
-      campaignId:
+      campaignBoundaryId:
         type: string
         minLength: 2
         maxLength: 64
-        description: Unique ID from Campaign
-      address:
-        $ref: '#/definitions/Address'
+        description: Unique ID from Campaign Boundary
       additionalFields:
         $ref: '#/definitions/additionalFields'
       auditDetails:
