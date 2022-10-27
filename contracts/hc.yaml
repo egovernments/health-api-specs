@@ -609,11 +609,11 @@ definitions:
       tenantId:
         type: string
         example: 'tenantA'
-      campaignId:
+      campaignBoundaryId:
         type: string
         minLength: 2
         maxLength: 64
-        description: Unique ID from Campaign
+        description: Unique ID from Campaign Boundary
       beneficiaryId:
         type: string
         minLength: 2
@@ -1135,11 +1135,6 @@ definitions:
         maxLength: 64
         description: Unique tenant of the system
         example: 'tenantA'
-      campaignId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique campaignId
       registrationId:
         type: string
         example: "R-ID-1"
