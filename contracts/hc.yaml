@@ -28,7 +28,7 @@ paths:
         - Campaign
       responses:
         '202':
-          description: Employee request accepted for creation.
+          description: Employee request accepted.
           schema:
             $ref: '#/definitions/CampaignResponse'
         '400':
@@ -54,7 +54,7 @@ paths:
         - Campaign
       responses:
         '202':
-          description: Employee request accepted for creation.
+          description: Campaign request accepted for update.
           schema:
             $ref: '#/definitions/CampaignResponse'
         '400':
@@ -80,7 +80,7 @@ paths:
         - Campaign
       responses:
         '202':
-          description:  Campaign Boundary request has been accepted for creation.
+          description:  Campaign Boundary request has been accepted.
           schema:
             $ref: '#/definitions/CampaignBoundaryResponse'
         '400':
@@ -88,7 +88,31 @@ paths:
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
-
+  /campaign/boundary/v1/_update:
+    post:
+      summary: >-
+        Link Boundary to Campaign
+      description: >-
+        Link Boundary to Campaign
+      parameters:
+        - name: CampaignBoundary
+          in: body
+          description: Capture linkage of Campaign and boundary.
+          required: true
+          schema:
+            $ref: '#/definitions/CampaignBoundaryRequest'
+      tags:
+        - Campaign
+      responses:
+        '202':
+          description:  Campaign Boundary request has been accepted for updation.
+          schema:
+            $ref: '#/definitions/CampaignBoundaryResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
   /campaign/staff/v1/_create:
     post:
       summary: >-
@@ -106,7 +130,7 @@ paths:
         - Campaign
       responses:
         '202':
-          description:  Campaign Staff request has been accepted for creation.
+          description:  Campaign Staff request has been accepted.
           schema:
             $ref: '#/definitions/CampaignStaffResponse'
         '400':
@@ -114,7 +138,31 @@ paths:
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
-
+  /campaign/staff/v1/_update:
+    post:
+      summary: >-
+        Update Campaign Staff users
+      description: >-
+        Update Campaign Staff users
+      parameters:
+        - name: CampaignStaff
+          in: body
+          description: Capture linkage of Campaign and staff user.
+          required: true
+          schema:
+            $ref: '#/definitions/CampaignStaffRequest'
+      tags:
+        - Campaign
+      responses:
+        '202':
+          description:  Campaign Staff request has been accepted for updation.
+          schema:
+            $ref: '#/definitions/CampaignStaffResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
   /campaign/facility/v1/_create:
     post:
       summary: >-
@@ -132,7 +180,7 @@ paths:
         - Campaign
       responses:
         '202':
-          description:  Campaign Staff request has been accepted for creation.
+          description:  Campaign Staff request has been accepted.
           schema:
             $ref: '#/definitions/CampaignStaffResponse'
         '400':
@@ -140,8 +188,32 @@ paths:
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
-
-  /campaign/registration/v1/_create:
+  /campaign/facility/v1/_update:
+    post:
+      summary: >-
+        Update Campaign Facilities
+      description: >-
+        Update Campaign Facilities
+      parameters:
+        - name: CampaignFacility
+          in: body
+          description: Capture linkage of Campaign and facility.
+          required: true
+          schema:
+            $ref: '#/definitions/CampaignFacilityRequest'
+      tags:
+        - Campaign
+      responses:
+        '202':
+          description:  Campaign Facility request has been accepted
+          schema:
+            $ref: '#/definitions/CampaignStaffResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /campaign/beneficiary/v1/_create:
     post:
       summary: >-
         Register for Campaign
@@ -163,7 +235,7 @@ paths:
         - Campaign
       responses:
         '202':
-          description:  Campaign Registration request has been accepted for creation.
+          description:  Campaign Registration request has been accepted.
           schema:
             $ref: '#/definitions/CampaignRegistrationResponse'
         '400':
@@ -171,7 +243,36 @@ paths:
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
-
+  /campaign/beneficiary/v1/_update:
+    post:
+      summary: >-
+        Update beneficiary registration for Campaign
+      description: >-
+        Update beneficiary registration for Campaign
+      parameters:
+        - name: CampaignRegistration
+          in: body
+          description: Campaign Beneficiary Registration.
+          required: true
+          schema:
+            $ref: '#/definitions/CampaignRegistrationRequest'
+        - name: echoEntityInResponse
+          in: query
+          type: boolean
+          required: false
+          default: true
+      tags:
+        - Campaign
+      responses:
+        '202':
+          description:  Campaign Beneficary request has been accepted.
+          schema:
+            $ref: '#/definitions/CampaignRegistrationResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
   /campaign/delivery/v1/_create:
     post:
       summary: >-
@@ -194,7 +295,37 @@ paths:
         - Campaign
       responses:
         '202':
-          description:  Delivery request has been accepted for creation.
+          description:  Delivery request has been accepted.
+          schema:
+            $ref: '#/definitions/DeliveryResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /campaign/delivery/v1/_update:
+    post:
+      summary: >-
+        Delivery Request
+      description: >-
+        Delivery Request
+      parameters:
+        - name: Delivery
+          in: body
+          description: Capture delivery details of resource(s) to beneficiary for a campaign
+          required: true
+          schema:
+            $ref: '#/definitions/DeliveryRequest'
+        - name: echoEntityInResponse
+          in: query
+          type: boolean
+          required: false
+          default: true
+      tags:
+        - Campaign
+      responses:
+        '202':
+          description:  Delivery request has been accepted.
           schema:
             $ref: '#/definitions/DeliveryResponse'
         '400':
@@ -203,26 +334,26 @@ paths:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
 
-  /campaign/supervision/log/v1/_create:
+  /campaign/supervision/v1/_create:
     post:
       summary: >-
-        Log a supervision activity performed against a campaign
+        Record a supervision activity performed against a campaign
       description: >-
-        Log a supervision activity performed against a campaign
+        Record a supervision activity performed against a campaign
       parameters:
-        - name: CampaignSupervisionLog
+        - name: CampaignSupervision
           in: body
-          description: Capture campaign supervision log.
+          description: Capture campaign supervision.
           required: true
           schema:
-            $ref: '#/definitions/CampaignSupervisionLogRequest'
+            $ref: '#/definitions/CampaignSupervisionRequest'
       tags:
         - Campaign
       responses:
         '202':
-          description:  Campaign Supervision Log has been accepted for creation.
+          description:  Campaign Supervision has been accepted.
           schema:
-            $ref: '#/definitions/CampaignSupervisionLogResponse'
+            $ref: '#/definitions/CampaignSupervisionResponse'
         '400':
           description: Invalid Input body.
           schema:
@@ -251,7 +382,7 @@ paths:
         - Individual
       responses:
         '202':
-          description:  Individual request has been accepted for creation.
+          description:  Individual request has been accepted.
           schema:
             $ref: '#/definitions/IndividualResponse'
         '400':
@@ -281,7 +412,7 @@ paths:
         - Individual
       responses:
         '202':
-          description: Individual request accepted for creation.
+          description: Individual request accepted.
           schema:
             $ref: '#/definitions/IndividualResponse'
         '400':
@@ -312,7 +443,7 @@ paths:
         - Household
       responses:
         '202':
-          description:  Household request has been accepted for creation.
+          description:  Household request has been accepted.
           schema:
             $ref: '#/definitions/HouseholdResponse'
         '400':
@@ -337,7 +468,7 @@ paths:
         - Household
       responses:
         '202':
-          description: Household request accepted for creation.
+          description: Household request accepted.
           schema:
             $ref: '#/definitions/HouseholdResponse'
         '400':
@@ -368,7 +499,7 @@ paths:
         - Facility
       responses:
         '202':
-          description:  Facility request has been accepted for creation.
+          description:  Facility request has been accepted.
           schema:
             $ref: '#/definitions/FacilityResponse'
         '400':
@@ -393,7 +524,7 @@ paths:
         - Facility
       responses:
         '202':
-          description: Facility request accepted for creation.
+          description: Facility request accepted.
           schema:
             $ref: '#/definitions/FacilityResponse'
         '400':
@@ -419,7 +550,7 @@ paths:
         - Inventory
       responses:
         '202':
-          description:  Inventory request has been accepted for creation.
+          description:  Inventory request has been accepted.
           schema:
             $ref: '#/definitions/InventoryResponse'
         '400':
@@ -427,7 +558,31 @@ paths:
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
-
+  /inventory/v1/_update:
+    post:
+      summary: >-
+        Update inventory item
+      description: >-
+        Update inventory item
+      parameters:
+        - name: Inventory
+          in: body
+          description: Capture details of Inventory.
+          required: true
+          schema:
+            $ref: '#/definitions/InventoryRequest'
+      tags:
+        - Inventory
+      responses:
+        '202':
+          description:  Inventory request has been accepted.
+          schema:
+            $ref: '#/definitions/InventoryResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
   /inventory/sku/v1/_create:
     post:
       summary: >-
@@ -445,7 +600,7 @@ paths:
         - Inventory
       responses:
         '202':
-          description:  Inventory SKU request has been accepted for creation.
+          description:  Inventory SKU request has been accepted.
           schema:
             $ref: '#/definitions/InventorySKUResponse'
         '400':
@@ -453,33 +608,81 @@ paths:
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
-
-  /inventory/sku/transfer/v1/_create:
+  /inventory/sku/v1/_update:
     post:
       summary: >-
-        Create/Add a new record for transfer of an SKU
+        Update inventory SKU item
       description: >-
-        Create a new log record for transfer of an SKU
+        Update inventory SKU item
       parameters:
-        - name: InventorySKUTransferLog
+        - name: InventorySKU
           in: body
-          description: Capture details of Inventory SKU transfer.
+          description: Capture details of Inventory SKU.
           required: true
           schema:
-            $ref: '#/definitions/InventorySKUTransferLogRequest'
+            $ref: '#/definitions/InventorySKURequest'
       tags:
         - Inventory
       responses:
         '202':
-          description:  Inventory SKU transfer log request has been accepted for creation.
+          description:  Inventory SKU request has been accepted.
           schema:
-            $ref: '#/definitions/InventorySKUTransferLogResponse'
+            $ref: '#/definitions/InventorySKUResponse'
         '400':
           description: Invalid Input body.
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
-
+  /inventory/sku/transfer/v1/_create:
+    post:
+      summary: >-
+        Create/Add a new record for transfer of an SKU
+      description: >-
+        Create a new record for transfer of an SKU
+      parameters:
+        - name: InventorySKUTransfer
+          in: body
+          description: Capture details of Inventory SKU transfer.
+          required: true
+          schema:
+            $ref: '#/definitions/InventorySKUTransferRequest'
+      tags:
+        - Inventory
+      responses:
+        '202':
+          description:  Inventory SKU transfer request has been accepted.
+          schema:
+            $ref: '#/definitions/InventorySKUTransferResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /inventory/sku/transfer/v1/_update:
+    post:
+      summary: >-
+        Update record for transfer of an SKU
+      description: >-
+        Update record for transfer of an SKU
+      parameters:
+        - name: InventorySKUTransfer
+          in: body
+          description: Capture details of Inventory SKU transfer.
+          required: true
+          schema:
+            $ref: '#/definitions/InventorySKUTransferRequest'
+      tags:
+        - Inventory
+      responses:
+        '202':
+          description:  Inventory SKU transfer request has been accepted.
+          schema:
+            $ref: '#/definitions/InventorySKUTransferResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
 parameters:
   tenantId:
     name: tenantId
@@ -532,13 +735,6 @@ definitions:
       dateOfBirth:
         type: string
         example: 'YYYYMMDD'
-      mode:
-        type: string
-        example: 'CREATE'
-        enum:
-          - CREATE
-          - UPDATE
-          - DELETE
       address:
         $ref: '#/definitions/Address'
       gender:
@@ -647,7 +843,14 @@ definitions:
         items:
           type: object
           $ref: '#/definitions/Field'
-
+  apiOperation:
+    type: string
+    description: Specify the type of operation being performed i.e. CREATE, UPDATE or DELETE
+    example: 'CREATE'
+    enum:
+      - CREATE
+      - UPDATE
+      - DELETE
   Field:
     type: object
     properties:
@@ -1196,7 +1399,7 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
-  CampaignSupervisionLog:
+  CampaignSupervision:
     type: object
     properties:
       id:
@@ -1304,7 +1507,7 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
-  InventorySKUTransferLog:
+  InventorySKUTransfer:
     type: object
     properties:
       id:
@@ -1384,6 +1587,9 @@ definitions:
       RequestInfo:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      apiOperation:
+        type: string
+        $ref: '#/definitions/apiOperation'
       Campaign:
         type: array
         items:
@@ -1415,6 +1621,9 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Individual'
+      apiOperation:
+        type: string
+        $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
       - Individual
@@ -1441,6 +1650,9 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Household'
+      apiOperation:
+        type: string
+        $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
       - Household
@@ -1467,6 +1679,9 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Facility'
+      apiOperation:
+        type: string
+        $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
       - Facility
@@ -1493,6 +1708,9 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/CampaignBoundary'
+      apiOperation:
+        type: string
+        $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
       - CampaignBoundary
@@ -1521,6 +1739,9 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/CampaignStaff'
+      apiOperation:
+        type: string
+        $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
       - CampaignStaff
@@ -1548,6 +1769,9 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/CampaignFacility'
+      apiOperation:
+        type: string
+        $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
       - CampaignFacility
@@ -1575,6 +1799,9 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/CampaignRegistration'
+      apiOperation:
+        type: string
+        $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
       - CampaignRegistration
@@ -1601,6 +1828,9 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Delivery'
+      apiOperation:
+        type: string
+        $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
       - Delivery
@@ -1617,30 +1847,33 @@ definitions:
     required:
       - ResponseInfo
 
-  CampaignSupervisionLogRequest:
+  CampaignSupervisionRequest:
     type: object
     properties:
       RequestInfo:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
-      CampaignSupervisionLog:
+      CampaignSupervision:
         type: array
         items:
-          $ref: '#/definitions/CampaignSupervisionLog'
+          $ref: '#/definitions/CampaignSupervision'
+      apiOperation:
+        type: string
+        $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
-      - CampaignSupervisionLog
+      - CampaignSupervision
 
-  CampaignSupervisionLogResponse:
+  CampaignSupervisionResponse:
     type: object
     properties:
       ResponseInfo:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
-      CampaignSupervisionLog:
+      CampaignSupervision:
         type: array
         items:
-          $ref: '#/definitions/CampaignSupervisionLog'
+          $ref: '#/definitions/CampaignSupervision'
     required:
       - ResponseInfo
 
@@ -1654,6 +1887,9 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Inventory'
+      apiOperation:
+        type: string
+        $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
       - Inventory
@@ -1682,6 +1918,9 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/SKU'
+      apiOperation:
+        type: string
+        $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
       - InventorySKU
@@ -1700,33 +1939,36 @@ definitions:
       - ResponseInfo
       - InventorySKU
 
-  InventorySKUTransferLogRequest:
+  InventorySKUTransferRequest:
     type: object
     properties:
       RequestInfo:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
-      InventorySKUTransferLog:
+      InventorySKUTransfer:
         type: array
         items:
-          $ref: '#/definitions/InventorySKUTransferLog'
+          $ref: '#/definitions/InventorySKUTransfer'
+      apiOperation:
+        type: string
+        $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
-      - InventorySKUTransferLog
+      - InventorySKUTransfer
 
-  InventorySKUTransferLogResponse:
+  InventorySKUTransferResponse:
     type: object
     properties:
       ResponseInfo:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
-      InventorySKUTransferLog:
+      InventorySKUTransfer:
         type: array
         items:
-          $ref: '#/definitions/InventorySKUTransferLog'
+          $ref: '#/definitions/InventorySKUTransfer'
     required:
       - ResponseInfo
-      - InventorySKUTransferLog
+      - InventorySKUTransfer
   #########################################
 
 
