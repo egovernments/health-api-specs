@@ -62,6 +62,35 @@ paths:
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /campaign/v1/_search:
+    post:
+      summary: >-
+        Search for existing Campaign
+      description: >-
+        Search for existing Campaign
+      parameters:
+        - name: campaign
+          in: body
+          description: Details for the Campaign.
+          required: true
+          schema:
+            $ref: '#/definitions/CampaignRequest'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/tenantId'
+        - $ref: '#/parameters/lastChangedSince'
+      tags:
+        - Campaign
+      responses:
+        '200':
+          description: Campaigns.
+          schema:
+            $ref: '#/definitions/CampaignResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
 
   /campaign/boundary/v1/_create:
     post:
@@ -113,6 +142,36 @@ paths:
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /campaign/boundary/v1/_search:
+    post:
+      summary: >-
+        Search Campaign Boundaries
+      description: >-
+        Search Campaign Boundaries
+      parameters:
+        - name: CampaignBoundary
+          in: body
+          description: Capture linkage of Campaign and boundary.
+          required: true
+          schema:
+            $ref: '#/definitions/CampaignBoundaryRequest'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/tenantId'
+        - $ref: '#/parameters/lastChangedSince'
+      tags:
+        - Campaign
+      responses:
+        '200':
+          description:  Campaign Boundaries.
+          schema:
+            $ref: '#/definitions/CampaignBoundaryResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
   /campaign/staff/v1/_create:
     post:
       summary: >-
@@ -163,6 +222,36 @@ paths:
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /campaign/staff/v1/_search:
+    post:
+      summary: >-
+        Search Campaign Staff users
+      description: >-
+        Search Campaign Staff users
+      parameters:
+        - name: CampaignStaff
+          in: body
+          description: Capture linkage of Campaign and staff user.
+          required: true
+          schema:
+            $ref: '#/definitions/CampaignStaffRequest'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/tenantId'
+        - $ref: '#/parameters/lastChangedSince'
+      tags:
+        - Campaign
+      responses:
+        '200':
+          description:  Campaign Staff.
+          schema:
+            $ref: '#/definitions/CampaignStaffResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
   /campaign/facility/v1/_create:
     post:
       summary: >-
@@ -213,6 +302,36 @@ paths:
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /campaign/facility/v1/_search:
+    post:
+      summary: >-
+        Search Campaign Facilities
+      description: >-
+        Search Campaign Facilities
+      parameters:
+        - name: CampaignFacility
+          in: body
+          description: Capture linkage of Campaign and facility.
+          required: true
+          schema:
+            $ref: '#/definitions/CampaignFacilityRequest'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/tenantId'
+        - $ref: '#/parameters/lastChangedSince'
+      tags:
+        - Campaign
+      responses:
+        '200':
+          description:  Campaign Facilities
+          schema:
+            $ref: '#/definitions/CampaignStaffResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
   /campaign/beneficiary/v1/_create:
     post:
       summary: >-
@@ -220,24 +339,20 @@ paths:
       description: >-
         Register for Campaign
       parameters:
-        - name: CampaignRegistration
+        - name: CampaignBeneficiary
           in: body
           description: Register beneficiary to a campaign.
           required: true
           schema:
-            $ref: '#/definitions/CampaignRegistrationRequest'
-        - name: echoEntityInResponse
-          in: query
-          type: boolean
-          required: false
-          default: true
+            $ref: '#/definitions/CampaignBeneficiaryRequest'
+        - $ref: '#/parameters/echoEntityInResponse'
       tags:
         - Campaign
       responses:
         '202':
-          description:  Campaign Registration request has been accepted.
+          description:  Campaign Beneficiary request has been accepted.
           schema:
-            $ref: '#/definitions/CampaignRegistrationResponse'
+            $ref: '#/definitions/CampaignBeneficiaryResponse'
         '400':
           description: Invalid Input body.
           schema:
@@ -250,29 +365,55 @@ paths:
       description: >-
         Update beneficiary registration for Campaign
       parameters:
-        - name: CampaignRegistration
+        - name: CampaignBeneficiary
           in: body
           description: Campaign Beneficiary Registration.
           required: true
           schema:
-            $ref: '#/definitions/CampaignRegistrationRequest'
-        - name: echoEntityInResponse
-          in: query
-          type: boolean
-          required: false
-          default: true
+            $ref: '#/definitions/CampaignBeneficiaryRequest'
+        - $ref: '#/parameters/echoEntityInResponse'
       tags:
         - Campaign
       responses:
         '202':
           description:  Campaign Beneficary request has been accepted.
           schema:
-            $ref: '#/definitions/CampaignRegistrationResponse'
+            $ref: '#/definitions/CampaignBeneficiaryResponse'
         '400':
           description: Invalid Input body.
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /campaign/beneficiary/v1/_search:
+    post:
+      summary: >-
+        Search beneficiary registration for Campaign
+      description: >-
+        Search beneficiary registration for Campaign
+      parameters:
+        - name: CampaignBeneficiary
+          in: body
+          description: Campaign Beneficiary Registration.
+          required: true
+          schema:
+            $ref: '#/definitions/CampaignBeneficiaryRequest'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/tenantId'
+        - $ref: '#/parameters/lastChangedSince'
+      tags:
+        - Campaign
+      responses:
+        '200':
+          description:  Campaign Beneficaries.
+          schema:
+            $ref: '#/definitions/CampaignBeneficiaryResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
   /campaign/delivery/v1/_create:
     post:
       summary: >-
@@ -286,11 +427,7 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/DeliveryRequest'
-        - name: echoEntityInResponse
-          in: query
-          type: boolean
-          required: false
-          default: true
+        - $ref: '#/parameters/echoEntityInResponse'
       tags:
         - Campaign
       responses:
@@ -316,16 +453,41 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/DeliveryRequest'
-        - name: echoEntityInResponse
-          in: query
-          type: boolean
-          required: false
-          default: true
+        - $ref: '#/parameters/echoEntityInResponse'
       tags:
         - Campaign
       responses:
         '202':
           description:  Delivery request has been accepted.
+          schema:
+            $ref: '#/definitions/DeliveryResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /campaign/delivery/v1/_search:
+    post:
+      summary: >-
+        Search Delivery Request
+      description: >-
+        Search Delivery Request
+      parameters:
+        - name: Delivery
+          in: body
+          description: Capture delivery details of resource(s) to beneficiary for a campaign
+          required: true
+          schema:
+            $ref: '#/definitions/DeliveryRequest'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/tenantId'
+        - $ref: '#/parameters/lastChangedSince'
+      tags:
+        - Campaign
+      responses:
+        '200':
+          description:  Delivery requests.
           schema:
             $ref: '#/definitions/DeliveryResponse'
         '400':
@@ -373,11 +535,7 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/IndividualRequest'
-        - name: echoEntityInResponse
-          in: query
-          type: boolean
-          required: false
-          default: true
+        - $ref: '#/parameters/echoEntityInResponse'
       tags:
         - Individual
       responses:
@@ -403,16 +561,41 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/IndividualRequest'
-        - name: echoEntityInResponse
-          in: query
-          type: boolean
-          required: false
-          default: true
+        - $ref: '#/parameters/echoEntityInResponse'
       tags:
         - Individual
       responses:
         '202':
           description: Individual request accepted.
+          schema:
+            $ref: '#/definitions/IndividualResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /individual/v1/_search:
+    post:
+      summary: >-
+        Search existing Individual
+      description: >-
+        Search existing Individual
+      parameters:
+        - name: Individual
+          in: body
+          description: Individual details.
+          required: true
+          schema:
+            $ref: '#/definitions/IndividualRequest'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/tenantId'
+        - $ref: '#/parameters/lastChangedSince'
+      tags:
+        - Individual
+      responses:
+        '200':
+          description: Individuals.
           schema:
             $ref: '#/definitions/IndividualResponse'
         '400':
@@ -434,11 +617,7 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/HouseholdRequest'
-        - name: echoEntityInResponse
-          in: query
-          type: boolean
-          required: false
-          default: true
+        - $ref: '#/parameters/echoEntityInResponse'
       tags:
         - Household
       responses:
@@ -464,11 +643,41 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/HouseholdRequest'
+        - $ref: '#/parameters/echoEntityInResponse'
       tags:
         - Household
       responses:
         '202':
           description: Household request accepted.
+          schema:
+            $ref: '#/definitions/HouseholdResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /household/v1/_search:
+    post:
+      summary: >-
+        Search existing household
+      description: >-
+        Search existing household
+      parameters:
+        - name: Household
+          in: body
+          description: Details for existing household.
+          required: true
+          schema:
+            $ref: '#/definitions/HouseholdRequest'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/tenantId'
+        - $ref: '#/parameters/lastChangedSince'
+      tags:
+        - Household
+      responses:
+        '200':
+          description: Households.
           schema:
             $ref: '#/definitions/HouseholdResponse'
         '400':
@@ -490,11 +699,6 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/FacilityRequest'
-        - name: echoEntityInResponse
-          in: query
-          type: boolean
-          required: false
-          default: true
       tags:
         - Facility
       responses:
@@ -525,6 +729,35 @@ paths:
       responses:
         '202':
           description: Facility request accepted.
+          schema:
+            $ref: '#/definitions/FacilityResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /facility/v1/_search:
+    post:
+      summary: >-
+        Search existing facility
+      description: >-
+        Search existing facility
+      parameters:
+        - name: Facility
+          in: body
+          description: Details for existing facility.
+          required: true
+          schema:
+            $ref: '#/definitions/FacilityRequest'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/tenantId'
+        - $ref: '#/parameters/lastChangedSince'
+      tags:
+        - Facility
+      responses:
+        '200':
+          description: Facilities.
           schema:
             $ref: '#/definitions/FacilityResponse'
         '400':
@@ -583,6 +816,36 @@ paths:
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /inventory/v1/_search:
+    post:
+      summary: >-
+        Search inventory
+      description: >-
+        Search inventory
+      parameters:
+        - name: Inventory
+          in: body
+          description: Capture details of Inventory.
+          required: true
+          schema:
+            $ref: '#/definitions/InventoryRequest'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/tenantId'
+        - $ref: '#/parameters/lastChangedSince'
+      tags:
+        - Inventory
+      responses:
+        '200':
+          description:  Inventory.
+          schema:
+            $ref: '#/definitions/InventoryResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
   /inventory/sku/v1/_create:
     post:
       summary: >-
@@ -633,6 +896,32 @@ paths:
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /inventory/sku/v1/_search:
+    post:
+      summary: >-
+        Search inventory SKU item
+      description: >-
+        Search inventory SKU item
+      parameters:
+        - name: InventorySKU
+          in: body
+          description: Capture details of Inventory SKU.
+          required: true
+          schema:
+            $ref: '#/definitions/InventorySKURequest'
+      tags:
+        - Inventory
+      responses:
+        '200':
+          description:  Inventory SKU.
+          schema:
+            $ref: '#/definitions/InventorySKUResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
   /inventory/sku/transfer/v1/_create:
     post:
       summary: >-
@@ -683,6 +972,36 @@ paths:
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /inventory/sku/transfer/v1/_search:
+    post:
+      summary: >-
+        Search for transfer of an SKU
+      description: >-
+        Search for transfer of an SKU
+      parameters:
+        - name: InventorySKUTransfer
+          in: body
+          description: Capture details of Inventory SKU transfer.
+          required: true
+          schema:
+            $ref: '#/definitions/InventorySKUTransferRequest'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/tenantId'
+        - $ref: '#/parameters/lastChangedSince'
+      tags:
+        - Inventory
+      responses:
+        '200':
+          description:  Inventory SKU transfer.
+          schema:
+            $ref: '#/definitions/InventorySKUTransferResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
 parameters:
   tenantId:
     name: tenantId
@@ -701,6 +1020,26 @@ parameters:
     type: integer
     format: int64
 
+  echoEntityInResponse:
+    name: echoEntityInResponse
+    in: query
+    type: boolean
+    required: false
+    default: true
+    description: Client can specify if the request body needs to be sent back in the response. Being used to limit amount of data that needs to flow back from the server in low bandwidth scenarios.
+  limit:
+    name: limit
+    description: Pagination - limit records in response
+    in: query
+    type: integer
+    required: false
+
+  offset:
+    name: offset
+    description: Pagination - offset from which records should be returned in response
+    in: query
+    type: integer
+    required: false
 
 definitions:
 
@@ -787,7 +1126,7 @@ definitions:
       auditDetails:
         $ref: 'https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails'
 
-  CampaignRegistration:
+  CampaignBeneficiary:
     description: A representation of Beneficiary Registration to a Campaign.
     type: object
     properties:
@@ -1789,23 +2128,23 @@ definitions:
       - ResponseInfo
       - CampaignFacility
 
-  CampaignRegistrationRequest:
+  CampaignBeneficiaryRequest:
     type: object
     properties:
       RequestInfo:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
-      CampaignRegistration:
+      CampaignBeneficiary:
         type: array
         items:
-          $ref: '#/definitions/CampaignRegistration'
+          $ref: '#/definitions/CampaignBeneficiary'
       apiOperation:
         type: string
         $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
-      - CampaignRegistration
-  CampaignRegistrationResponse:
+      - CampaignBeneficiary
+  CampaignBeneficiaryResponse:
     type: object
     properties:
       ResponseInfo:
@@ -1814,7 +2153,7 @@ definitions:
       Household:
         type: array
         items:
-          $ref: '#/definitions/CampaignRegistration'
+          $ref: '#/definitions/CampaignBeneficiary'
     required:
       - ResponseInfo
 
