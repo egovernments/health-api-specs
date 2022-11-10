@@ -766,236 +766,236 @@ paths:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
 
-  /inventory/v1/_create:
+  /product/v1/_create:
     post:
       summary: >-
-        Create/Add a new inventory item
+        Create/Add a new product
       description: >-
-        Create a new inventory item
+        Create a new product
       parameters:
-        - name: Inventory
+        - name: Product
           in: body
-          description: Capture details of Inventory.
+          description: Capture details of Product.
           required: true
           schema:
-            $ref: '#/definitions/InventoryRequest'
+            $ref: '#/definitions/ProductRequest'
       tags:
-        - Inventory
+        - Product
       responses:
         '202':
-          description:  Inventory request has been accepted.
+          description: Product request has been accepted.
           schema:
-            $ref: '#/definitions/InventoryResponse'
+            $ref: '#/definitions/ProductResponse'
         '400':
           description: Invalid Input body.
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
-  /inventory/v1/_update:
+  /product/v1/_update:
     post:
       summary: >-
-        Update inventory item
+        Update product
       description: >-
-        Update inventory item
+        Update product
       parameters:
-        - name: Inventory
+        - name: Product
           in: body
-          description: Capture details of Inventory.
+          description: Capture details of Product.
           required: true
           schema:
-            $ref: '#/definitions/InventoryRequest'
+            $ref: '#/definitions/ProductRequest'
       tags:
-        - Inventory
+        - Product
       responses:
         '202':
-          description:  Inventory request has been accepted.
+          description: Product request has been accepted.
           schema:
-            $ref: '#/definitions/InventoryResponse'
+            $ref: '#/definitions/ProductResponse'
         '400':
           description: Invalid Input body.
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
-  /inventory/v1/_search:
+  /product/v1/_search:
     post:
       summary: >-
-        Search inventory
+        Search product
       description: >-
-        Search inventory
+        Search product
       parameters:
-        - name: Inventory
+        - name: Product
           in: body
-          description: Capture details of Inventory.
+          description: Capture details of Product.
           required: true
           schema:
-            $ref: '#/definitions/InventoryRequest'
+            $ref: '#/definitions/ProductRequest'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
         - $ref: '#/parameters/tenantId'
         - $ref: '#/parameters/lastChangedSince'
       tags:
-        - Inventory
+        - Product
       responses:
         '200':
-          description:  Inventory.
+          description: Product.
           schema:
-            $ref: '#/definitions/InventoryResponse'
+            $ref: '#/definitions/ProductResponse'
         '400':
           description: Invalid Input body.
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
 
-  /inventory/sku/v1/_create:
+  /product/variant/v1/_create:
     post:
       summary: >-
-        Create/Add a new SKU for an inventory item
+        Create/Add a new variant for a product
       description: >-
-        Create a new SKU for an inventory item
+        Create/Add a new variant for a product
       parameters:
-        - name: InventorySKU
+        - name: ProductVariant
           in: body
-          description: Capture details of Inventory SKU.
+          description: Capture details of Product Variant.
           required: true
           schema:
-            $ref: '#/definitions/InventorySKURequest'
+            $ref: '#/definitions/ProductVariantRequest'
       tags:
-        - Inventory
+        - Product
       responses:
         '202':
-          description:  Inventory SKU request has been accepted.
+          description: Product Variant request has been accepted.
           schema:
-            $ref: '#/definitions/InventorySKUResponse'
+            $ref: '#/definitions/ProductVariantResponse'
         '400':
           description: Invalid Input body.
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
-  /inventory/sku/v1/_update:
+  /product/variant/v1/_update:
     post:
       summary: >-
-        Update inventory SKU item
+        Update product variant
       description: >-
-        Update inventory SKU item
+        Update product variant
       parameters:
-        - name: InventorySKU
+        - name: ProductVariant
           in: body
-          description: Capture details of Inventory SKU.
+          description: Capture details of Product Variant.
           required: true
           schema:
-            $ref: '#/definitions/InventorySKURequest'
+            $ref: '#/definitions/ProductVariantRequest'
       tags:
-        - Inventory
+        - Product
       responses:
         '202':
-          description:  Inventory SKU request has been accepted.
+          description: Product variant request has been accepted.
           schema:
-            $ref: '#/definitions/InventorySKUResponse'
+            $ref: '#/definitions/ProductVariantResponse'
         '400':
           description: Invalid Input body.
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
-  /inventory/sku/v1/_search:
+  /product/variant/v1/_search:
     post:
       summary: >-
-        Search inventory SKU item
+        Search product variant
       description: >-
-        Search inventory SKU item
+        Search product variant
       parameters:
-        - name: InventorySKU
+        - name: ProductVariant
           in: body
-          description: Capture details of Inventory SKU.
+          description: Capture details of Product variant.
           required: true
           schema:
-            $ref: '#/definitions/InventorySKURequest'
+            $ref: '#/definitions/ProductVariantRequest'
       tags:
-        - Inventory
+        - Product
       responses:
         '200':
-          description:  Inventory SKU.
+          description: Product Variant.
           schema:
-            $ref: '#/definitions/InventorySKUResponse'
+            $ref: '#/definitions/ProductVariantResponse'
         '400':
           description: Invalid Input body.
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
 
-  /inventory/sku/transfer/v1/_create:
+  /stock/v1/_create:
     post:
       summary: >-
-        Create/Add a new record for transfer of an SKU
+        Create/Add a new record for transfer of product variant stock
       description: >-
-        Create a new record for transfer of an SKU
+        Create/Add a new record for transfer of product variant stock
       parameters:
-        - name: InventorySKUTransfer
+        - name: StockTransaction
           in: body
-          description: Capture details of Inventory SKU transfer.
+          description: Capture details of stock transaction.
           required: true
           schema:
-            $ref: '#/definitions/InventorySKUTransferRequest'
+            $ref: '#/definitions/StockTransactionRequest'
       tags:
-        - Inventory
+        - Stock
       responses:
         '202':
-          description:  Inventory SKU transfer request has been accepted.
+          description: Stock Transaction request has been accepted.
           schema:
-            $ref: '#/definitions/InventorySKUTransferResponse'
+            $ref: '#/definitions/StockTransactionResponse'
         '400':
           description: Invalid Input body.
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
-  /inventory/sku/transfer/v1/_update:
+  /stock/v1/_update:
     post:
       summary: >-
-        Update record for transfer of an SKU
+        Update record for transfer of a stock transaction
       description: >-
-        Update record for transfer of an SKU
+        Update record for transfer of a stock transaction
       parameters:
-        - name: InventorySKUTransfer
+        - name: StockTransaction
           in: body
-          description: Capture details of Inventory SKU transfer.
+          description: Capture details of stock transaction
           required: true
           schema:
-            $ref: '#/definitions/InventorySKUTransferRequest'
+            $ref: '#/definitions/StockTransactionRequest'
       tags:
-        - Inventory
+        - Stock
       responses:
         '202':
-          description:  Inventory SKU transfer request has been accepted.
+          description: Stock Transaction request has been accepted.
           schema:
-            $ref: '#/definitions/InventorySKUTransferResponse'
+            $ref: '#/definitions/StockTransactionResponse'
         '400':
           description: Invalid Input body.
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
-  /inventory/sku/transfer/v1/_search:
+  /stock/v1/_search:
     post:
       summary: >-
-        Search for transfer of an SKU
+        Search for stock transaction
       description: >-
-        Search for transfer of an SKU
+        Search for stock transaction
       parameters:
-        - name: InventorySKUTransfer
+        - name: StockTransaction
           in: body
-          description: Capture details of Inventory SKU transfer.
+          description: Capture details of Stock Transfer.
           required: true
           schema:
-            $ref: '#/definitions/InventorySKUTransferRequest'
+            $ref: '#/definitions/StockTransactionRequest'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
         - $ref: '#/parameters/tenantId'
         - $ref: '#/parameters/lastChangedSince'
       tags:
-        - Inventory
+        - Stock
       responses:
         '200':
-          description:  Inventory SKU transfer.
+          description: Stock transfer.
           schema:
-            $ref: '#/definitions/InventorySKUTransferResponse'
+            $ref: '#/definitions/StockTransactionResponse'
         '400':
           description: Invalid Input body.
           schema:
@@ -1763,7 +1763,7 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
-  Inventory: #TODO Replace Resource with Inventory
+  Product: #TODO Replace Resource with this
     type: object
     properties:
       id:
@@ -1780,7 +1780,7 @@ definitions:
         example: 'tenantA'
       type:
         type: string
-        description: Define the type of inventory
+        description: Define the type of product
         example: 'DRUG'
         enum:
           - MEDICINE
@@ -1790,20 +1790,20 @@ definitions:
           - EDUCATIONAL_MATERIAL
       name:
         type: string
-        description: Capture name of the resource
+        description: Capture name of the product
         example: Paracetamol
       manufacturer:
         type: string
-        description: Capture manufacturer of inventory item
+        description: Capture manufacturer of product
         example: 'J&J'
-      #TODO: store base unit here and add multiplier to SKU?
+      #TODO: store base unit here and add multiplier to product variant?
       additionalFields:
         $ref: '#/definitions/additionalFields'
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
-  SKU:
+  ProductVariant:
     type: object
     properties:
       id:
@@ -1818,18 +1818,22 @@ definitions:
         maxLength: 64
         description: Unique tenant of the system
         example: 'tenantA'
-      inventoryId:
+      productId:
         type: string
         minLength: 2
         maxLength: 64
-        description: Inventory item for which this SKU is being created
+        description: Product for which this variant is being created
+      sku:
+        type: string
+        description: Capture sku code of the variant
+        example: PAR-200
       name:
         type: string
-        description: Capture name of the SKU
+        description: Capture name of the variant
         example: Paracetamol 200mg
       variant:
         type: string
-        description: Capture SKU variant
+        description: Capture product variant
         example: '200'
       variantUnit:
         type: string
@@ -1846,7 +1850,7 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
-  InventorySKUTransfer:
+  StockTransaction:
     type: object
     properties:
       id:
@@ -1870,23 +1874,27 @@ definitions:
         type: string
         minLength: 2
         maxLength: 64
-        description: Id of the facility where quantities of the SKU is being transferred
-        example: 'tenantA'
-      skuId:
+        description: Id of the facility where stock of the product variant are being transferred
+        example: 'FacilityA'
+      productVariantId:
         type: string
         minLength: 2
         maxLength: 64
-        description: SKU that is being transferred
+        description: Product variant that is being transferred
+      count:
+        type: integer
+        format: int64
+        description: Number of units of the product variant that are being transacted
       referenceId:
         type: string
         example: "C-1"
-        description: Reference entity for which the inventory is being transferred
+        description: Reference entity for which the stock transfer is occuring
       referenceIdType:
         type: string
         example: "CAMPAIGN"
         minLength: 2
         maxLength: 64
-        description: Type of entity type that referenceId refers to
+        description: Entity type that referenceId refers to
       transactionType:
         type: string
         minLength: 2
@@ -1906,7 +1914,7 @@ definitions:
         type: string
         minLength: 2
         maxLength: 64
-        description: Id of the party from/to which the SKU is being transferred
+        description: Id of the party from/to which the product variant stock is being transferred
       transactingPartyType:
         type: string
         minLength: 2
@@ -2216,98 +2224,98 @@ definitions:
     required:
       - ResponseInfo
 
-  InventoryRequest:
+  ProductRequest:
     type: object
     properties:
       RequestInfo:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
-      Inventory:
+      Product:
         type: array
         items:
-          $ref: '#/definitions/Inventory'
+          $ref: '#/definitions/Product'
       apiOperation:
         type: string
         $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
-      - Inventory
+      - Product
 
-  InventoryResponse:
+  ProductResponse:
     type: object
     properties:
       ResponseInfo:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
-      Inventory:
+      Product:
         type: array
         items:
-          $ref: '#/definitions/Inventory'
+          $ref: '#/definitions/Product'
     required:
       - ResponseInfo
-      - Inventory
+      - Product
 
-  InventorySKURequest:
+  ProductVariantRequest:
     type: object
     properties:
       RequestInfo:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
-      InventorySKU:
+      ProductVariant:
         type: array
         items:
-          $ref: '#/definitions/SKU'
+          $ref: '#/definitions/ProductVariant'
       apiOperation:
         type: string
         $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
-      - InventorySKU
+      - ProductVariant
 
-  InventorySKUResponse:
+  ProductVariantResponse:
     type: object
     properties:
       ResponseInfo:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
-      InventorySKU:
+      ProductVariant:
         type: array
         items:
-          $ref: '#/definitions/SKU'
+          $ref: '#/definitions/ProductVariant'
     required:
       - ResponseInfo
-      - InventorySKU
+      - ProductVariant
 
-  InventorySKUTransferRequest:
+  StockTransactionRequest:
     type: object
     properties:
       RequestInfo:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
-      InventorySKUTransfer:
+      StockTransaction:
         type: array
         items:
-          $ref: '#/definitions/InventorySKUTransfer'
+          $ref: '#/definitions/StockTransaction'
       apiOperation:
         type: string
         $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
-      - InventorySKUTransfer
+      - StockTransaction
 
-  InventorySKUTransferResponse:
+  StockTransactionResponse:
     type: object
     properties:
       ResponseInfo:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
-      InventorySKUTransfer:
+      StockTransaction:
         type: array
         items:
-          $ref: '#/definitions/InventorySKUTransfer'
+          $ref: '#/definitions/StockTransaction'
     required:
       - ResponseInfo
-      - InventorySKUTransfer
+      - StockTransaction
   #########################################
 
 
