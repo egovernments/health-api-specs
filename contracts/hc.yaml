@@ -3,7 +3,7 @@ info:
   version: 1.0.0
   title: Health Campaign Management System
   contact:
-    name:  Digit Health Campaign
+    name: Digit Health Campaign
     email: info@egovernments.org
 host: phoenix-qa.egovernments.org
 
@@ -109,7 +109,7 @@ paths:
         - Campaign
       responses:
         '202':
-          description:  Campaign Boundary request has been accepted.
+          description: Campaign Boundary request has been accepted.
           schema:
             $ref: '#/definitions/CampaignBoundaryResponse'
         '400':
@@ -134,7 +134,7 @@ paths:
         - Campaign
       responses:
         '202':
-          description:  Campaign Boundary request has been accepted for updation.
+          description: Campaign Boundary request has been accepted for updation.
           schema:
             $ref: '#/definitions/CampaignBoundaryResponse'
         '400':
@@ -163,7 +163,7 @@ paths:
         - Campaign
       responses:
         '200':
-          description:  Campaign Boundaries.
+          description: Campaign Boundaries.
           schema:
             $ref: '#/definitions/CampaignBoundaryResponse'
         '400':
@@ -189,7 +189,7 @@ paths:
         - Campaign
       responses:
         '202':
-          description:  Campaign Staff request has been accepted.
+          description: Campaign Staff request has been accepted.
           schema:
             $ref: '#/definitions/CampaignStaffResponse'
         '400':
@@ -214,7 +214,7 @@ paths:
         - Campaign
       responses:
         '202':
-          description:  Campaign Staff request has been accepted for updation.
+          description: Campaign Staff request has been accepted for updation.
           schema:
             $ref: '#/definitions/CampaignStaffResponse'
         '400':
@@ -243,7 +243,7 @@ paths:
         - Campaign
       responses:
         '200':
-          description:  Campaign Staff.
+          description: Campaign Staff.
           schema:
             $ref: '#/definitions/CampaignStaffResponse'
         '400':
@@ -269,7 +269,7 @@ paths:
         - Campaign
       responses:
         '202':
-          description:  Campaign Staff request has been accepted.
+          description: Campaign Staff request has been accepted.
           schema:
             $ref: '#/definitions/CampaignStaffResponse'
         '400':
@@ -294,7 +294,7 @@ paths:
         - Campaign
       responses:
         '202':
-          description:  Campaign Facility request has been accepted
+          description: Campaign Facility request has been accepted
           schema:
             $ref: '#/definitions/CampaignStaffResponse'
         '400':
@@ -323,7 +323,7 @@ paths:
         - Campaign
       responses:
         '200':
-          description:  Campaign Facilities
+          description: Campaign Facilities
           schema:
             $ref: '#/definitions/CampaignStaffResponse'
         '400':
@@ -350,7 +350,7 @@ paths:
         - Campaign
       responses:
         '202':
-          description:  Campaign Beneficiary request has been accepted.
+          description: Campaign Beneficiary request has been accepted.
           schema:
             $ref: '#/definitions/CampaignBeneficiaryResponse'
         '400':
@@ -376,7 +376,7 @@ paths:
         - Campaign
       responses:
         '202':
-          description:  Campaign Beneficary request has been accepted.
+          description: Campaign Beneficary request has been accepted.
           schema:
             $ref: '#/definitions/CampaignBeneficiaryResponse'
         '400':
@@ -405,7 +405,7 @@ paths:
         - Campaign
       responses:
         '200':
-          description:  Campaign Beneficaries.
+          description: Campaign Beneficaries.
           schema:
             $ref: '#/definitions/CampaignBeneficiaryResponse'
         '400':
@@ -432,7 +432,7 @@ paths:
         - Campaign
       responses:
         '202':
-          description:  Delivery request has been accepted.
+          description: Delivery request has been accepted.
           schema:
             $ref: '#/definitions/DeliveryResponse'
         '400':
@@ -458,7 +458,7 @@ paths:
         - Campaign
       responses:
         '202':
-          description:  Delivery request has been accepted.
+          description: Delivery request has been accepted.
           schema:
             $ref: '#/definitions/DeliveryResponse'
         '400':
@@ -487,7 +487,7 @@ paths:
         - Campaign
       responses:
         '200':
-          description:  Delivery requests.
+          description: Delivery requests.
           schema:
             $ref: '#/definitions/DeliveryResponse'
         '400':
@@ -513,7 +513,7 @@ paths:
         - Campaign
       responses:
         '202':
-          description:  Campaign Supervision has been accepted.
+          description: Campaign Supervision has been accepted.
           schema:
             $ref: '#/definitions/CampaignSupervisionResponse'
         '400':
@@ -540,7 +540,7 @@ paths:
         - Individual
       responses:
         '202':
-          description:  Individual request has been accepted.
+          description: Individual request has been accepted.
           schema:
             $ref: '#/definitions/IndividualResponse'
         '400':
@@ -622,7 +622,7 @@ paths:
         - Household
       responses:
         '202':
-          description:  Household request has been accepted.
+          description: Household request has been accepted.
           schema:
             $ref: '#/definitions/HouseholdResponse'
         '400':
@@ -703,7 +703,7 @@ paths:
         - Facility
       responses:
         '202':
-          description:  Facility request has been accepted.
+          description: Facility request has been accepted.
           schema:
             $ref: '#/definitions/FacilityResponse'
         '400':
@@ -1111,20 +1111,47 @@ definitions:
         maxLength: 64
         description: Unique tenant of the system
         example: 'tenantA'
-      noOfIndividual:
+      noOfMembers:
         type: integer
         example: 4
-        description: total no of individuals in a house
+        description: total no of individuals in a house. Could be different from the count of members as all members may not be enumerated individually.
       address:
         $ref: '#/definitions/Address'
-      individuals:
+      members:
         type: array
         items:
-          $ref: '#/definitions/Individual'
+          $ref: '#/definitions/HouseholdMember'
       additionalFields:
         $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/additionalFields'
       auditDetails:
         $ref: 'https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails'
+
+  HouseholdMember:
+    description: A representation of a household member (already registered as an individual)
+    type: object
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: true
+      individualId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Id of the individual
+      isHeadOfHousehold:
+        type: boolean
+        default: false
+      tenantId:
+        type: string
+        example: 'tenantA'
+      additionalFields:
+        $ref: '#/definitions/additionalFields'
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
   CampaignBeneficiary:
     description: A representation of Beneficiary Registration to a Campaign.
@@ -1166,7 +1193,7 @@ definitions:
         maxLength: 64
       auditDetails:
         $ref: >-
-          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails  
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
   additionalFields:
     type: object
