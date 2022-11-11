@@ -1,0 +1,79 @@
+@startuml Household Registry - Update
+!theme vibrant
+participant Client as c
+participant HouseholdRegistry as hr
+queue Kafka as k
+participant PersisterService as prs
+participant IndexerService as idx
+participant ErrorService as es
+participant ElasticSearch as el
+database Database as db
+c -> hr : /household/v1/_update
+activate hr
+hr -> hr: Validate request body
+alt request validation fails
+    hr -> hr: Request validation failed
+    hr -> k: Household Data /error_topic
+    note left
+        This will be marked as unrecoverable right away 
+        and requhre manual intervention
+    end note
+    activate k
+    group async
+        es -> k: Consume Household Data
+        activate es
+        deactivate k
+        es -> db: Persist Household Data /error_table
+        activate db
+        deactivate db
+        deactivate es
+    end
+    hr -> c: HttpStatus: 200 OK with appropriate response code
+end
+hr -> hr: Request validation successful
+alt record doesn't exist
+    hr -> db: Fetch the existing record
+    activate db
+    db -> hr: 0 rows
+    deactivate db
+    hr -> k: Household Data /error_topic
+    group async
+        es -> k: Consume Household Data
+        activate es
+        deactivate k
+        es -> db: Persist Household Data /error_table
+        activate db
+        deactivate db
+        deactivate es
+    end
+    hr -> c: HttpStatus: 200 OK with appropriate response code
+end
+hr -> db: Fetch the existing record
+activate db
+db -> hr: 1 row
+deactivate db
+hr -> hr: Check if the new record is not equal to existing record
+alt new record equals existing record
+    hr -> hr: new record equals existing record
+    hr -> c: HttpStatus: 200 OK with appropriate response code
+end
+hr -> k: Household Data /update_topic
+activate k
+hr -> c: HttpStatus: 200 OK
+deactivate hr
+group async
+    prs -> k: Consume Household Data
+    activate prs
+    idx -> k: Consume Household Data
+    activate idx
+    idx -> el: Store Household Data
+    activate el
+    deactivate el
+    deactivate idx
+    prs -> db: Update Household Data
+    activate db
+    deactivate db
+    deactivate prs
+end
+deactivate k
+@enduml

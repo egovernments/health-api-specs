@@ -31,8 +31,8 @@ alt request validation fails
     ir -> c: HttpStatus: 200 OK with appropriate response code
 end
 ir -> ir: Request validation successful
-ir -> db: Fetch the existing record
 alt record doesn't exist
+    ir -> db: Fetch the existing record
     activate db
     db -> ir: 0 rows
     deactivate db
@@ -48,10 +48,11 @@ alt record doesn't exist
     end
     ir -> c: HttpStatus: 200 OK with appropriate response code
 end
-db -> ir: 1 row
+ir -> db: Fetch the existing record
 activate db
+db -> ir: 1 row
 deactivate db
-ir -> ir: Check if the new record equals existing record
+ir -> ir: Check if the new record is not equal to existing record
 alt new record equals existing record
     ir -> ir: new record equals existing record
     ir -> c: HttpStatus: 200 OK with appropriate response code
