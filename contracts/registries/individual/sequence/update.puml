@@ -76,7 +76,7 @@ alt new record equals existing record
 end
 ir -> rc: Put new record in cache
 activate rc
-deactive rc
+deactivate rc
 ir -> k: Individual Data /update_topic
 activate k
 ir -> c: HttpStatus: 202 ACCEPTED
