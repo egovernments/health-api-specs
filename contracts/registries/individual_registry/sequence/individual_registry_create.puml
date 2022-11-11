@@ -1,0 +1,61 @@
+@startuml Individual Registry - Create
+!theme vibrant
+participant Client as c
+participant IndividualRegistry as ir
+queue Kafka as k
+participant PersisterService as prs
+participant IndexerService as idx
+participant ErrorService as es
+participant ElasticSearch as el
+database Database as db
+c -> ir : /individual/v1/_create
+activate ir
+ir -> ir: Validate request body
+alt request validation fails
+    ir -> ir: Request validation failed
+    ir -> k: Individual Data /error_topic
+    note left
+        This will be marked as unrecoverable right away 
+        and require manual intervention
+    end note
+    activate k
+    group async
+        es -> k: Consume Individual Data
+        activate es
+        deactivate k
+        es -> db: Persist Individual Data /error_table
+        activate db
+        deactivate db
+        deactivate es
+    end
+    ir -> c: HttpStatus: 200 OK with appropriate response code
+end
+ir -> ir: Request validation successful
+ir -> db: Check if the record already exists
+alt record already exists
+    activate db
+    db -> ir: 1 row
+    ir -> c: HttpStatus: 200 OK with appropriate response code
+end
+db -> ir: 0 rows
+deactivate db
+ir -> k: Individual Data /persist_topic
+activate k
+ir -> c: HttpStatus: 200 OK
+deactivate ir
+group async
+    prs -> k: Consume Individual Data
+    activate prs
+    idx -> k: Consume Individual Data
+    activate idx
+    idx -> el: Store Individual Data
+    activate el
+    deactivate el
+    deactivate idx
+    prs -> db: Persist Individual Data
+    activate db
+    deactivate db
+    deactivate prs
+end
+deactivate k
+@enduml
