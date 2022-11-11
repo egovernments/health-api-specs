@@ -2,6 +2,8 @@
 !theme vibrant
 participant Client as c
 participant HouseholdRegistry as hr
+participant IndividualRegistry as ir
+participant RedisCache as rc
 queue Kafka as k
 participant PersisterService as prs
 participant IndexerService as idx
@@ -28,22 +30,22 @@ alt request validation fails
         deactivate db
         deactivate es
     end
-    hr -> c: HttpStatus: 200 OK with appropriate response code
+    hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
 end
 hr -> hr: Request validation successful
 hr -> db: Check if the record already exists
 alt record already exists
     activate db
     db -> hr: 1 row
-    hr -> c: HttpStatus: 200 OK with appropriate response code
+    hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
 end
 db -> hr: 0 rows
 deactivate db
 alt individual doesn't exists
-    hr -> db: Check if individual exists
-    activate db
-    db -> hr: 0 rows
-    deactivate db
+    hr -> ir: /individual/v1/_search - cache true
+    activate ir
+    ir -> hr: 0 rows
+    deactivate ir
     hr -> k: Household Data /error_topic
     note left
         This will be marked as recoverable and will be 
@@ -59,12 +61,12 @@ alt individual doesn't exists
         deactivate db
         deactivate es
     end
-    hr -> c: HttpStatus: 200 OK with appropriate response code
+    hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
 end
-hr -> db: Check if individual exists
-activate db
-db -> hr: 1 row
-deactivate db
+hr -> ir: /individual/v1/_search - cache true
+activate ir
+ir -> hr: 1 row
+deactivate ir
 alt id generation fails
     hr -> idgen: /id/_generate
     activate idgen
@@ -85,16 +87,19 @@ alt id generation fails
         deactivate db
         deactivate es
     end
-    hr -> c: HttpStatus: 200 OK with appropriate response code
+    hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
 end
 hr -> idgen: Generate ID
 activate idgen
 idgen -> hr: Generated ID
 deactivate idgen
+hr -> rc: Update Generated ID against Transaction ID in cache
+activate rc
+deactivate rc
 hr -> hr: Update generated ID in Household Data
 hr -> k: Household Data /persist_topic
 activate k
-hr -> c: HttpStatus: 200 OK
+hr -> c: HttpStatus: 202 ACCEPTED
 deactivate hr
 group async
     prs -> k: Consume Household Data

@@ -2,6 +2,7 @@
 !theme vibrant
 participant Client as c
 participant HouseholdRegistry as hr
+participant RedisCache as rc
 queue Kafka as k
 participant PersisterService as prs
 participant IndexerService as idx
@@ -28,14 +29,19 @@ alt request validation fails
         deactivate db
         deactivate es
     end
-    hr -> c: HttpStatus: 200 OK with appropriate response code
+    hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
 end
 hr -> hr: Request validation successful
 alt record doesn't exist
-    hr -> db: Fetch the existing record
+    hr -> rc: Fetch the existing record
+    activate rc
+    rc -> rc: 0 rows
+    rc -> db: Fetch the existing record
     activate db
-    db -> hr: 0 rows
+    db -> rc: 0 rows
     deactivate db
+    rc -> hr: 0 rows
+    deactivate rc
     hr -> k: Household Data /error_topic
     group async
         es -> k: Consume Household Data
@@ -46,20 +52,34 @@ alt record doesn't exist
         deactivate db
         deactivate es
     end
-    hr -> c: HttpStatus: 200 OK with appropriate response code
+    hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
 end
-hr -> db: Fetch the existing record
-activate db
-db -> hr: 1 row
-deactivate db
+alt record doesn't exists in cache
+    hr -> rc: Fetch the existing record
+    activate rc
+    rc -> rc: 0 rows
+    rc -> db: Fetch the existing record
+    activate db
+    db -> rc: 1 row
+    deactivate db
+    rc -> hr: 1 row
+    deactivate rc
+end
+hr -> rc: Fetch the existing record
+activate rc
+rc -> hr: 1 row
+deactivate rc
 hr -> hr: Check if the new record is not equal to existing record
 alt new record equals existing record
     hr -> hr: new record equals existing record
-    hr -> c: HttpStatus: 200 OK with appropriate response code
+    hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
 end
+hr -> rc: Put new record in cache
+activate rc
+deactivate rc
 hr -> k: Household Data /update_topic
 activate k
-hr -> c: HttpStatus: 200 OK
+hr -> c: HttpStatus: 202 ACCEPTED
 deactivate hr
 group async
     prs -> k: Consume Household Data
