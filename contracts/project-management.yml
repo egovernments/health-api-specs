@@ -986,9 +986,15 @@ definitions:
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
-  
-  
-  
+
+  apiOperation:
+    type: string
+    description: Specify the type of operation being performed i.e. CREATE, UPDATE or DELETE
+    example: 'CREATE'
+    enum:
+      - CREATE
+      - UPDATE
+      - DELETE
 
   additionalFields:
     type: object
@@ -1473,6 +1479,16 @@ definitions:
           $ref: '#/definitions/IndividualId'
       additionalFields:
         $ref: '#/definitions/additionalFields'
+
+  IndividualId:
+    type: object
+    properties:
+      type:
+        type: string
+        example: 'SYSTEM_GENERATED'
+      idNumber:
+        type: string
+        example: 'ABCD-1212'
 
   Household:
     description: A representation of Household.
