@@ -18,7 +18,7 @@ alt request validation fails
     hr -> k: Household Data /error_topic
     note left
         This will be marked as unrecoverable right away 
-        and requhre manual intervention
+        and require manual intervention
     end note
     activate k
     group async
@@ -42,7 +42,7 @@ end
 db -> hr: 0 rows
 deactivate db
 alt individual doesn't exists
-    hr -> ir: /individual/v1/_search - cache true
+    hr -> ir: /individual/v1/_search
     activate ir
     ir -> hr: 0 rows
     deactivate ir
@@ -63,7 +63,7 @@ alt individual doesn't exists
     end
     hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
 end
-hr -> ir: /individual/v1/_search - cache true
+hr -> ir: /individual/v1/_search
 activate ir
 ir -> hr: 1 row
 deactivate ir
