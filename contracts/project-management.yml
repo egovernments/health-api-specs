@@ -457,7 +457,7 @@ paths:
       parameters:
         - name: Individual
           in: body
-          description: Details for the new Campaign.
+          description: Details for the Individual.
           required: true
           schema:
             $ref: '#/definitions/IndividualRequest'
@@ -1697,7 +1697,7 @@ definitions:
         description: Reference entity for which the stock transfer is occuring
       referenceIdType:
         type: string
-        example: "CAMPAIGN"
+        example: "PROJECT"
         minLength: 2
         maxLength: 64
         description: Entity type that referenceId refers to
