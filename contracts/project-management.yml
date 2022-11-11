@@ -1761,6 +1761,9 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Project'
+      apiOperation:
+        type: string
+        $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
       - Project
@@ -1792,6 +1795,9 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/ProjectBeneficiary'
+      apiOperation:
+        type: string
+        $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
       - Beneficiary
@@ -1820,6 +1826,9 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Task'
+      apiOperation:
+        type: string
+        $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
       - Task
