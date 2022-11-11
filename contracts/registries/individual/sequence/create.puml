@@ -2,6 +2,7 @@
 !theme vibrant
 participant Client as c
 participant IndividualRegistry as ir
+participant IDGenService as idgen
 queue Kafka as k
 participant PersisterService as prs
 participant IndexerService as idx
@@ -39,6 +40,33 @@ alt record already exists
 end
 db -> ir: 0 rows
 deactivate db
+alt id generation fails
+    ir -> idgen: /id/_generate
+    activate idgen
+    idgen -> ir: HttpStatus: 400
+    deactivate idgen
+    ir -> k: Individual Data /error_topic
+    note left
+        This will be marked as recoverable and 
+        will be retried later
+    end note
+    activate k
+    group async
+        es -> k: Consume Individual Data
+        activate es
+        deactivate k
+        es -> db: Persist Individual Data /error_table
+        activate db
+        deactivate db
+        deactivate es
+    end
+    ir -> c: HttpStatus: 200 OK with appropriate response code
+end
+ir -> idgen: Generate ID
+activate idgen
+idgen -> ir: Generated ID
+deactivate idgen
+ir -> ir: Update generated ID in Individual Data
 ir -> k: Individual Data /persist_topic
 activate k
 ir -> c: HttpStatus: 200 OK

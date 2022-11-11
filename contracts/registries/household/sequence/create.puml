@@ -65,6 +65,33 @@ hr -> db: Check if individual exists
 activate db
 db -> hr: 1 row
 deactivate db
+alt id generation fails
+    hr -> idgen: /id/_generate
+    activate idgen
+    idgen -> hr: HttpStatus: 400
+    deactivate idgen
+    hr -> k: Household Data /error_topic
+    note left
+        This will be marked as recoverable and 
+        will be retried later
+    end note
+    activate k
+    group async
+        es -> k: Consume Household Data
+        activate es
+        deactivate k
+        es -> db: Persist Household Data /error_table
+        activate db
+        deactivate db
+        deactivate es
+    end
+    hr -> c: HttpStatus: 200 OK with appropriate response code
+end
+hr -> idgen: Generate ID
+activate idgen
+idgen -> hr: Generated ID
+deactivate idgen
+hr -> hr: Update generated ID in Household Data
 hr -> k: Household Data /persist_topic
 activate k
 hr -> c: HttpStatus: 200 OK
