@@ -1,0 +1,44 @@
+@startuml Individual Registry - Search
+!theme vibrant
+participant Client as c
+participant IndividualRegistry as ir
+participant RedisCache as rc
+database Database as db
+c -> ir : /individual/v1/_search
+activate ir
+ir -> ir: Validate request body
+alt request validation fails
+    ir -> ir: Request validation failed
+    ir -> c: HttpStatus: 200 OK with appropriate response code
+end
+ir -> ir: Request validation successful
+alt record doesn't exist
+    ir -> rc: Search record based on criteria
+    activate rc
+    rc -> rc: 0 rows
+    rc -> db: Search record based on criteria
+    activate db
+    db -> rc: 0 rows
+    deactivate db
+    rc -> ir: 0 rows
+    deactivate rc
+    ir -> c: HttpStatus: 200 OK with appropriate response code
+end
+alt record doesn't exists in cache
+    ir -> rc: Search record based on criteria
+    activate rc
+    rc -> rc: 0 rows
+    rc -> db: Search record based on criteria
+    activate db
+    db -> rc: 1-n rows
+    deactivate db
+    rc -> ir: 1-n rows
+    deactivate rc
+end
+ir -> rc: Search record based on criteria
+activate rc
+rc -> ir: 1-n rows
+deactivate rc
+ir -> c: HttpStatus: 200 OK with found record(s)
+deactivate ir
+@enduml

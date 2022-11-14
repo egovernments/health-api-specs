@@ -1,0 +1,119 @@
+@startuml Household Registry - Create
+!theme vibrant
+participant Client as c
+participant HouseholdRegistry as hr
+participant IndividualRegistry as ir
+participant RedisCache as rc
+queue Kafka as k
+participant PersisterService as prs
+participant IndexerService as idx
+participant ErrorService as es
+participant ElasticSearch as el
+database Database as db
+c -> hr : /household/v1/_create
+activate hr
+hr -> hr: Validate request body
+alt request validation fails
+    hr -> hr: Request validation failed
+    hr -> k: Household Data /error_topic
+    note left
+        This will be marked as unrecoverable right away 
+        and require manual intervention
+    end note
+    activate k
+    group async
+        es -> k: Consume Household Data
+        activate es
+        deactivate k
+        es -> db: Persist Household Data /error_table
+        activate db
+        deactivate db
+        deactivate es
+    end
+    hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
+end
+hr -> hr: Request validation successful
+hr -> db: Check if the record already exists
+alt record already exists
+    activate db
+    db -> hr: 1 row
+    hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
+end
+db -> hr: 0 rows
+deactivate db
+alt individual doesn't exists
+    hr -> ir: /individual/v1/_search
+    activate ir
+    ir -> hr: 0 rows
+    deactivate ir
+    hr -> k: Household Data /error_topic
+    note left
+        This will be marked as recoverable and will be 
+        retried later
+    end note
+    activate k
+    group async
+        es -> k: Consume Household Data
+        activate es
+        deactivate k
+        es -> db: Persist Household Data /error_table
+        activate db
+        deactivate db
+        deactivate es
+    end
+    hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
+end
+hr -> ir: /individual/v1/_search
+activate ir
+ir -> hr: 1 row
+deactivate ir
+alt id generation fails
+    hr -> idgen: /id/_generate
+    activate idgen
+    idgen -> hr: HttpStatus: 400
+    deactivate idgen
+    hr -> k: Household Data /error_topic
+    note left
+        This will be marked as recoverable and 
+        will be retried later
+    end note
+    activate k
+    group async
+        es -> k: Consume Household Data
+        activate es
+        deactivate k
+        es -> db: Persist Household Data /error_table
+        activate db
+        deactivate db
+        deactivate es
+    end
+    hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
+end
+hr -> idgen: Generate ID
+activate idgen
+idgen -> hr: Generated ID
+deactivate idgen
+hr -> hr: Update generated ID in Household Data
+hr -> k: Household Data /persist_topic
+activate k
+hr -> rc: Put Household Data against Transaction ID in cache
+activate rc
+deactivate rc
+hr -> c: HttpStatus: 202 ACCEPTED
+deactivate hr
+group async
+    prs -> k: Consume Household Data
+    activate prs
+    idx -> k: Consume Household Data
+    activate idx
+    idx -> el: Store Household Data
+    activate el
+    deactivate el
+    deactivate idx
+    prs -> db: Persist Household Data
+    activate db
+    deactivate db
+    deactivate prs
+end
+deactivate k
+@enduml
