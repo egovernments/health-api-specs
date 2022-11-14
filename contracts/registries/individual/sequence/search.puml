@@ -39,13 +39,6 @@ ir -> rc: Search record based on criteria
 activate rc
 rc -> ir: 1-n rows
 deactivate rc
-alt no record found
-    activate db
-    db -> ir: 0 row
-    ir -> c: HttpStatus: 200 OK with appropriate response code
-end
-db -> ir: 1-n rows
-deactivate db
 ir -> c: HttpStatus: 200 OK with found record(s)
 deactivate ir
 @enduml

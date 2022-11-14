@@ -29,7 +29,7 @@ alt request validation fails
         deactivate db
         deactivate es
     end
-    ir -> c: HttpStatus: 202 ACCEPTED with appropriate response code
+    ir -> c: HttpStatus: 200 OK with appropriate response code
 end
 ir -> ir: Request validation successful
 alt record doesn't exist
@@ -52,7 +52,7 @@ alt record doesn't exist
         deactivate db
         deactivate es
     end
-    ir -> c: HttpStatus: 202 ACCEPTED with appropriate response code
+    ir -> c: HttpStatus: 200 OK with appropriate response code
 end
 alt record doesn't exists in cache
     ir -> rc: Fetch the existing record
@@ -71,14 +71,14 @@ rc -> ir: 1 row
 deactivate rc
 ir -> ir: Check if the new record is not equal to existing record
 alt new record equals existing record
-    ir -> ir: new record equals existing record
+    ir -> ir: New record equals existing record
     ir -> c: HttpStatus: 202 ACCEPTED with appropriate response code
 end
-ir -> rc: Put new record in cache
-activate rc
-deactivate rc
 ir -> k: Individual Data /update_topic
 activate k
+ir -> rc: Update new record in cache
+activate rc
+deactivate rc
 ir -> c: HttpStatus: 202 ACCEPTED
 deactivate ir
 group async

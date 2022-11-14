@@ -30,7 +30,7 @@ alt request validation fails
         deactivate db
         deactivate es
     end
-    ir -> c: HttpStatus: 202 ACCEPTED with appropriate response code
+    ir -> c: HttpStatus: 200 OK with appropriate response code
 end
 ir -> ir: Request validation successful
 ir -> db: Check if the record already exists
@@ -61,18 +61,18 @@ alt id generation fails
         deactivate db
         deactivate es
     end
-    ir -> c: HttpStatus: 202 ACCEPTED with appropriate response code
+    ir -> c: HttpStatus: 200 OK with appropriate response code
 end
 ir -> idgen: Generate ID
 activate idgen
 idgen -> ir: Generated ID
 deactivate idgen
-ir -> rc: Update Generated ID against Transaction ID in cache
-activate rc
-deactivate rc
 ir -> ir: Update generated ID in Individual Data
 ir -> k: Individual Data /persist_topic
 activate k
+ir -> rc: Put Individual Data against Transaction ID in cache
+activate rc
+deactivate rc
 ir -> c: HttpStatus: 202 ACCEPTED
 deactivate ir
 group async
