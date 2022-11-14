@@ -358,7 +358,7 @@ paths:
         '202':
           description: Project Staff request has been accepted.
           schema:
-            $ref: '#/definitions/ProjectStaffResponse'
+            $ref: '#/definitions/ProjectFacilityResponse'
         '400':
           description: Invalid Input body.
           schema:
@@ -383,7 +383,7 @@ paths:
         '202':
           description: Project Facility request has been accepted
           schema:
-            $ref: '#/definitions/ProjectStaffResponse'
+            $ref: '#/definitions/ProjectFacilityResponse'
         '400':
           description: Invalid Input body.
           schema:
@@ -412,14 +412,92 @@ paths:
         '200':
           description: Project Facilities
           schema:
-            $ref: '#/definitions/ProjectStaffResponse'
+            $ref: '#/definitions/ProjectFacilityResponse'
         '400':
           description: Invalid Input body.
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
 
-
+  /project/resource/v1/_create:
+    post:
+      summary: >-
+        Link Resources to Project
+      description: >-
+        Link Resources to Project
+      parameters:
+        - name: ProjectResource
+          in: body
+          description: Capture linkage of Project and resources.
+          required: true
+          schema:
+            $ref: '#/definitions/ProjectResourceRequest'
+      tags:
+        - Project
+      responses:
+        '202':
+          description: Project Resource request has been accepted.
+          schema:
+            $ref: '#/definitions/ProjectResourceResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /project/resource/v1/_update:
+    post:
+      summary: >-
+        Update Project Resource linkage
+      description: >-
+        Update Project Resource linkage
+      parameters:
+        - name: ProjectResource
+          in: body
+          description: Capture linkage of Project and Resource.
+          required: true
+          schema:
+            $ref: '#/definitions/ProjectResourceRequest'
+      tags:
+        - Project
+      responses:
+        '202':
+          description: Project Resource request has been accepted
+          schema:
+            $ref: '#/definitions/ProjectResourceResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /project/resource/v1/_search:
+    post:
+      summary: >-
+        Search Project Resources
+      description: >-
+        Search Project Resources
+      parameters:
+        - name: ProjectResource
+          in: body
+          description: Search linkage of Project and resource.
+          required: true
+          schema:
+            $ref: '#/definitions/ProjectResourceRequest'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/tenantId'
+        - $ref: '#/parameters/lastChangedSince'
+      tags:
+        - Project
+      responses:
+        '200':
+          description: Project Resources
+          schema:
+            $ref: '#/definitions/ProjectResourceResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
 
 
   /individual/v1/_create:
@@ -1017,37 +1095,37 @@ definitions:
         type: string
         example: 180
 
-  Resource:
-    type: object
-    properties:
-      id:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique system generated GUID
-        readOnly: true
-      tenantId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique tenant of the system
-        example: 'tenantA'
-
-      type:
-        type: string
-        description: Define the type of resource
-        example: Bednets|Tablet
-      name:
-        type: string
-        description: Capture name of the resource
-        example: Paracetamol
-      unit:
-        type: string
-        example: 'BALE'
-        enum:
-          - BALE
-          - CARTONS
-          - VIALS
+#  Resource:
+#    type: object
+#    properties:
+#      id:
+#        type: string
+#        minLength: 2
+#        maxLength: 64
+#        description: Unique system generated GUID
+#        readOnly: true
+#      tenantId:
+#        type: string
+#        minLength: 2
+#        maxLength: 64
+#        description: Unique tenant of the system
+#        example: 'tenantA'
+#
+#      type:
+#        type: string
+#        description: Define the type of resource
+#        example: Bednets|Tablet
+#      name:
+#        type: string
+#        description: Capture name of the resource
+#        example: Paracetamol
+#      unit:
+#        type: string
+#        example: 'BALE'
+#        enum:
+#          - BALE
+#          - CARTONS
+#          - VIALS
 
 
   Target:
@@ -1427,6 +1505,36 @@ definitions:
       facilityId:
         type: string
         description: Unique facilityId defined using facility service
+        minLength: 2
+        maxLength: 64
+      projectId:
+        type: string
+        description: Project Id
+        minLength: 2
+        maxLength: 64
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+
+  ProjectResource:
+    description: This object defines the mapping of a resource to a project.
+    type: object
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: True
+      tenantId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique tenant of the system
+        example: 'tenantA'
+      resourceId:
+        type: string
+        description: Unique resourceId defined elsewhere (product service etc)
         minLength: 2
         maxLength: 64
       projectId:
@@ -1902,6 +2010,37 @@ definitions:
     required:
       - ResponseInfo
       - ProjectFacility
+
+  ProjectResourceRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      ProjectResource:
+        type: array
+        items:
+          $ref: '#/definitions/ProjectResource'
+      apiOperation:
+        type: string
+        $ref: '#/definitions/apiOperation'
+    required:
+      - RequestInfo
+      - ProjectResource
+  ProjectResourceResponse:
+    type: object
+    properties:
+      ResponseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
+      ProjectResource:
+        type: array
+        items:
+          $ref: '#/definitions/ProjectResource'
+    required:
+      - ResponseInfo
+      - ProjectResource
+
 
   IndividualRequest:
     type: object
