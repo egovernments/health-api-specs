@@ -1409,14 +1409,22 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/TaskResource'
-      startDate:
+      plannedStartDate:
         type: integer
         format: int64
-        description: Task start date
-      endDate:
+        description: Task planned start date
+      plannedEndDate:
         type: integer
         format: int64
-        description: Task end date
+        description: Task planned end date
+      actualStartDate:
+        type: integer
+        format: int64
+        description: Task planned start date
+      actualEndDate:
+        type: integer
+        format: int64
+        description: Task planned end date
       createdBy:
         type: string
         example: "UUID"
