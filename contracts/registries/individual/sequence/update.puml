@@ -29,7 +29,7 @@ alt request validation fails
         deactivate db
         deactivate es
     end
-    ir -> c: HttpStatus: 200 OK with appropriate response code
+    ir -> c: HttpStatus: 202 ACCEPTED with appropriate response code
 end
 ir -> ir: Request validation successful
 alt record doesn't exist
@@ -42,6 +42,10 @@ alt record doesn't exist
     deactivate db
     rc -> ir: 0 rows
     deactivate rc
+    note left
+        This will be marked as unrecoverable right away 
+        and require manual intervention
+    end note
     ir -> k: Individual Data /error_topic
     group async
         es -> k: Consume Individual Data
@@ -52,7 +56,7 @@ alt record doesn't exist
         deactivate db
         deactivate es
     end
-    ir -> c: HttpStatus: 200 OK with appropriate response code
+    ir -> c: HttpStatus: 202 ACCEPTED with appropriate response code
 end
 alt record doesn't exists in cache
     ir -> rc: Fetch the existing record

@@ -17,7 +17,7 @@ alt request validation fails
     hr -> k: Household Data /error_topic
     note left
         This will be marked as unrecoverable right away 
-        and requhre manual intervention
+        and require manual intervention
     end note
     activate k
     group async
@@ -29,7 +29,7 @@ alt request validation fails
         deactivate db
         deactivate es
     end
-    hr -> c: HttpStatus: 200 OK with appropriate response code
+    hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
 end
 hr -> hr: Request validation successful
 alt record doesn't exist
@@ -42,6 +42,10 @@ alt record doesn't exist
     deactivate db
     rc -> hr: 0 rows
     deactivate rc
+    note left
+        This will be marked as unrecoverable right away 
+        and require manual intervention
+    end note
     hr -> k: Household Data /error_topic
     group async
         es -> k: Consume Household Data
@@ -52,7 +56,7 @@ alt record doesn't exist
         deactivate db
         deactivate es
     end
-    hr -> c: HttpStatus: 200 OK with appropriate response code
+    hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
 end
 alt record doesn't exists in cache
     hr -> rc: Fetch the existing record

@@ -30,7 +30,7 @@ alt request validation fails
         deactivate db
         deactivate es
     end
-    hr -> c: HttpStatus: 200 OK with appropriate response code
+    hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
 end
 hr -> hr: Request validation successful
 hr -> db: Check if the record already exists
@@ -61,7 +61,7 @@ alt individual doesn't exists
         deactivate db
         deactivate es
     end
-    hr -> c: HttpStatus: 200 OK with appropriate response code
+    hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
 end
 hr -> ir: /individual/v1/_search
 activate ir
@@ -87,7 +87,7 @@ alt id generation fails
         deactivate db
         deactivate es
     end
-    hr -> c: HttpStatus: 200 OK with appropriate response code
+    hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
 end
 hr -> idgen: Generate ID
 activate idgen
