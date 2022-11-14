@@ -80,7 +80,7 @@ alt new record equals existing record
 end
 ir -> k: Individual Data /update_topic
 activate k
-ir -> rc: Update new record in cache
+ir -> rc: Update new record in cache against clientReferenceId/individualId
 activate rc
 deactivate rc
 ir -> c: HttpStatus: 202 ACCEPTED

@@ -70,7 +70,7 @@ deactivate idgen
 ir -> ir: Update generated ID in Individual Data
 ir -> k: Individual Data /persist_topic
 activate k
-ir -> rc: Put Individual Data against Transaction ID in cache
+ir -> rc: Put Individual Data against clientReferenceId/individualId in cache
 activate rc
 deactivate rc
 ir -> c: HttpStatus: 202 ACCEPTED
