@@ -96,7 +96,7 @@ deactivate idgen
 hr -> hr: Update generated ID in Household Data
 hr -> k: Household Data /persist_topic
 activate k
-hr -> rc: Put Household Data against Transaction ID in cache
+hr -> rc: Put Household Data against clientReferenceId/householdId in cache
 activate rc
 deactivate rc
 hr -> c: HttpStatus: 202 ACCEPTED

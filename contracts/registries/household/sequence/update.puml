@@ -75,12 +75,12 @@ rc -> hr: 1 row
 deactivate rc
 hr -> hr: Check if the new record is not equal to existing record
 alt new record equals existing record
-    hr -> hr: new record equals existing record
+    hr -> hr: New record equals existing record
     hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
 end
 hr -> k: Household Data /update_topic
 activate k
-hr -> rc: Put new record in cache
+hr -> rc: Update new record in cache against clientReferenceId/householdId
 activate rc
 deactivate rc
 hr -> c: HttpStatus: 202 ACCEPTED
