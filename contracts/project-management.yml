@@ -1160,7 +1160,7 @@ definitions:
         maxLength: 64
         description: Unique tenant of the system
         example: 'tenantA'
-      resourceId:
+      productVariantId:
         type: string
         minLength: 2
         maxLength: 64
@@ -1207,6 +1207,10 @@ definitions:
         type: number
         format: double
         description: longitude of the address
+      locationAccuracy:
+        type: number
+        format: double
+        description: accuracy of the address latitude and longitude in meters
       type:
         type: string
         description: Type of address.
@@ -1409,14 +1413,22 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/TaskResource'
-      startDate:
+      plannedStartDate:
         type: integer
         format: int64
-        description: Task start date
-      endDate:
+        description: Task planned start date
+      plannedEndDate:
         type: integer
         format: int64
-        description: Task end date
+        description: Task planned end date
+      actualStartDate:
+        type: integer
+        format: int64
+        description: Task planned start date
+      actualEndDate:
+        type: integer
+        format: int64
+        description: Task planned end date
       createdBy:
         type: string
         example: "UUID"
@@ -1532,14 +1544,14 @@ definitions:
         maxLength: 64
         description: Unique tenant of the system
         example: 'tenantA'
-      resourceId:
+      productVariantId:
         type: string
-        description: Unique resourceId defined elsewhere (product service etc)
+        description: Unique productVariantId defined in Product service
         minLength: 2
         maxLength: 64
       projectId:
         type: string
-        description: Project Id
+        description: Unique Project Id defined in Project Service
         minLength: 2
         maxLength: 64
       auditDetails:
@@ -1580,11 +1592,11 @@ definitions:
       identifiers:
         type: array
         items:
-          $ref: '#/definitions/IndividualId'
+          $ref: '#/definitions/Identifier'
       additionalFields:
         $ref: '#/definitions/additionalFields'
 
-  IndividualId:
+  Identifier:
     type: object
     properties:
       type:
@@ -1810,7 +1822,7 @@ definitions:
       quantity:
         type: integer
         format: int64
-        description: Number of units of the product variant that are being transacted
+        description: Number/Quantity/Count of units of the product variant that are being transacted
       referenceId:
         type: string
         example: "C-1"
