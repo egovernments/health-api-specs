@@ -1592,11 +1592,11 @@ definitions:
       identifiers:
         type: array
         items:
-          $ref: '#/definitions/IndividualId'
+          $ref: '#/definitions/Identifier'
       additionalFields:
         $ref: '#/definitions/additionalFields'
 
-  IndividualId:
+  Identifier:
     type: object
     properties:
       type:
