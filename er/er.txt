@@ -15,10 +15,10 @@ Table individual {
   longitude double
   addressId varchar
   additionalDetails longtext
-  createdAt bigint
-  modifiedAt bigint
   createdBy varchar(64)
-  modifiedBy varchar(64)
+  createdTime bigint
+  lastModifiedBy varchar(64)
+  lastModifiedTime bigint
   isDeleted bool
 }
 
@@ -30,10 +30,10 @@ Table individual_identifier {
   // status varchar(64) // ACTIVE, EXPIRED etc
   // validityStart bigint
   // validityEnd bigint
-  createdAt bigint
-  modifiedAt bigint
   createdBy varchar(64)
-  modifiedBy varchar(64)
+  createdTime bigint
+  lastModifiedBy varchar(64)
+  lastModifiedTime bigint
   isDeleted bool
 }
 
@@ -54,9 +54,9 @@ Table address {
   street varchar(256)
   additionalDetails longtext
   localityCode varchar //Reference to master data
-  createdAt bigint
-  modifiedAt bigint
   createdBy varchar(64)
-  modifiedBy varchar(64)
+  createdTime bigint
+  lastModifiedBy varchar(64)
+  lastModifiedTime bigint
   isDeleted bool
 }
