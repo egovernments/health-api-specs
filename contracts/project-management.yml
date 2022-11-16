@@ -518,14 +518,20 @@ paths:
         - Individual
       responses:
         '202':
-          description: Individual request has been accepted.
+          description: Accepted
           schema:
             $ref: '#/definitions/IndividualResponse'
         '400':
-          description: Invalid Input body.
+          description: Bad Request
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
   /individual/v1/_update:
     post:
       summary: >-
@@ -544,14 +550,20 @@ paths:
         - Individual
       responses:
         '202':
-          description: Individual request accepted.
+          description: Accepted
           schema:
             $ref: '#/definitions/IndividualResponse'
         '400':
-          description: Invalid Input body.
+          description: Bad Request
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
   /individual/v1/_search:
     post:
       summary: >-
@@ -985,6 +997,7 @@ paths:
 
 
 parameters:
+  #TODO is tenantId required as a query param if it can be determine from requestInfo->userInfo
   tenantId:
     name: tenantId
     in: query
@@ -1002,6 +1015,7 @@ parameters:
     type: integer
     format: int64
 
+#TODO is this a good idea? It is possible that client will be unaware of the server generated id.
   echoEntityInResponse:
     name: echoEntityInResponse
     in: query
@@ -1009,6 +1023,14 @@ parameters:
     required: false
     default: true
     description: Client can specify if the request body needs to be sent back in the response. Being used to limit amount of data that needs to flow back from the server in low bandwidth scenarios.
+
+  handleErrorsManually:
+    name: handleErrorsManually
+    in: query
+    type: boolean
+    required: false
+    default: false
+    description: Client can specify that it is incapable of handling any errors with the requests and server should route these for manual intervention if required.
 
   limit:
     name: limit
@@ -1027,6 +1049,10 @@ parameters:
 
 definitions:
 
+  eventTimestamp:
+    type: integer
+    format: int64
+    example: 1663218161
 
   ProjectBeneficiary:
     description: A representation of Individual Registration to a Project.
@@ -1052,9 +1078,7 @@ definitions:
         maxLength: 64
         description: Unique ID form Project registration
       dateOfRegistration:
-        type: integer
-        format: int64
-        example: 1663218161
+        $ref: '#/definitions/eventTimestamp'
       additionalFields:
         $ref: '#/definitions/additionalFields'
       auditDetails:
@@ -1076,9 +1100,12 @@ definitions:
       schema:
         type: string
         example: 'HOUSEHOLD'
+        minLength: 2
+        maxLength: 64
       version:
         type: integer
         example: 2
+        minimum: 1
       fields:
         type: array
         items:
@@ -1091,9 +1118,13 @@ definitions:
       key:
         type: string
         example: height
+        minLength: 2
+        maxLength: 64
       value:
         type: string
         example: 180
+        minLength: 2
+        maxLength: 10000
 
 #  Resource:
 #    type: object
@@ -1180,7 +1211,7 @@ definitions:
   Address:
     type: object
     description: |
-      Representation of a address. Indiavidual APIs may choose to extend from this using allOf if more details needed to be added in their case.
+      Representation of a address. Individual APIs may choose to extend from this using allOf if more details needed to be added in their case.
     properties:
       id:
         type: string
@@ -1202,15 +1233,21 @@ definitions:
       latitude:
         type: number
         format: double
-        description: latitude of the address
+        minimum: -90
+        maximum: 90
+        description: Latitude of the address
       longitude:
         type: number
         format: double
-        description: longitude of the address
+        minimum: -180
+        maximum: 180
+        description: Longitude of the address
       locationAccuracy:
         type: number
         format: double
-        description: accuracy of the address latitude and longitude in meters
+        minimum: 0
+        maximum: 10000
+        description: Accuracy of the address latitude and longitude in meters
       type:
         type: string
         description: Type of address.
@@ -1230,26 +1267,30 @@ definitions:
         minLength: 2
         maxLength: 256
       landmark:
-        description: additional landmark to help locate the address
+        description: Additional landmark to help locate the address
         type: string
         minLength: 2
         maxLength: 256
       city:
         description: City of the address. Can be represented by the tenantid itself
         type: string
+        minLength: 2
+        maxLength: 256
       pincode:
         type: string
         description: PIN code of the address. Indian pincodes will usually be all numbers.
+        minLength: 2
+        maxLength: 64
       buildingName:
         type: string
         description: Name of the building
-        maxLength: 64
         minLength: 2
+        maxLength: 256
       street:
         type: string
         description: Street Name
-        maxLength: 64
         minLength: 2
+        maxLength: 256
       locality:
         $ref: 'https://raw.githubusercontent.com/egovernments/egov-services/master/docs/egov-location/contracts/v11-0-0.yml#/definitions/Boundary'
 
@@ -1429,6 +1470,8 @@ definitions:
         type: integer
         format: int64
         description: Task planned end date
+
+#TODO add eventTimestamp
       createdBy:
         type: string
         example: "UUID"
@@ -1577,9 +1620,13 @@ definitions:
       name:
         #TODO: shouldn't we split this into familyName, givenName, otherNames like in https://schema.org/Person
         type: string
+        minLength: 2
+        maxLength: 200
+        description: Name of individual
       dateOfBirth:
         type: string
         example: 'YYYYMMDD'
+        maxLength: 6
       address:
         $ref: '#/definitions/Address'
       gender:
@@ -1588,7 +1635,7 @@ definitions:
         enum:
           - MALE
           - FEMALE
-          - OTHERS
+          - OTHER
       identifiers:
         type: array
         items:
@@ -1602,9 +1649,13 @@ definitions:
       type:
         type: string
         example: 'SYSTEM_GENERATED'
-      idNumber:
+        minLength: 2
+        maxLength: 64
+      id:
         type: string
         example: 'ABCD-1212'
+        minLength: 2
+        maxLength: 64
 
   Household:
     description: A representation of Household.
@@ -1653,6 +1704,11 @@ definitions:
         description: Unique system generated GUID
         readOnly: true
       individualId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Id of the individual
+      individualClientReferenceId:
         type: string
         minLength: 2
         maxLength: 64
