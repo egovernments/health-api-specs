@@ -1,57 +1,65 @@
 @startuml Individual Registry - Search
 !theme vibrant
 participant Client as c
-participant IndividualRegistry as hr
+participant IndividualRegistry as ir
 participant RedisCache as rc
 database Database as db
-c -> hr : /individual/v1/_search
-activate hr
-hr -> hr: Validate request body
+c -> ir : /individual/v1/_search
+activate ir
+ir -> ir: Validate request body
 alt request validation fails
-    hr -> hr: Request validation failed
-    hr -> c: HttpStatus: 200 OK with appropriate response code
+    ir -> ir: Request validation failed
+    ir -> c: HttpStatus: 200 OK with appropriate response code
 end
-hr -> hr: Request validation successful
+ir -> ir: Request validation successful
 alt search by clientReferenceId/individualId
     alt record doesn't exist
-        hr -> rc: Search record based on clientReferenceId/individualId
+        ir -> rc: Search record based on clientReferenceId/individualId
         activate rc
-        rc -> rc: 0 rows
-        hr -> db: Search record based on clientReferenceId/individualId
-        activate db
-        db -> rc: 0 rows
-        deactivate db
-        rc -> hr: 0 rows
+        rc -> ir: 0 rows
         deactivate rc
-        hr -> c: HttpStatus: 200 OK with appropriate response code
+        ir -> db: Search record based on clientReferenceId/individualId
+        activate db
+        db -> ir: 0 rows
+        deactivate db
+        ir -> c: HttpStatus: 400 with appropriate error code
+        note left
+          Error Code: RECORD_NOT_FOUND
+        end note
     end
     alt record doesn't exists in cache
-        hr -> rc: Search record based on clientReferenceId/individualId
+        ir -> rc: Search record based on clientReferenceId/individualId
         activate rc
-        rc -> rc: 0 rows
-        rc -> db: Search record based on clientReferenceId/individualId
-        activate db
-        db -> rc: 1 row
-        deactivate db
-        rc -> hr: 1 row
+        rc -> ir: 0 rows
         deactivate rc
+        ir -> db: Search record based on clientReferenceId/individualId
+        activate db
+        db -> ir: 1 row
+        deactivate db
+        ir -> rc: 1 record
+        activate rc
+        deactivate rc
+        ir -> c: HttpStatus: 200 with appropriate response code
     end
-hr -> rc: Search record based on clientReferenceId/individualId
+ir -> rc: Search record based on clientReferenceId/individualId
 activate rc
-rc -> hr: 1 row
+rc -> ir: 1 row
 deactivate rc
 end
 alt record doesn't exist for criteria
-    hr -> db: Search record based on clientReferenceId/individualId
+    ir -> db: Search record based on criteria
     activate db
-    db -> hr: 0 rows
+    db -> ir: 0 rows
     deactivate db
-    hr -> c: HttpStatus: 200 OK with appropriate response code
+    ir -> c: HttpStatus: 400 with appropriate error code
+    note left
+      Error Code: RECORD_NOT_FOUND
+    end note
 end
-hr -> db: Search record based on clientReferenceId/individualId
+ir -> db: Search record based on criteria
 activate db
-db -> hr: 1-n rows
+db -> ir: 1-n rows
 deactivate db
-hr -> c: HttpStatus: 200 OK with found record(s)
-deactivate hr
+ir -> c: HttpStatus: 200 OK with found record(s)
+deactivate ir
 @enduml

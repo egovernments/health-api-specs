@@ -1,0 +1,62 @@
+//For use at https://dbdiagram.io/
+
+//Do we need to maintain audit related columns in each table?
+
+Table individual {
+  id varchar [pk]
+  clientReferenceId varchar(64)
+  // firstName varchar
+  // middleName varchar
+  // lastName varchar
+  name varchar(200)
+  dateOfBirth bigint //YYYYMMDD. Do not store time and timezone in this field.
+  gender varchar(10)
+  latitude double
+  longitude double
+  addressId varchar
+  additionalDetails longtext
+  createdAt bigint
+  modifiedAt bigint
+  createdBy varchar(64)
+  modifiedBy varchar(64)
+  isDeleted bool
+}
+
+Table individual_identifier {
+  id varchar [pk]
+  individualId varchar [ref: > individual.id]
+  identifierType varchar(64)
+  identifierId varchar(64)
+  // status varchar(64) // ACTIVE, EXPIRED etc
+  // validityStart bigint
+  // validityEnd bigint
+  createdAt bigint
+  modifiedAt bigint
+  createdBy varchar(64)
+  modifiedBy varchar(64)
+  isDeleted bool
+}
+
+Table address {
+  id varchar [pk]
+  tenantId varchar
+  doorNo varchar(64)
+  latitude double
+  longitude double
+  locationAccuracy int
+  type varchar(64)
+  addressLine1 varchar(256)
+  addressLine2 varchar(256)
+  landmark varchar(256)
+  city varchar(256)
+  pincode varchar(64)
+  buildingName varchar(256)
+  street varchar(256)
+  additionalDetails longtext
+  localityCode varchar //Reference to master data
+  createdAt bigint
+  modifiedAt bigint
+  createdBy varchar(64)
+  modifiedBy varchar(64)
+  isDeleted bool
+}
