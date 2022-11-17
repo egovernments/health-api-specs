@@ -10,22 +10,22 @@ participant IndexerService as idx
 participant ErrorService as es
 participant ElasticSearch as el
 database Database as db
-c -> s : /household/v1/_create
+c -> s : /household/member/v1/_create
 activate s
 s -> s: Validate request body
 alt request validation fails
     s -> s: Request validation failed
-    s -> k: Household Data /error_topic
+    s -> k: Household Member Data /error_topic
     note left
         This will be marked as unrecoverable right away 
         and require manual intervention
     end note
     activate k
     group async
-        es -> k: Consume Household Data
+        es -> k: Consume Household Member Data
         activate es
         deactivate k
-        es -> db: Persist Household Data /error_table
+        es -> db: Persist Household Member Data /error_table
         activate db
         deactivate db
         deactivate es
@@ -36,9 +36,9 @@ alt request validation fails
     end note
 end
 s -> s: Request validation successful
-alt record already exists
+alt household member record already exists
     alt record found in cache
-      s -> rc: Check using clientReferenceId / serverGeneratedId
+      s -> rc: Check using household clientReferenceId / serverGeneratedId
       activate rc
       rc -> s: 1 row
       deactivate rc
@@ -47,7 +47,7 @@ alt record already exists
           Error Code: RECORD_ALREADY_EXISTS
       end note
     end
-    s -> rc: Check using clientReferenceId / serverGeneratedId
+    s -> rc: Check using household clientReferenceId / serverGeneratedId
     activate rc
     rc -> s: 0 rows
     deactivate rc
@@ -55,7 +55,7 @@ alt record already exists
     activate db
     db -> s: 1 row
     deactivate db
-    s -> rc: Put data in cache using clientReferenceId / serverGeneratedId
+    s -> rc: Put data in cache using household clientReferenceId / serverGeneratedId
     activate rc
     deactivate rc
     s -> c: HttpStatus: 400 with appropriate error code
@@ -63,22 +63,47 @@ alt record already exists
         Error Code: RECORD_ALREADY_EXISTS
     end note
 end
-alt individual(s) don't exist [loop on all individualId(s) in request]
+'alt household doesn't exist
+'    s -> db: Check if household exists
+'    activate db
+'    db -> s: 0 rows
+'    deactivate db
+'    s -> k: Household Member Data /error_topic
+'    note left
+'        This will be marked as recoverable and will be
+'        retried later
+'    end note
+'    activate k
+'    group async
+'        es -> k: Consume Household Member Data
+'        activate es
+'        deactivate k
+'        es -> db: Persist Household Member Data /error_table
+'        activate db
+'        deactivate db
+'        deactivate es
+'    end
+'    s -> c: HttpStatus: 400 with appropriate error code
+'    note left
+'        Error Code: DEPENDENCY_ERROR
+'    end note
+'end
+alt individual doesn't exist
     s -> s2: /individual/v1/_search
     activate s2
     s2 -> s: 0 rows
     deactivate s2
-    s -> k: Household Data /error_topic
+    s -> k: Household Member Data /error_topic
     note left
         This will be marked as recoverable and will be 
         retried later
     end note
     activate k
     group async
-        es -> k: Consume Household Data
+        es -> k: Consume Household Member Data
         activate es
         deactivate k
-        es -> db: Persist Household Data /error_table
+        es -> db: Persist Household Member Data /error_table
         activate db
         deactivate db
         deactivate es
@@ -88,13 +113,9 @@ alt individual(s) don't exist [loop on all individualId(s) in request]
         Error Code: DEPENDENCY_ERROR
     end note
 end
-s -> s2: /individual/v1/_search
-activate s2
-s2 -> s: 1 row
-deactivate s2
-s -> db: Get Individual/Household mapping using individual clientReferenceId/serverGeneratedId [loop on all individualId(s) in request]]
+s -> db: Get Individual/Household mapping using individual clientReferenceId/serverGeneratedId
 activate db
-alt mapping record found
+alt record found
   db -> s: 1 row
   s -> c: HttpStatus: 400 with appropriate error code
   note left
@@ -102,53 +123,45 @@ alt mapping record found
       Ensures that the individual is not already linked to a household
   end note
 end
-alt id generation fails
-    s -> idgen: /id/_generate
-    activate idgen
-    idgen -> s: HttpStatus: 400
-    deactivate idgen
-    s -> k: Household Data /error_topic
+db -> s: 0 rows
+deactivate db
+s -> s: Check if isHeadOfHousehold is true in request
+alt request isHeadOfHousehold true
+  s -> db: Get Individual/Household mapping using household clientReferenceId/serverGeneratedId
+  activate db
+  db -> s: 1-n row(s)
+  deactivate db
+  alt record with isHeadOfHousehold true found
+    s -> s: Check if there is already a record with isHeadOfHousehold true
+    s -> c: HttpStatus: 400 with appropriate error code
     note left
-        This will be marked as recoverable and 
-        will be retried later
+        Error Code: BAD_REQUEST
     end note
-    activate k
-    group async
-        es -> k: Consume Household Data
-        activate es
-        deactivate k
-        es -> db: Persist Household Data /error_table
-        activate db
-        deactivate db
-        deactivate es
-    end
-    s -> c: HttpStatus: 500 with appropriate error code
-    note left
-      Error Code: ID_GENERATION_FAILED
-    end note
+  end
 end
-s -> idgen: Generate ID
-activate idgen
-idgen -> s: Generated ID
-deactivate idgen
-s -> s: Update generated ID in Household Data
-s -> k: Household Data /persist_topic
+
+s -> k: Household Member Data /persist_topic
 activate k
-s -> rc: Put Household Data against clientReferenceId/serverGeneratedId in cache
+s -> rc: Invalidate household cache using clientReferenceId/serverGeneratedId
+note left
+  The request does not have all the data required to update
+  the household cache for which this member is being added
+  and hence is being invalidated.
+end note
 activate rc
 deactivate rc
 s -> c: HttpStatus: 202 ACCEPTED
 deactivate s
 group async
-    prs -> k: Consume Household Data
+    prs -> k: Consume Household Member Data
     activate prs
-    idx -> k: Consume Household Data
+    idx -> k: Consume Household Member Data
     activate idx
-    idx -> el: Store Household Data
+    idx -> el: Store Household Member Data
     activate el
     deactivate el
     deactivate idx
-    prs -> db: Persist Household Data
+    prs -> db: Persist Household Member Data
     activate db
     deactivate db
     deactivate prs

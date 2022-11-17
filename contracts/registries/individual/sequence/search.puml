@@ -1,65 +1,68 @@
 @startuml Individual Registry - Search
 !theme vibrant
 participant Client as c
-participant IndividualRegistry as ir
+participant IndividualRegistry as s
 participant RedisCache as rc
 database Database as db
-c -> ir : /individual/v1/_search
-activate ir
-ir -> ir: Validate request body
+c -> s : /individual/v1/_search
+activate s
+s -> s: Validate request body
 alt request validation fails
-    ir -> ir: Request validation failed
-    ir -> c: HttpStatus: 200 OK with appropriate response code
+    s -> s: Request validation failed
+    s -> c: HttpStatus: 400 with appropriate error code
+    note left
+      Error Code: REQUEST_VALIDATION_FAILED
+    end note
 end
-ir -> ir: Request validation successful
-alt search by clientReferenceId/individualId
+s -> s: Request validation successful
+alt search by clientReferenceId/serverGeneratedId
     alt record doesn't exist
-        ir -> rc: Search record based on clientReferenceId/individualId
+        s -> rc: Search record based on clientReferenceId/serverGeneratedId
         activate rc
-        rc -> ir: 0 rows
+        rc -> s: 0 rows
         deactivate rc
-        ir -> db: Search record based on clientReferenceId/individualId
+        s -> db: Search record based on clientReferenceId/serverGeneratedId
         activate db
-        db -> ir: 0 rows
+        db -> s: 0 rows
         deactivate db
-        ir -> c: HttpStatus: 400 with appropriate error code
+        s -> c: HttpStatus: 400 with appropriate error code
         note left
           Error Code: RECORD_NOT_FOUND
         end note
     end
     alt record doesn't exists in cache
-        ir -> rc: Search record based on clientReferenceId/individualId
+        s -> rc: Search record based on clientReferenceId/serverGeneratedId
         activate rc
-        rc -> ir: 0 rows
+        rc -> s: 0 rows
         deactivate rc
-        ir -> db: Search record based on clientReferenceId/individualId
+        s -> db: Search record based on clientReferenceId/serverGeneratedId
         activate db
-        db -> ir: 1 row
+        db -> s: 1 row
         deactivate db
-        ir -> rc: 1 record
+        s -> rc: 1 record
         activate rc
         deactivate rc
-        ir -> c: HttpStatus: 200 with appropriate response code
+        s -> c: HttpStatus: 200 with appropriate response code
     end
-ir -> rc: Search record based on clientReferenceId/individualId
+s -> rc: Search record based on clientReferenceId/serverGeneratedId
 activate rc
-rc -> ir: 1 row
+rc -> s: 1 row
 deactivate rc
 end
 alt record doesn't exist for criteria
-    ir -> db: Search record based on criteria
+    s -> db: Search record based on criteria
     activate db
-    db -> ir: 0 rows
+    db -> s: 0 rows
     deactivate db
-    ir -> c: HttpStatus: 400 with appropriate error code
+    s -> c: HttpStatus: 400 with appropriate error code
     note left
       Error Code: RECORD_NOT_FOUND
     end note
 end
-ir -> db: Search record based on criteria
+s -> db: Search record based on criteria
 activate db
-db -> ir: 1-n rows
+db -> s: 1-n rows
 deactivate db
-ir -> c: HttpStatus: 200 OK with found record(s)
-deactivate ir
+s -> c: HttpStatus: 200 OK with found record(s)
+deactivate s
 @enduml
