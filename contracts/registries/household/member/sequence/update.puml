@@ -1,4 +1,5 @@
-@startuml Household Registry - Update
+@startuml
+title Household Member - Update
 !theme vibrant
 participant Client as c
 participant HouseholdRegistry as s

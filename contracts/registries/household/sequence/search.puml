@@ -1,4 +1,5 @@
-@startuml household Registry - Search
+@startuml
+title Household - Search
 !theme vibrant
 participant Client as c
 participant HouseholdRegistry as s

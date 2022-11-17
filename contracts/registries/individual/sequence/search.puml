@@ -1,4 +1,5 @@
-@startuml Individual Registry - Search
+@startuml
+title Individual - Search
 !theme vibrant
 participant Client as c
 participant IndividualRegistry as s

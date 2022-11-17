@@ -1,4 +1,5 @@
-@startuml Household Registry - Create
+@startuml
+title Household Member - Create
 !theme vibrant
 participant Client as c
 participant HouseholdRegistry as s

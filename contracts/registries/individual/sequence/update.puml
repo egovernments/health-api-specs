@@ -1,4 +1,5 @@
-@startuml Individual Registry - Update
+@startuml
+title Individual - Update
 !theme vibrant
 participant Client as c
 participant IndividualRegistry as s
