@@ -60,3 +60,23 @@ Table address {
   lastModifiedTime bigint
   isDeleted bool
 }
+
+Table household {
+  id varchar [pk]
+  clientReferenceId varchar(64)
+  numberOfMembers int
+  addressId varchar
+  additionalDetails longtext
+  createdBy varchar(64)
+  createdTime bigint
+  lastModifiedBy varchar(64)
+  lastModifiedTime bigint
+  isDeleted bool
+}
+
+Table household_individual_mapping {
+  individualId varchar [ref: > individual.id]
+  householdId varchar [ref: > household.id]
+  isHeadOfHousehold bool
+  isDeleted bool
+}

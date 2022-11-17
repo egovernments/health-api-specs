@@ -585,11 +585,16 @@ paths:
         - Individual
       responses:
         '200':
-          description: Individuals.
+          description: Ok
           schema:
             $ref: '#/definitions/IndividualResponse'
         '400':
-          description: Invalid Input body.
+          description: Bad Request
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+        '500':
+          description: Internal Server Error
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
@@ -612,11 +617,16 @@ paths:
         - Household
       responses:
         '202':
-          description: Household request has been accepted.
+          description: Accepted
           schema:
             $ref: '#/definitions/HouseholdResponse'
         '400':
-          description: Invalid Input body.
+          description: Bad Request
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+        '500':
+          description: Internal Server Error
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
@@ -638,11 +648,16 @@ paths:
         - Household
       responses:
         '202':
-          description: Household request accepted.
+          description: Accepted
           schema:
             $ref: '#/definitions/HouseholdResponse'
         '400':
-          description: Invalid Input body.
+          description: Bad Request
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+        '500':
+          description: Internal Server Error
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
@@ -667,11 +682,16 @@ paths:
         - Household
       responses:
         '200':
-          description: Households.
+          description: Ok
           schema:
             $ref: '#/definitions/HouseholdResponse'
         '400':
-          description: Invalid Input body.
+          description: Bad Request
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+        '500':
+          description: Internal Server Error
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
@@ -685,7 +705,7 @@ paths:
       parameters:
         - name: HouseholdMember
           in: body
-          description: Capture linkage of Household Member.
+          description: Capture linkage of Household to Member.
           required: true
           schema:
             $ref: '#/definitions/HouseholdMemberRequest'
@@ -694,11 +714,16 @@ paths:
         - Household
       responses:
         '202':
-          description: Household member request has been accepted.
+          description: Accepted
           schema:
             $ref: '#/definitions/HouseholdMemberResponse'
         '400':
-          description: Invalid Input body.
+          description: Bad Request
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+        '500':
+          description: Internal Server Error
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
@@ -707,11 +732,11 @@ paths:
       summary: >-
         Update the linkage details of an existing household member
       description: >-
-        Update the linkage details of an existing household memver
+        Update the linkage details of an existing household member
       parameters:
         - name: HouseholdMember
           in: body
-          description: Details for existing household member.
+          description: Linkage details for existing household member.
           required: true
           schema:
             $ref: '#/definitions/HouseholdMemberRequest'
@@ -720,11 +745,16 @@ paths:
         - Household
       responses:
         '202':
-          description: Household request accepted.
+          description: Accepted
           schema:
             $ref: '#/definitions/HouseholdResponse'
         '400':
-          description: Invalid Input body.
+          description: Bad Request
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+        '500':
+          description: Internal Server Error
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
@@ -1249,12 +1279,12 @@ definitions:
         minLength: 2
         maxLength: 64
         example: 'ID-1'
-      reasonIfNotDelivered:
+      quantity:
         type: string
       isDelivered:
         type: boolean
         example: true
-      quantity:
+      reasonIfNotDelivered:
         type: string
       auditDetails:
         $ref: >-
@@ -1752,6 +1782,16 @@ definitions:
         maxLength: 64
         description: Unique system generated GUID
         readOnly: true
+      householdId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Id of the household
+      householdClientReferenceId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Client reference id of the household
       individualId:
         type: string
         minLength: 2
@@ -1761,7 +1801,7 @@ definitions:
         type: string
         minLength: 2
         maxLength: 64
-        description: Id of the individual
+        description: Client reference Id of the individual
       isHeadOfHousehold:
         type: boolean
         default: false
