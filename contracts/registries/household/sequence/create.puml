@@ -30,14 +30,20 @@ alt request validation fails
         deactivate db
         deactivate es
     end
-    hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
+    hr -> c: HttpStatus: 400 with appropriate error code
+    note left
+        Error Code: REQUEST_VALIDATION_FAILED
+    end note
 end
 hr -> hr: Request validation successful
 hr -> db: Check if the record already exists
 alt record already exists
     activate db
     db -> hr: 1 row
-    hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
+    hr -> c: HttpStatus: 400 with appropriate error code
+    note left
+        Error Code: RECORD_ALREADY_EXISTS
+    end note
 end
 db -> hr: 0 rows
 deactivate db
@@ -61,7 +67,10 @@ alt individual doesn't exists
         deactivate db
         deactivate es
     end
-    hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
+    hr -> c: HttpStatus: 400 with appropriate error code
+    note left
+        Error Code: DEPENDENCY_ERROR
+    end note
 end
 hr -> ir: /individual/v1/_search
 activate ir
@@ -87,7 +96,10 @@ alt id generation fails
         deactivate db
         deactivate es
     end
-    hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
+    hr -> c: HttpStatus: 500 with appropriate error code
+    note left
+      Error Code: ID_GENERATION_FAILED
+    end note
 end
 hr -> idgen: Generate ID
 activate idgen
