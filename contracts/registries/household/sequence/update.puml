@@ -49,13 +49,13 @@ alt record doesn't exist
         This will be marked as unrecoverable right away 
         and require manual intervention
     end note
-    s -> k: Individual Data /error_topic
+    s -> k: Household Data /error_topic
     activate k
     group async
-        es -> k: Consume Individual Data
+        es -> k: Consume Household Data
         activate es
         deactivate k
-        es -> db: Persist Individual Data /error_table
+        es -> db: Persist Household Data /error_table
         activate db
         deactivate db
         deactivate es

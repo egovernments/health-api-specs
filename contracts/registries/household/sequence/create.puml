@@ -64,45 +64,46 @@ alt record already exists
         Error Code: RECORD_ALREADY_EXISTS
     end note
 end
-alt individual(s) don't exist [loop on all individualId(s) in request]
-    s -> s2: /individual/v1/_search
-    activate s2
-    s2 -> s: 0 rows
-    deactivate s2
-    s -> k: Household Data /error_topic
-    note left
-        This will be marked as recoverable and will be 
-        retried later
-    end note
-    activate k
-    group async
-        es -> k: Consume Household Data
-        activate es
-        deactivate k
-        es -> db: Persist Household Data /error_table
-        activate db
-        deactivate db
-        deactivate es
-    end
-    s -> c: HttpStatus: 400 with appropriate error code
-    note left
-        Error Code: DEPENDENCY_ERROR
-    end note
-end
-s -> s2: /individual/v1/_search
-activate s2
-s2 -> s: 1 row
-deactivate s2
-s -> db: Get Individual/Household mapping using individual clientReferenceId/serverGeneratedId [loop on all individualId(s) in request]]
-activate db
-alt mapping record found
-  db -> s: 1 row
-  s -> c: HttpStatus: 400 with appropriate error code
-  note left
-      Error Code: BAD_REQUEST
-      Ensures that the individual is not already linked to a household
-  end note
-end
+'alt individual(s) don't exist [loop on all individualId(s) in request]
+'    s -> s2: /individual/v1/_search
+'    activate s2
+'    s2 -> s: 0 rows
+'    deactivate s2
+'    s -> k: Household Data /error_topic
+'    note left
+'        This will be marked as recoverable and will be
+'        retried later
+'    end note
+'    activate k
+'    group async
+'        es -> k: Consume Household Data
+'        activate es
+'        deactivate k
+'        es -> db: Persist Household Data /error_table
+'        activate db
+'        deactivate db
+'        deactivate es
+'    end
+'    s -> c: HttpStatus: 400 with appropriate error code
+'    note left
+'        Error Code: DEPENDENCY_ERROR
+'    end note
+'end
+'s -> s2: /individual/v1/_search
+'activate s2
+'s2 -> s: 1 row
+'deactivate s2
+'s -> db: Get Individual/Household mapping using individual clientReferenceId/serverGeneratedId [loop on all individualId(s) in request]]
+'activate db
+'alt mapping record found
+'  db -> s: 1 row
+'  deactivate db
+'  s -> c: HttpStatus: 400 with appropriate error code
+'  note left
+'      Error Code: BAD_REQUEST
+'      Ensures that the individual is not already linked to a household
+'  end note
+'end
 alt id generation fails
     s -> idgen: /id/_generate
     activate idgen

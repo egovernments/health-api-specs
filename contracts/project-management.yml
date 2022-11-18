@@ -1,3 +1,5 @@
+#TODO review mandatory fields per entity
+#TODO remove tenantId where not required
 swagger: '2.0'
 info:
   version: 1.0.0
@@ -748,6 +750,40 @@ paths:
           description: Accepted
           schema:
             $ref: '#/definitions/HouseholdResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /household/member/v1/_search:
+    post:
+      summary: >-
+        Search existing household member
+      description: >-
+        Search existing household member
+      parameters:
+        - name: HouseholdMember
+          in: body
+          description: Details for existing household member.
+          required: true
+          schema:
+            $ref: '#/definitions/HouseholdMemberRequest'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/tenantId'
+        - $ref: '#/parameters/lastChangedSince'
+      tags:
+        - Household
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/HouseholdMemberResponse'
         '400':
           description: Bad Request
           schema:
@@ -1760,13 +1796,15 @@ definitions:
       noOfMembers:
         type: integer
         example: 4
+        minimum: 0
+        maximum: 1000
         description: Total no of individuals in a household. Could be different from the count of members as all members may not be enumerated individually.
       address:
         $ref: '#/definitions/Address'
-      members:
-        type: array
-        items:
-          $ref: '#/definitions/HouseholdMember'
+#      members:
+#        type: array
+#        items:
+#          $ref: '#/definitions/HouseholdMember'
       additionalFields:
         $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/commons.yml#/definitions/additionalFields'
       auditDetails:
