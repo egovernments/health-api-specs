@@ -591,8 +591,8 @@ paths:
         - $ref: '#/parameters/tenantId'
         - $ref: '#/parameters/lastChangedSince'
         - $ref: '#/parameters/includeDeleted'
-        tags:
-          - Individual
+      tags:
+        - Individual
       responses:
         '200':
           description: Ok
