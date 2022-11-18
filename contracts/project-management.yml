@@ -1,5 +1,3 @@
-#TODO review mandatory fields per entity
-#TODO remove tenantId where not required
 swagger: '2.0'
 info:
   version: 1.0.0
@@ -9,7 +7,9 @@ info:
     email: info@egovernments.org
 schemes:
   - https
-
+#TODO review mandatory fields per entity
+#TODO remove tenantId where not required
+#TODO remove enums where not required
 paths:
   /project/v1/_create:
     post:
@@ -1489,9 +1489,11 @@ definitions:
         #  default: 0
         # description: Applicable only if isRecurring is true the defalut unit is days
       resources:
+        #Default products and variants used by projects using this type are specified here. Can override at the project level using /project/resource
         type: array
         items:
-          $ref: '#/definitions/ProductVariant'
+          $ref: '#/definitions/ProjectProductVariant'
+#          $ref: '#/definitions/ProductVariant'
       #          $ref: '#/definitions/Resource'
       auditDetails:
         $ref: >-
@@ -1917,7 +1919,6 @@ definitions:
         type: string
         description: Capture manufacturer of product
         example: 'J&J'
-      #TODO: store base unit here and add multiplier to product variant?
       additionalFields:
         $ref: '#/definitions/additionalFields'
       auditDetails:
@@ -1951,12 +1952,27 @@ definitions:
       name:
         type: string
         description: Capture name of the variant
-        example: Paracetamol 200mg
+        example: Paracetamol 200mg white color
       variant:
-        type: string
+      #A variant is a combination of 1 or more variations for a product
+        type: array
+        items:
+          $ref: '#/definitions/Variation'
         description: Capture product variant
+      additionalFields:
+        $ref: '#/definitions/additionalFields'
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+
+  Variation:
+    type: object
+    properties:
+      variation:
+        type: string
+        description: Capture product variation
         example: '200'
-      variantUnit:
+      variationUnit:
         type: string
         example: 'MG'
         enum:
@@ -1965,11 +1981,17 @@ definitions:
           - VIALS
           - MG
           - ML
-      additionalFields:
-        $ref: '#/definitions/additionalFields'
-      auditDetails:
-        $ref: >-
-          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+
+  ProjectProductVariant:
+    #Master Data MDMS
+    type: object
+    properties:
+      productVariantId:
+        type: string
+        description: Reference to id in ProductVariant
+      isBaseUnitVariant:
+        type: boolean
+        description: Denotes if a variant is a base unit variant. Useful to filter variants applicable for tasks within a project.
 
   StockTransaction:
     type: object
