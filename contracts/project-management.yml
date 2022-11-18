@@ -1708,16 +1708,17 @@ definitions:
         maxLength: 64
         description: Unique tenant of the system
         example: 'tenantA'
-      productVariantId:
-        type: string
-        description: Unique productVariantId defined in Product service
-        minLength: 2
-        maxLength: 64
       projectId:
         type: string
         description: Unique Project Id defined in Project Service
         minLength: 2
         maxLength: 64
+      resource:
+        $ref: '#/definitions/ProjectProductVariant'
+      #        type: string
+      #        description: Unique productVariantId defined in Product service
+      #        minLength: 2
+      #        maxLength: 64
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
