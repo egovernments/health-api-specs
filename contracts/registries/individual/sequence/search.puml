@@ -12,13 +12,13 @@ alt request validation fails
     ir -> c: HttpStatus: 200 OK with appropriate response code
 end
 ir -> ir: Request validation successful
-alt search by clientReferenceId/individualId
+alt search by individualId
     alt record doesn't exist
-        ir -> rc: Search record based on clientReferenceId/individualId
+        ir -> rc: Search record based on individualId
         activate rc
         rc -> ir: 0 rows
         deactivate rc
-        ir -> db: Search record based on clientReferenceId/individualId
+        ir -> db: Search record based on individualId
         activate db
         db -> ir: 0 rows
         deactivate db
@@ -28,11 +28,11 @@ alt search by clientReferenceId/individualId
         end note
     end
     alt record doesn't exists in cache
-        ir -> rc: Search record based on clientReferenceId/individualId
+        ir -> rc: Search record based on individualId
         activate rc
         rc -> ir: 0 rows
         deactivate rc
-        ir -> db: Search record based on clientReferenceId/individualId
+        ir -> db: Search record based on individualId
         activate db
         db -> ir: 1 row
         deactivate db
@@ -41,7 +41,7 @@ alt search by clientReferenceId/individualId
         deactivate rc
         ir -> c: HttpStatus: 200 with appropriate response code
     end
-ir -> rc: Search record based on clientReferenceId/individualId
+ir -> rc: Search record based on individualId
 activate rc
 rc -> ir: 1 row
 deactivate rc

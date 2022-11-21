@@ -65,11 +65,11 @@ alt record doesn't exist
     end note
 end
 alt record doesn't exists in cache
-    ir -> rc: Search record based on clientReferenceId/individualId
+    ir -> rc: Search record based on individualId
     activate rc
     rc -> ir: 0 rows
     deactivate rc
-    ir -> db: Search record based on clientReferenceId/individualId
+    ir -> db: Search record based on individualId
     activate db
     db -> ir: 1 row
     deactivate db
@@ -88,7 +88,7 @@ deactivate rc
 'end
 ir -> k: Individual Data /update_topic
 activate k
-ir -> rc: Update new record in cache against clientReferenceId/individualId
+ir -> rc: Update new record in cache against individualId
 activate rc
 deactivate rc
 ir -> c: HttpStatus: 202 ACCEPTED

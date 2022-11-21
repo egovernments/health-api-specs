@@ -12,12 +12,12 @@ alt request validation fails
     hr -> c: HttpStatus: 200 OK with appropriate response code
 end
 hr -> hr: Request validation successful
-alt search by clientReferenceId/householdId
+alt search by householdId
     alt record doesn't exist
-        hr -> rc: Search record based on clientReferenceId/householdId
+        hr -> rc: Search record based on householdId
         activate rc
         rc -> rc: 0 rows
-        hr -> db: Search record based on clientReferenceId/householdId
+        hr -> db: Search record based on householdId
         activate db
         db -> rc: 0 rows
         deactivate db
@@ -26,29 +26,29 @@ alt search by clientReferenceId/householdId
         hr -> c: HttpStatus: 200 OK with appropriate response code
     end
     alt record doesn't exists in cache
-        hr -> rc: Search record based on clientReferenceId/householdId
+        hr -> rc: Search record based on householdId
         activate rc
         rc -> rc: 0 rows
-        rc -> db: Search record based on clientReferenceId/householdId
+        rc -> db: Search record based on householdId
         activate db
         db -> rc: 1 row
         deactivate db
         rc -> hr: 1 row
         deactivate rc
     end
-hr -> rc: Search record based on clientReferenceId/householdId
+hr -> rc: Search record based on householdId
 activate rc
 rc -> hr: 1 row
 deactivate rc
 end
 alt record doesn't exist for criteria
-    hr -> db: Search record based on clientReferenceId/householdId
+    hr -> db: Search record based on householdId
     activate db
     db -> hr: 0 rows
     deactivate db
     hr -> c: HttpStatus: 200 OK with appropriate response code
 end
-hr -> db: Search record based on clientReferenceId/householdId
+hr -> db: Search record based on householdId
 activate db
 db -> hr: 1-n rows
 deactivate db
