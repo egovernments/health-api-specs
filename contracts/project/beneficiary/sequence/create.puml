@@ -1,5 +1,5 @@
 @startuml
-title Household - Create
+title Project Beneficiary - Create
 !theme vibrant
 participant Client as c
 participant ProjectService as s
