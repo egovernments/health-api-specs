@@ -1,57 +1,69 @@
-@startuml Household Registry - Search
+@startuml
+title Household - Search
 !theme vibrant
 participant Client as c
-participant HouseholdRegistry as hr
+participant HouseholdRegistry as s
 participant RedisCache as rc
 database Database as db
-c -> hr : /household/v1/_search
-activate hr
-hr -> hr: Validate request body
+c -> s : /household/v1/_search
+activate s
+s -> s: Validate request body
 alt request validation fails
-    hr -> hr: Request validation failed
-    hr -> c: HttpStatus: 200 OK with appropriate response code
+    s -> s: Request validation failed
+    s -> c: HttpStatus: 400 with appropriate error code
+    note left
+      Error Code: REQUEST_VALIDATION_FAILED
+    end note
 end
-hr -> hr: Request validation successful
-alt search by householdId
+s -> s: Request validation successful
+alt search by clientReferenceId/serverGeneratedId
     alt record doesn't exist
-        hr -> rc: Search record based on householdId
+        s -> rc: Search record based on clientReferenceId/serverGeneratedId
         activate rc
-        rc -> rc: 0 rows
-        hr -> db: Search record based on householdId
-        activate db
-        db -> rc: 0 rows
-        deactivate db
-        rc -> hr: 0 rows
+        rc -> s: 0 rows
         deactivate rc
-        hr -> c: HttpStatus: 200 OK with appropriate response code
+        s -> db: Search record based on clientReferenceId/serverGeneratedId
+        activate db
+        db -> s: 0 rows
+        deactivate db
+        s -> c: HttpStatus: 400 with appropriate error code
+        note left
+          Error Code: RECORD_NOT_FOUND
+        end note
     end
     alt record doesn't exists in cache
-        hr -> rc: Search record based on householdId
+        s -> rc: Search record based on clientReferenceId/serverGeneratedId
         activate rc
-        rc -> rc: 0 rows
-        rc -> db: Search record based on householdId
-        activate db
-        db -> rc: 1 row
-        deactivate db
-        rc -> hr: 1 row
+        rc -> s: 0 rows
         deactivate rc
+        s -> db: Search record based on clientReferenceId/serverGeneratedId
+        activate db
+        db -> s: 1 row
+        deactivate db
+        s -> rc: 1 record
+        activate rc
+        deactivate rc
+        s -> c: HttpStatus: 200 with appropriate response code
     end
-hr -> rc: Search record based on householdId
+s -> rc: Search record based on clientReferenceId/serverGeneratedId
 activate rc
-rc -> hr: 1 row
+rc -> s: 1 row
 deactivate rc
 end
 alt record doesn't exist for criteria
-    hr -> db: Search record based on householdId
+    s -> db: Search record based on criteria
     activate db
-    db -> hr: 0 rows
+    db -> s: 0 rows
     deactivate db
-    hr -> c: HttpStatus: 200 OK with appropriate response code
+    s -> c: HttpStatus: 400 with appropriate error code
+    note left
+      Error Code: RECORD_NOT_FOUND
+    end note
 end
-hr -> db: Search record based on householdId
+s -> db: Search record based on criteria
 activate db
-db -> hr: 1-n rows
+db -> s: 1-n rows
 deactivate db
-hr -> c: HttpStatus: 200 OK with found record(s)
-deactivate hr
+s -> c: HttpStatus: 200 OK with found record(s)
+deactivate s
 @enduml

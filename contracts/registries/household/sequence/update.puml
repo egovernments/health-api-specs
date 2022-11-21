@@ -1,7 +1,8 @@
-@startuml Household Registry - Update
+@startuml
+title Household - Update
 !theme vibrant
 participant Client as c
-participant HouseholdRegistry as hr
+participant HouseholdRegistry as s
 participant RedisCache as rc
 queue Kafka as k
 participant PersisterService as prs
@@ -9,12 +10,12 @@ participant IndexerService as idx
 participant ErrorService as es
 participant ElasticSearch as el
 database Database as db
-c -> hr : /household/v1/_update
-activate hr
-hr -> hr: Validate request body
+c -> s : /household/v1/_update
+activate s
+s -> s: Validate request body
 alt request validation fails
-    hr -> hr: Request validation failed
-    hr -> k: Household Data /error_topic
+    s -> s: Request validation failed
+    s -> k: Household Data /error_topic
     note left
         This will be marked as unrecoverable right away 
         and require manual intervention
@@ -29,24 +30,27 @@ alt request validation fails
         deactivate db
         deactivate es
     end
-    hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
+    s -> c: HttpStatus: 400 with appropriate error code
+    note left
+        Error Code: REQUEST_VALIDATION_FAILED
+    end note
 end
-hr -> hr: Request validation successful
+s -> s: Request validation successful
 alt record doesn't exist
-    hr -> rc: Fetch the existing record
+    s -> rc: Search record based on clientReferenceId/serverGeneratedId
     activate rc
-    rc -> rc: 0 rows
-    rc -> db: Fetch the existing record
-    activate db
-    db -> rc: 0 rows
-    deactivate db
-    rc -> hr: 0 rows
+    rc -> s: 0 rows
     deactivate rc
+    s -> db: Search record based on clientReferenceId/serverGeneratedId
+    activate db
+    db -> s: 0 row
+    deactivate db
     note left
         This will be marked as unrecoverable right away 
         and require manual intervention
     end note
-    hr -> k: Household Data /error_topic
+    s -> k: Household Data /error_topic
+    activate k
     group async
         es -> k: Consume Household Data
         activate es
@@ -56,39 +60,40 @@ alt record doesn't exist
         deactivate db
         deactivate es
     end
-    hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
+    s -> c: HttpStatus: 400 with appropriate error code
+    note left
+      Error Code: RECORD_NOT_FOUND
+    end note
 end
 alt record doesn't exists in cache
-    hr -> rc: Fetch the existing record
+    s -> rc: Search record based on clientReferenceId/serverGeneratedId
     activate rc
-    rc -> rc: 0 rows
-    rc -> db: Fetch the existing record
+    rc -> s: 0 rows
+    deactivate rc
+    s -> db: Search record based on clientReferenceId/serverGeneratedId
     activate db
-    db -> rc: 1 row
+    db -> s: 1 row
     deactivate db
-    rc -> hr: 1 row
+    s -> rc: 1 record
+    activate rc
     deactivate rc
 end
-hr -> rc: Fetch the existing record
+s -> rc: Fetch the existing record
 activate rc
-rc -> hr: 1 row
+rc -> s: 1 row
 deactivate rc
-hr -> hr: Check if the new record is not equal to existing record
-alt new record equals existing record
-    hr -> hr: New record equals existing record
-    hr -> c: HttpStatus: 202 ACCEPTED with appropriate response code
-end
-hr -> k: Household Data /update_topic
+s -> k: Household Data /update_topic
 activate k
-hr -> rc: Update new record in cache against householdId
+s -> rc: Update new record in cache against clientReferenceId/serverGeneratedId
 activate rc
 deactivate rc
-hr -> c: HttpStatus: 202 ACCEPTED
-deactivate hr
+s -> c: HttpStatus: 202 ACCEPTED
+deactivate s
 group async
     prs -> k: Consume Household Data
     activate prs
     idx -> k: Consume Household Data
+    deactivate k
     activate idx
     idx -> el: Store Household Data
     activate el
@@ -99,5 +104,4 @@ group async
     deactivate db
     deactivate prs
 end
-deactivate k
 @enduml
