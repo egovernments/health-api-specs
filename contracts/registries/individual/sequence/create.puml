@@ -96,7 +96,7 @@ deactivate idgen
 s -> s: Update generated ID in Individual Data
 s -> k: Individual Data /persist_topic
 activate k
-s -> rc: Put Individual Data against clientReferenceId/serverGeneratedId in cache
+s -> rc: Put Individual Data against serverGeneratedId in cache
 activate rc
 deactivate rc
 s -> c: HttpStatus: 202 ACCEPTED
