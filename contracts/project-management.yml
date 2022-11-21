@@ -137,7 +137,7 @@ paths:
         - Project
       responses:
         '202':
-          description: Project Beneficary request has been accepted.
+          description: Project Beneficiary request has been accepted.
           schema:
             $ref: '#/definitions/BeneficiaryResponse'
         '400':
