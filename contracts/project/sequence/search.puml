@@ -1,11 +1,11 @@
 @startuml
-title Individual - Search
+title Project - Search
 !theme vibrant
 participant Client as c
-participant IndividualRegistry as s
+participant ProjectService as s
 participant RedisCache as rc
 database Database as db
-c -> s : /individual/v1/_search
+c -> s : /project/v1/_search
 activate s
 s -> s: Validate request body
 alt request validation fails

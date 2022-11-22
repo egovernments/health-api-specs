@@ -39,7 +39,7 @@ end
 s -> s: Request validation successful
 alt record already exists
     alt record found in cache
-      s -> rc: Check using serverGeneratedId
+      s -> rc: Check using clientReferenceId/serverGeneratedId
       activate rc
       rc -> s: 1 row
       deactivate rc
@@ -48,7 +48,7 @@ alt record already exists
           Error Code: RECORD_ALREADY_EXISTS
       end note
     end
-    s -> rc: Check using serverGeneratedId
+    s -> rc: Check using clientReferenceId/serverGeneratedId
     activate rc
     rc -> s: 0 rows
     deactivate rc
@@ -56,7 +56,7 @@ alt record already exists
     activate db
     db -> s: 1 row
     deactivate db
-    s -> rc: Put data in cache using serverGeneratedId
+    s -> rc: Put data in cache using clientReferenceId/serverGeneratedId
     activate rc
     deactivate rc
     s -> c: HttpStatus: 400 with appropriate error code
@@ -96,7 +96,7 @@ deactivate idgen
 s -> s: Update generated ID in Individual Data
 s -> k: Individual Data /persist_topic
 activate k
-s -> rc: Put Individual Data against serverGeneratedId in cache
+s -> rc: Put Individual Data against clientReferenceId/serverGeneratedId in cache
 activate rc
 deactivate rc
 s -> c: HttpStatus: 202 ACCEPTED
