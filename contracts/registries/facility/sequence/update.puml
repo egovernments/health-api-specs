@@ -1,8 +1,8 @@
 @startuml
-title Project - Facility - Update
+title Facility - Update
 !theme vibrant
 participant Client as c
-participant ProjectService as s
+participant FacilityRegistry as s
 participant RedisCache as rc
 queue Kafka as k
 participant PersisterService as prs
@@ -10,22 +10,22 @@ participant IndexerService as idx
 participant ErrorService as es
 participant ElasticSearch as el
 database Database as db
-c -> s : /project/facility/v1/_update
+c -> s : /facility/v1/_update
 activate s
 s -> s: Validate request body
 alt request validation fails
     s -> s: Request validation failed
-    s -> k: Project Facility Data /error_topic
+    s -> k: Facility Data /error_topic
     note left
         This will be marked as unrecoverable right away 
         and require manual intervention
     end note
     activate k
     group async
-        es -> k: Consume Project Facility Data
+        es -> k: Consume Facility Data
         activate es
         deactivate k
-        es -> db: Persist Project Facility Data /error_table
+        es -> db: Persist Facility Data /error_table
         activate db
         deactivate db
         deactivate es
@@ -45,12 +45,12 @@ alt record doesn't exist
     activate db
     db -> s: 0 row
     deactivate db
-    s -> k: Project Facility Data /error_topic
+    s -> k: Facility Data /error_topic
     group async
-        es -> k: Consume Project Facility Data
+        es -> k: Consume Facility Data
         activate es
         deactivate k
-        es -> db: Persist Project Facility Data /error_table
+        es -> db: Persist Facility Data /error_table
         activate db
         deactivate db
         deactivate es
@@ -77,7 +77,7 @@ s -> rc: Fetch the existing record
 activate rc
 rc -> s: 1 row
 deactivate rc
-s -> k: Project Facility Data /update_topic
+s -> k: Facility Data /update_topic
 activate k
 s -> rc: Update new record in cache against clientReferenceId/serverGeneratedId
 activate rc
@@ -85,15 +85,15 @@ deactivate rc
 s -> c: HttpStatus: 202 ACCEPTED
 deactivate s
 group async
-    prs -> k: Consume Project Facility Data
+    prs -> k: Consume Facility Data
     activate prs
-    idx -> k: Consume Project Facility Data
+    idx -> k: Consume Facility Data
     activate idx
-    idx -> el: Store Project Facility Data
+    idx -> el: Store Facility Data
     activate el
     deactivate el
     deactivate idx
-    prs -> db: Update Project Facility Data
+    prs -> db: Update Facility Data
     activate db
     deactivate db
     deactivate prs
