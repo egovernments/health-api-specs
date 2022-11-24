@@ -1200,6 +1200,15 @@ definitions:
     format: int64
     example: 1663218161
 
+  isDeleted:
+    type: boolean
+    description: Flag to indicate if record is soft deleted
+
+  rowVersion:
+    type: integer
+    format: int64
+    description: Field to indicate the version of the row that the client used as a base to perform an update operation. This is to validate and maintain the sequence of updates.
+
   ProjectBeneficiary:
     description: A representation of Individual Registration to a Project.
     type: object
@@ -1227,6 +1236,10 @@ definitions:
         $ref: '#/definitions/eventTimestamp'
       additionalFields:
         $ref: '#/definitions/additionalFields'
+      isDeleted:
+        $ref: '#/definitions/isDeleted'
+      rowVersion:
+        $ref: '#/definitions/rowVersion'
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
@@ -1571,6 +1584,12 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Target'
+      additionalFields:
+        $ref: '#/definitions/additionalFields'
+      isDeleted:
+        $ref: '#/definitions/isDeleted'
+      rowVersion:
+        $ref: '#/definitions/rowVersion'
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
@@ -1636,6 +1655,10 @@ definitions:
         # default: 1
       additionalFields:
         $ref: '#/definitions/additionalFields'
+      isDeleted:
+        $ref: '#/definitions/isDeleted'
+      rowVersion:
+        $ref: '#/definitions/rowVersion'
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
@@ -1685,6 +1708,10 @@ definitions:
         type: string
         minLength: 2
         maxLength: 64
+      isDeleted:
+        $ref: '#/definitions/isDeleted'
+      rowVersion:
+        $ref: '#/definitions/rowVersion'
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
@@ -1715,6 +1742,10 @@ definitions:
         description: Project Id
         minLength: 2
         maxLength: 64
+      isDeleted:
+        $ref: '#/definitions/isDeleted'
+      rowVersion:
+        $ref: '#/definitions/rowVersion'
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
@@ -1746,6 +1777,10 @@ definitions:
       #        description: Unique productVariantId defined in Product service
       #        minLength: 2
       #        maxLength: 64
+      isDeleted:
+        $ref: '#/definitions/isDeleted'
+      rowVersion:
+        $ref: '#/definitions/rowVersion'
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
@@ -1791,6 +1826,10 @@ definitions:
           $ref: '#/definitions/Identifier'
       additionalFields:
         $ref: '#/definitions/additionalFields'
+      isDeleted:
+        $ref: '#/definitions/isDeleted'
+      rowVersion:
+        $ref: '#/definitions/rowVersion'
       auditDetails:
         $ref: 'https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails'
 
@@ -1837,6 +1876,10 @@ definitions:
       #          $ref: '#/definitions/HouseholdMember'
       additionalFields:
         $ref: '#/definitions/additionalFields'
+      isDeleted:
+        $ref: '#/definitions/isDeleted'
+      rowVersion:
+        $ref: '#/definitions/rowVersion'
       auditDetails:
         $ref: 'https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails'
 
@@ -1878,6 +1921,10 @@ definitions:
         example: 'tenantA'
       additionalFields:
         $ref: '#/definitions/additionalFields'
+      isDeleted:
+        $ref: '#/definitions/isDeleted'
+      rowVersion:
+        $ref: '#/definitions/rowVersion'
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
@@ -1908,6 +1955,10 @@ definitions:
         $ref: '#/definitions/Address'
       additionalFields:
         $ref: '#/definitions/additionalFields'
+      isDeleted:
+        $ref: '#/definitions/isDeleted'
+      rowVersion:
+        $ref: '#/definitions/rowVersion'
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
@@ -1949,6 +2000,10 @@ definitions:
         example: 'J&J'
       additionalFields:
         $ref: '#/definitions/additionalFields'
+      isDeleted:
+        $ref: '#/definitions/isDeleted'
+      rowVersion:
+        $ref: '#/definitions/rowVersion'
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
@@ -1989,6 +2044,10 @@ definitions:
         description: Capture product variant
       additionalFields:
         $ref: '#/definitions/additionalFields'
+      isDeleted:
+        $ref: '#/definitions/isDeleted'
+      rowVersion:
+        $ref: '#/definitions/rowVersion'
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
@@ -2094,6 +2153,10 @@ definitions:
         example: 'WAREHOUSE'
       additionalFields:
         $ref: '#/definitions/additionalFields'
+      isDeleted:
+        $ref: '#/definitions/isDeleted'
+      rowVersion:
+        $ref: '#/definitions/rowVersion'
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
