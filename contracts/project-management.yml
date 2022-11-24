@@ -1203,6 +1203,7 @@ definitions:
   isDeleted:
     type: boolean
     description: Flag to indicate if record is soft deleted
+    readOnly: true
 
   rowVersion:
     type: integer
