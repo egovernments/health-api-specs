@@ -77,6 +77,26 @@ s -> rc: Fetch the existing record
 activate rc
 rc -> s: 1 row
 deactivate rc
+alt incorrect rowVersion
+    s -> s: Compare rowVersion between request and db
+    s -> s: Incorrect rowVersion [request: should be +1 only]
+    s -> k: Project Staff Data /error_topic
+    group async
+        es -> k: Consume Project Staff Data
+        activate es
+        deactivate k
+        es -> db: Persist Project Staff Data /error_table
+        activate db
+        deactivate db
+        deactivate es
+    end
+    s -> c: HttpStatus: 400 with appropriate error code
+    note left
+      Error Code: BAD_REQUEST
+    end note
+end
+s -> s: Compare rowVersion between request and db
+s -> s: rowVersion in request = rowVersion in db + 1
 s -> k: Project Staff Data /update_topic
 activate k
 s -> rc: Update new record in cache against clientReferenceId/serverGeneratedId
