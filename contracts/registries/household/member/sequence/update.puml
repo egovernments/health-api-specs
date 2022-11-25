@@ -65,6 +65,26 @@ s -> db: Get Individual/Household mapping using household and individual clientR
 activate db
 db -> s: 1 row
 deactivate db
+alt incorrect rowVersion
+    s -> s: Compare rowVersion between request and db
+    s -> s: Incorrect rowVersion [request: should be +1 only]
+    s -> k: Household Member Data /error_topic
+    group async
+        es -> k: Consume Household Member Data
+        activate es
+        deactivate k
+        es -> db: Persist Household Member Data /error_table
+        activate db
+        deactivate db
+        deactivate es
+    end
+    s -> c: HttpStatus: 400 with appropriate error code
+    note left
+      Error Code: BAD_REQUEST
+    end note
+end
+s -> s: Compare rowVersion between request and db
+s -> s: rowVersion in request = rowVersion in db + 1
 s -> k: Household Member Data /update_topic
 activate k
 s -> rc: Update new record in cache against clientReferenceId/serverGeneratedId
