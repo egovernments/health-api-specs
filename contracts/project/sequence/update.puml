@@ -102,6 +102,7 @@ alt incorrect rowVersion
 end
 s -> s: Compare rowVersion between request and db
 s -> s: rowVersion in request = rowVersion in db + 1
+s -> s: Put addressId from db to request
 s -> k: Project Data /update_topic
 activate k
 s -> rc: Update new record in cache against clientReferenceId/serverGeneratedId

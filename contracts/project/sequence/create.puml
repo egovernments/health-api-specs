@@ -93,7 +93,7 @@ s -> db: Check if productTypeId exists
 activate db
 db -> s: 1 row
 deactivate db
-alt id generation fails
+alt id generation fails - same for address and project
     s -> idgen: /id/_generate
     activate idgen
     idgen -> s: HttpStatus: 400
@@ -118,11 +118,13 @@ alt id generation fails
       Error Code: ID_GENERATION_FAILED
     end note
 end
-s -> idgen: Generate ID
-activate idgen
-idgen -> s: Generated ID
-deactivate idgen
-s -> s: Update generated ID in Project Data
+group repeat same for address and project
+    s -> idgen: /id/_generate
+    activate idgen
+    idgen -> s: Generated ID
+    deactivate idgen
+    s -> s: Update generated ID in Project Data/Address
+end
 s -> k: Project Data /persist_topic
 activate k
 s -> rc: Put Project Data against clientReferenceId/serverGeneratedId in cache
