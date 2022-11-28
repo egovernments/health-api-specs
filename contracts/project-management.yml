@@ -1322,6 +1322,12 @@ definitions:
   Target:
     type: object
     properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: true
       beneficiaryType:
         type: string
         minLength: 2
@@ -1331,6 +1337,8 @@ definitions:
         type: integer
       targetNo:
         type: integer
+      isDeleted:
+        $ref: '#/definitions/isDeleted'
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
@@ -1363,6 +1371,8 @@ definitions:
         example: true
       reasonIfNotDelivered:
         type: string
+      isDeleted:
+        $ref: '#/definitions/isDeleted'
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
@@ -1773,7 +1783,9 @@ definitions:
         minLength: 2
         maxLength: 64
       resource:
-        $ref: '#/definitions/ProjectProductVariant'
+        type: array
+        items:
+          $ref: '#/definitions/ProjectProductVariant'
       #        type: string
       #        description: Unique productVariantId defined in Product service
       #        minLength: 2
@@ -2033,16 +2045,16 @@ definitions:
         type: string
         description: Capture sku code of the variant
         example: 'PAR-200'
-      name:
+      variation:
         type: string
         description: Capture name of the variant
         example: Paracetamol 200mg white color
-      variant:
-        #A variant is a combination of 1 or more variations for a product
-        type: array
-        items:
-          $ref: '#/definitions/Variation'
-        description: Capture product variant
+#      variant:
+#        #A variant is a combination of 1 or more variations for a product
+#        type: array
+#        items:
+#          $ref: '#/definitions/Variation'
+#        description: Capture product variant
       additionalFields:
         $ref: '#/definitions/additionalFields'
       isDeleted:
@@ -2053,22 +2065,22 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
-  Variation:
-    type: object
-    properties:
-      variation:
-        type: string
-        description: Capture product variation
-        example: '200'
-      variationUnit:
-        type: string
-        example: 'MG'
-        enum:
-          - BALE
-          - CARTONS
-          - VIALS
-          - MG
-          - ML
+#  Variation:
+#    type: object
+#    properties:
+#      variation:
+#        type: string
+#        description: Capture product variation
+#        example: '200'
+#      variationUnit:
+#        type: string
+#        example: 'MG'
+#        enum:
+#          - BALE
+#          - CARTONS
+#          - VIALS
+#          - MG
+#          - ML
 
   ProjectProductVariant:
     #Master Data MDMS
