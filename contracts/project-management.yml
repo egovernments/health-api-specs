@@ -2195,15 +2195,15 @@ definitions:
   ProjectResponse:
     type: object
     properties:
-      RequestInfo:
+      ResponseInfo:
         $ref: >-
-          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
       Project:
         type: array
         items:
           $ref: '#/definitions/Project'
     required:
-      - RequestInfo
+      - ResponseInfo
       - Project
 
 
@@ -2229,15 +2229,15 @@ definitions:
   BeneficiaryResponse:
     type: object
     properties:
-      RequestInfo:
+      ResponseInfo:
         $ref: >-
-          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
       ProjectBeneficiary:
         type: array
         items:
           $ref: '#/definitions/ProjectBeneficiary'
     required:
-      - RequestInfo
+      - ResponseInfo
       - Beneficiary
 
   ###################################################################
@@ -2260,15 +2260,15 @@ definitions:
   TaskResponse:
     type: object
     properties:
-      RequestInfo:
+      ResponseInfo:
         $ref: >-
-          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
       Task:
         type: array
         items:
           $ref: '#/definitions/Task'
     required:
-      - RequestInfo
+      - ResponseInfo
       - Task
 
 
