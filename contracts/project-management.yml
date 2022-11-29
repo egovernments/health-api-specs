@@ -74,7 +74,7 @@ paths:
           description: Details for the project.
           required: true
           schema:
-            $ref: '#/definitions/ProjectRequest'
+            $ref: '#/definitions/ProjectSearchRequest'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
         - $ref: '#/parameters/tenantId'
@@ -242,7 +242,7 @@ paths:
           description: Project Task Search.
           required: true
           schema:
-            $ref: '#/definitions/TaskRequest'
+            $ref: '#/definitions/TaskSearchRequest'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
         - $ref: '#/parameters/tenantId'
@@ -1194,6 +1194,12 @@ parameters:
     required: false
 
 definitions:
+  boundaryCode:
+    description: Reference to boundary code.
+    type: string
+    format: varchar
+    minLength: 0
+    maxLength: 64
 
   eventTimestamp:
     type: integer
@@ -1568,9 +1574,14 @@ definitions:
         maxLength: 64
         description: Unique tenant of the system
         example: 'tenantA'
-      projectTypeID:
+      projectTypeId:
         type: string
         description: Unique id of Project type master data
+        minLength: 2
+        maxLength: 64
+      subProjectTypeId:
+        type: string
+        description: Unique id of subproject type master data
         minLength: 2
         maxLength: 64
       address:
@@ -1600,10 +1611,6 @@ definitions:
         type: string
         minLength: 2
         maxLength: 64
-      executingDpartment:
-        type: string
-        minLength: 2
-        maxLength: 64
       referenceNumber:
         type: string
         minLength: 2
@@ -1621,6 +1628,32 @@ definitions:
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+
+  ProjectSearch:
+    type: object
+    properties:
+      id:
+        $ref: '#/definitions/Project/properties/id'
+      tenantId:
+        $ref: '#/definitions/Project/properties/tenantId'
+      startDate:
+        $ref: '#/definitions/Project/properties/startDate'
+      endDate:
+        $ref: '#/definitions/Project/properties/endDate'
+      isTaskEnabled:
+        $ref: '#/definitions/Project/properties/isTaskEnabled'
+      parent:
+        $ref: '#/definitions/Project/properties/parent'
+      projectTypeId:
+        $ref: '#/definitions/Project/properties/projectTypeId'
+      subProjectTypeId:
+        $ref: '#/definitions/Project/properties/subProjectTypeId'
+      department:
+        $ref: '#/definitions/Project/properties/department'
+      referenceNumber:
+        $ref: '#/definitions/Project/properties/referenceNumber'
+      boundaryCode:
+        $ref: '#/definitions/boundaryCode'
 
   Task:
     type: object
@@ -1665,8 +1698,6 @@ definitions:
         type: integer
         format: int64
         description: Task planned end date
-
-      #TODO add eventTimestamp
       createdBy:
         type: string
         example: "UUID"
@@ -1694,6 +1725,32 @@ definitions:
         type: string
         description: It is a master data from mdms
         example: 'DELIVERED'
+
+  TaskSearch:
+    type: object
+    properties:
+      id:
+        $ref: '#/definitions/Task/properties/id'
+      tenantId:
+        $ref: '#/definitions/Task/properties/tenantId'
+      projectId:
+        $ref: '#/definitions/Task/properties/projectId'
+      projectBeneficiaryId:
+        $ref: '#/definitions/Task/properties/projectBeneficiaryId'
+      plannedStartDate:
+        $ref: '#/definitions/Task/properties/plannedStartDate'
+      plannedEndDate:
+        $ref: '#/definitions/Task/properties/plannedEndDate'
+      actualStartDate:
+        $ref: '#/definitions/Task/properties/actualStartDate'
+      actualEndDate:
+        $ref: '#/definitions/Task/properties/actualEndDate'
+      createdBy:
+        $ref: '#/definitions/Task/properties/createdBy'
+      status:
+        $ref: '#/definitions/Task/properties/status'
+      boundaryCode:
+        $ref: '#/definitions/boundaryCode'
 
   ProjectStaff:
     description: This object defines the mapping of a system staff user to a project for a certain period.
@@ -2213,6 +2270,19 @@ definitions:
     required:
       - RequestInfo
       - Project
+  ProjectSearchRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      Project:
+        type: array
+        items:
+          $ref: '#/definitions/ProjectSearch'
+    required:
+      - RequestInfo
+      - Project
   ProjectResponse:
     type: object
     properties:
@@ -2275,6 +2345,19 @@ definitions:
       apiOperation:
         type: string
         $ref: '#/definitions/apiOperation'
+    required:
+      - RequestInfo
+      - Task
+  TaskSearchRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      Task:
+        type: array
+        items:
+          $ref: '#/definitions/TaskSearch'
     required:
       - RequestInfo
       - Task
