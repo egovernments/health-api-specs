@@ -10,6 +10,7 @@ schemes:
 #TODO review mandatory fields per entity
 #TODO remove tenantId where not required
 #TODO remove enums where not required
+#TODO potentially move task outside project
 paths:
   /project/v1/_create:
     post:
@@ -1426,6 +1427,7 @@ definitions:
           enum:
             - PERMANENT
             - CORRESPONDENCE
+            - OTHER
       addressLine1:
         description: Apartment, Block, Street of the address
         type: string
@@ -2084,11 +2086,15 @@ definitions:
 
   ProjectProductVariant:
     #Master Data MDMS
+    #Required to map projects to product variants and define the type and if the variant is considered as a base unit within this project
     type: object
     properties:
       productVariantId:
         type: string
         description: Reference to id in ProductVariant
+      type:
+        type: string
+        description: Type of resource i.e. Human, Product in the context of the project
       isBaseUnitVariant:
         type: boolean
         description: Denotes if a variant is a base unit variant. Useful to filter variants applicable for tasks within a project.
