@@ -28,14 +28,13 @@ paths:
         - Project
       responses:
         '202':
-          description: Project request accepted for creation.
+          description: Accepted
           schema:
             $ref: '#/definitions/ProjectResponse'
         '400':
-          description: Invalid Input body.
+          description: Error
           schema:
-            $ref: >-
-              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+            $ref: '#/definitions/ProjectResponse'
   /project/v1/_update:
     post:
       summary: >-
@@ -2195,15 +2194,20 @@ definitions:
   ProjectResponse:
     type: object
     properties:
-      RequestInfo:
+      ResponseInfo:
         $ref: >-
-          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
       Project:
         type: array
         items:
           $ref: '#/definitions/Project'
+      Errors:
+        type: array
+        items:
+          $ref: >-
+            https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/Error
     required:
-      - RequestInfo
+      - ResponseInfo
       - Project
 
 
