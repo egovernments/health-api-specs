@@ -9,7 +9,6 @@ schemes:
   - https
 #TODO review mandatory fields per entity
 #TODO remove tenantId where not required
-#TODO remove enums where not required
 #TODO potentially move task outside project
 paths:
   /project/v1/_create:
@@ -1503,10 +1502,10 @@ definitions:
       beneficiaryType:
         type: string
         description: beneficiary type
-        enum:
-          - HOUSEHOLD
-          - INDIVIDUAL
-          - STRUCTURE
+#        enum:
+#          - HOUSEHOLD
+#          - INDIVIDUAL
+#          - STRUCTURE
       eligibilityCriteria:
         type: array
         items:
@@ -1975,10 +1974,10 @@ definitions:
       usage:
         type: string
         example: 'STORAGE_WAREHOUSE'
-        enum:
-          - STORAGE_WAREHOUSE
-          - MEDICAL_FACILITY
-          - SEWAGE_TREATMENT_PLANT
+#        enum:
+#          - STORAGE_WAREHOUSE
+#          - MEDICAL_FACILITY
+#          - SEWAGE_TREATMENT_PLANT
       storageCapacity:
         type: integer
         description: Physical storage capacity of the facility in cubic meters
@@ -2015,12 +2014,12 @@ definitions:
         type: string
         description: Define the type of product
         example: 'DRUG'
-        enum:
-          - MEDICINE
-          - VACCINE
-          - SPRAY
-          - BEDNET
-          - EDUCATIONAL_MATERIAL
+#        enum:
+#          - MEDICINE
+#          - VACCINE
+#          - SPRAY
+#          - BEDNET
+#          - EDUCATIONAL_MATERIAL
       name:
         type: string
         description: Capture name of the product
