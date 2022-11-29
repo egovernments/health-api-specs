@@ -158,7 +158,7 @@ paths:
           description: Project Beneficiary Search.
           required: true
           schema:
-            $ref: '#/definitions/BeneficiaryRequest'
+            $ref: '#/definitions/BeneficiarySearchRequest'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
         - $ref: '#/parameters/tenantId'
@@ -325,7 +325,7 @@ paths:
           description: Capture linkage of Project and staff user.
           required: true
           schema:
-            $ref: '#/definitions/ProjectStaffRequest'
+            $ref: '#/definitions/ProjectStaffSearchRequest'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
         - $ref: '#/parameters/tenantId'
@@ -408,7 +408,7 @@ paths:
           description: Capture linkage of Project and facility.
           required: true
           schema:
-            $ref: '#/definitions/ProjectFacilityRequest'
+            $ref: '#/definitions/ProjectFacilitySearchRequest'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
         - $ref: '#/parameters/tenantId'
@@ -489,7 +489,7 @@ paths:
           description: Search linkage of Project and resource.
           required: true
           schema:
-            $ref: '#/definitions/ProjectResourceRequest'
+            $ref: '#/definitions/ProjectResourceSearchRequest'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
         - $ref: '#/parameters/tenantId'
@@ -585,7 +585,7 @@ paths:
           description: Individual details.
           required: true
           schema:
-            $ref: '#/definitions/IndividualRequest'
+            $ref: '#/definitions/IndividualSearchRequest'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
         - $ref: '#/parameters/tenantId'
@@ -683,7 +683,7 @@ paths:
           description: Details for existing household.
           required: true
           schema:
-            $ref: '#/definitions/HouseholdRequest'
+            $ref: '#/definitions/HouseholdSearchRequest'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
         - $ref: '#/parameters/tenantId'
@@ -781,7 +781,7 @@ paths:
           description: Details for existing household member.
           required: true
           schema:
-            $ref: '#/definitions/HouseholdMemberRequest'
+            $ref: '#/definitions/HouseholdMemberSearchRequest'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
         - $ref: '#/parameters/tenantId'
@@ -867,7 +867,7 @@ paths:
           description: Details for existing facility.
           required: true
           schema:
-            $ref: '#/definitions/FacilityRequest'
+            $ref: '#/definitions/FacilitySearchRequest'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
         - $ref: '#/parameters/tenantId'
@@ -948,7 +948,7 @@ paths:
           description: Capture details of Product.
           required: true
           schema:
-            $ref: '#/definitions/ProductRequest'
+            $ref: '#/definitions/ProductSearchRequest'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
         - $ref: '#/parameters/tenantId'
@@ -1029,7 +1029,7 @@ paths:
           description: Capture details of Product variant.
           required: true
           schema:
-            $ref: '#/definitions/ProductVariantRequest'
+            $ref: '#/definitions/ProductVariantSearchRequest'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
         - $ref: '#/parameters/tenantId'
@@ -1110,7 +1110,7 @@ paths:
           description: Capture details of Stock Transfer.
           required: true
           schema:
-            $ref: '#/definitions/StockTransactionRequest'
+            $ref: '#/definitions/StockTransactionSearchRequest'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
         - $ref: '#/parameters/tenantId'
@@ -1215,41 +1215,6 @@ definitions:
     type: integer
     format: int64
     description: Field to indicate the version of the row that the client used as a base to perform an update operation. This is to validate and maintain the sequence of updates.
-
-  ProjectBeneficiary:
-    description: A representation of Individual Registration to a Project.
-    type: object
-    properties:
-      id:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique system generated GUID
-        readOnly: true
-      tenantId:
-        type: string
-        example: 'tenantA'
-      projectId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique ID form Project
-      beneficiaryid:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique ID form Project registration
-      dateOfRegistration:
-        $ref: '#/definitions/eventTimestamp'
-      additionalFields:
-        $ref: '#/definitions/additionalFields'
-      isDeleted:
-        $ref: '#/definitions/isDeleted'
-      rowVersion:
-        $ref: '#/definitions/rowVersion'
-      auditDetails:
-        $ref: >-
-          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
   apiOperation:
     type: string
@@ -1508,10 +1473,10 @@ definitions:
       beneficiaryType:
         type: string
         description: beneficiary type
-#        enum:
-#          - HOUSEHOLD
-#          - INDIVIDUAL
-#          - STRUCTURE
+      #        enum:
+      #          - HOUSEHOLD
+      #          - INDIVIDUAL
+      #          - STRUCTURE
       eligibilityCriteria:
         type: array
         items:
@@ -1654,6 +1619,56 @@ definitions:
         $ref: '#/definitions/Project/properties/referenceNumber'
       boundaryCode:
         $ref: '#/definitions/boundaryCode'
+
+  ProjectBeneficiary:
+    description: A representation of Individual Registration to a Project.
+    type: object
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: true
+      tenantId:
+        type: string
+        example: 'tenantA'
+      projectId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique ID form Project
+      beneficiaryId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique ID form Project registration
+      dateOfRegistration:
+        $ref: '#/definitions/eventTimestamp'
+      additionalFields:
+        $ref: '#/definitions/additionalFields'
+      isDeleted:
+        $ref: '#/definitions/isDeleted'
+      rowVersion:
+        $ref: '#/definitions/rowVersion'
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+
+  ProjectBeneficiarySearch:
+    description: Search model for project beneficiary.
+    type: object
+    properties:
+      id:
+        $ref: '#/definitions/ProjectBeneficiary/properties/id'
+      tenantId:
+        $ref: '#/definitions/ProjectBeneficiary/properties/tenantId'
+      projectId:
+        $ref: '#/definitions/ProjectBeneficiary/properties/projectId'
+      beneficiaryId:
+        $ref: '#/definitions/ProjectBeneficiary/properties/beneficiaryId'
+      dateOfRegistration:
+        $ref: '#/definitions/ProjectBeneficiary/properties/dateOfRegistration'
 
   Task:
     type: object
@@ -1801,6 +1816,23 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
+  ProjectStaffSearch:
+    description: This object defines the mapping of a system staff user to a project for a certain period.
+    type: object
+    properties:
+      id:
+        $ref: '#/definitions/ProjectStaff/properties/id'
+      tenantId:
+        $ref: '#/definitions/ProjectStaff/properties/tenantId'
+      userId:
+        $ref: '#/definitions/ProjectStaff/properties/userId'
+      projectId:
+        $ref: '#/definitions/ProjectStaff/properties/projectId'
+      startDate:
+        $ref: '#/definitions/ProjectStaff/properties/startDate'
+      endDate:
+        $ref: '#/definitions/ProjectStaff/properties/endDate'
+
   ProjectFacility:
     description: This object defines the mapping of a facility to a project.
     type: object
@@ -1834,6 +1866,19 @@ definitions:
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+
+  ProjectFacilitySearch:
+    description: This object defines the mapping of a facility to a project.
+    type: object
+    properties:
+      id:
+        $ref: '#/definitions/ProjectFacility/properties/id'
+      tenantId:
+        $ref: '#/definitions/ProjectFacility/properties/tenantId'
+      facilityId:
+        $ref: '#/definitions/ProjectFacility/properties/facilityId'
+      projectId:
+        $ref: '#/definitions/ProjectFacility/properties/projectId'
 
   ProjectResource:
     description: This object defines the mapping of a resource to a project.
@@ -1872,6 +1917,16 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
+  ProjectResourceSearch:
+    description: This object defines the mapping of a resource to a project.
+    type: object
+    properties:
+      id:
+        $ref: '#/definitions/ProjectResource/properties/id'
+      tenantId:
+        $ref: '#/definitions/ProjectResource/properties/tenantId'
+      projectId:
+        $ref: '#/definitions/ProjectResource/properties/projectId'
 
   Individual:
     description: A representation of an Individual.
@@ -1920,6 +1975,25 @@ definitions:
       auditDetails:
         $ref: 'https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails'
 
+  IndividualSearch:
+    description: A representation of an Individual.
+    type: object
+    properties:
+      id:
+        $ref: '#/definitions/Individual/properties/id'
+      clientReferenceId:
+        $ref: '#/definitions/Individual/properties/clientReferenceId'
+      name:
+        $ref: '#/definitions/Individual/properties/name'
+      dateOfBirth:
+        $ref: '#/definitions/Individual/properties/dateOfBirth'
+      gender:
+        $ref: '#/definitions/Individual/properties/gender'
+      identifier:
+        $ref: '#/definitions/Identifier'
+      boundaryCode:
+        $ref: '#/definitions/boundaryCode'
+
   Identifier:
     type: object
     properties:
@@ -1949,7 +2023,7 @@ definitions:
         minLength: 2
         maxLength: 64
         description: Unique client generated GUID
-      noOfMembers:
+      memberCount:
         type: integer
         example: 4
         minimum: 0
@@ -1969,6 +2043,19 @@ definitions:
         $ref: '#/definitions/rowVersion'
       auditDetails:
         $ref: 'https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails'
+
+  HouseholdSearch:
+    description: A representation of Household.
+    type: object
+    properties:
+      id:
+        $ref: '#/definitions/Household/properties/id'
+      clientReferenceId:
+        $ref: '#/definitions/Household/properties/clientReferenceId'
+      memberCount:
+        $ref: '#/definitions/Household/properties/memberCount'
+      boundaryCode:
+        $ref: '#/definitions/boundaryCode'
 
   HouseholdMember:
     description: A representation of a household member (already registered as an individual)
@@ -2016,6 +2103,25 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
+  HouseholdMemberSearch:
+    description: Search model for household member
+    type: object
+    properties:
+      id:
+        $ref: '#/definitions/HouseholdMember/properties/id'
+      householdId:
+        $ref: '#/definitions/HouseholdMember/properties/householdId'
+      householdClientReferenceId:
+        $ref: '#/definitions/HouseholdMember/properties/householdClientReferenceId'
+      individualId:
+        $ref: '#/definitions/HouseholdMember/properties/individualId'
+      individualClientReferenceId:
+        $ref: '#/definitions/HouseholdMember/properties/individualClientReferenceId'
+      isHeadOfHousehold:
+        $ref: '#/definitions/HouseholdMember/properties/isHeadOfHousehold'
+      tenantId:
+        $ref: '#/definitions/HouseholdMember/properties/tenantId'
+
   Facility:
     type: object
     properties:
@@ -2031,10 +2137,10 @@ definitions:
       usage:
         type: string
         example: 'STORAGE_WAREHOUSE'
-#        enum:
-#          - STORAGE_WAREHOUSE
-#          - MEDICAL_FACILITY
-#          - SEWAGE_TREATMENT_PLANT
+      #        enum:
+      #          - STORAGE_WAREHOUSE
+      #          - MEDICAL_FACILITY
+      #          - SEWAGE_TREATMENT_PLANT
       storageCapacity:
         type: integer
         description: Physical storage capacity of the facility in cubic meters
@@ -2050,7 +2156,19 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
-
+  FacilitySearch:
+    type: object
+    properties:
+      id:
+        $ref: '#/definitions/Facility/properties/id'
+      isPermanent:
+        $ref: '#/definitions/Facility/properties/isPermanent'
+      usage:
+        $ref: '#/definitions/Facility/properties/usage'
+      storageCapacity:
+        $ref: '#/definitions/Facility/properties/storageCapacity'
+      boundaryCode:
+        $ref: '#/definitions/boundaryCode'
 
   Product:
     type: object
@@ -2071,12 +2189,12 @@ definitions:
         type: string
         description: Define the type of product
         example: 'DRUG'
-#        enum:
-#          - MEDICINE
-#          - VACCINE
-#          - SPRAY
-#          - BEDNET
-#          - EDUCATIONAL_MATERIAL
+      #        enum:
+      #          - MEDICINE
+      #          - VACCINE
+      #          - SPRAY
+      #          - BEDNET
+      #          - EDUCATIONAL_MATERIAL
       name:
         type: string
         description: Capture name of the product
@@ -2094,6 +2212,20 @@ definitions:
       auditDetails:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+
+  ProductSearch:
+    type: object
+    properties:
+      id:
+        $ref: '#/definitions/Product/properties/id'
+      tenantId:
+        $ref: '#/definitions/Product/properties/tenantId'
+      type:
+        $ref: '#/definitions/Product/properties/type'
+      name:
+        $ref: '#/definitions/Product/properties/name'
+      manufacturer:
+        $ref: '#/definitions/Product/properties/manufacturer'
 
   ProductVariant:
     type: object
@@ -2123,12 +2255,12 @@ definitions:
         type: string
         description: Capture name of the variant
         example: Paracetamol 200mg white color
-#      variant:
-#        #A variant is a combination of 1 or more variations for a product
-#        type: array
-#        items:
-#          $ref: '#/definitions/Variation'
-#        description: Capture product variant
+      #      variant:
+      #        #A variant is a combination of 1 or more variations for a product
+      #        type: array
+      #        items:
+      #          $ref: '#/definitions/Variation'
+      #        description: Capture product variant
       additionalFields:
         $ref: '#/definitions/additionalFields'
       isDeleted:
@@ -2139,22 +2271,36 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
-#  Variation:
-#    type: object
-#    properties:
-#      variation:
-#        type: string
-#        description: Capture product variation
-#        example: '200'
-#      variationUnit:
-#        type: string
-#        example: 'MG'
-#        enum:
-#          - BALE
-#          - CARTONS
-#          - VIALS
-#          - MG
-#          - ML
+  ProductVariantSearch:
+    type: object
+    properties:
+      id:
+        $ref: '#/definitions/ProductVariant/properties/id'
+      tenantId:
+        $ref: '#/definitions/ProductVariant/properties/tenantId'
+      productId:
+        $ref: '#/definitions/ProductVariant/properties/productId'
+      sku:
+        $ref: '#/definitions/ProductVariant/properties/sku'
+      variation:
+        $ref: '#/definitions/ProductVariant/properties/variation'
+
+  #  Variation:
+  #    type: object
+  #    properties:
+  #      variation:
+  #        type: string
+  #        description: Capture product variation
+  #        example: '200'
+  #      variationUnit:
+  #        type: string
+  #        example: 'MG'
+  #        enum:
+  #          - BALE
+  #          - CARTONS
+  #          - VIALS
+  #          - MG
+  #          - ML
 
   ProjectProductVariant:
     #Master Data MDMS
@@ -2252,6 +2398,32 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
+  StockTransactionSearch:
+    type: object
+    properties:
+      id:
+        $ref: '#/definitions/StockTransaction/properties/id'
+      clientReferenceId:
+        $ref: '#/definitions/StockTransaction/properties/clientReferenceId'
+      tenantId:
+        $ref: '#/definitions/StockTransaction/properties/tenantId'
+      facilityId:
+        $ref: '#/definitions/StockTransaction/properties/facilityId'
+      productVariantId:
+        $ref: '#/definitions/StockTransaction/properties/productVariantId'
+      referenceId:
+        $ref: '#/definitions/StockTransaction/properties/referenceId'
+      referenceIdType:
+        $ref: '#/definitions/StockTransaction/properties/referenceIdType'
+      transactionType:
+        $ref: '#/definitions/StockTransaction/properties/transactionType'
+      transactionReason:
+        $ref: '#/definitions/StockTransaction/properties/transactionReason'
+      transactingPartyId:
+        $ref: '#/definitions/StockTransaction/properties/transactingPartyId'
+      transactingPartyType:
+        $ref: '#/definitions/StockTransaction/properties/transactingPartyType'
+
   #########################################
 
   ProjectRequest:
@@ -2265,7 +2437,6 @@ definitions:
         items:
           $ref: '#/definitions/Project'
       apiOperation:
-        type: string
         $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
@@ -2277,9 +2448,7 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
       Project:
-        type: array
-        items:
-          $ref: '#/definitions/ProjectSearch'
+        $ref: '#/definitions/ProjectSearch'
     required:
       - RequestInfo
       - Project
@@ -2312,11 +2481,23 @@ definitions:
         items:
           $ref: '#/definitions/ProjectBeneficiary'
       apiOperation:
-        type: string
         $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
       - Beneficiary
+
+  BeneficiarySearchRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      ProjectBeneficiary:
+        $ref: '#/definitions/ProjectBeneficiarySearch'
+    required:
+      - RequestInfo
+      - Beneficiary
+
   BeneficiaryResponse:
     type: object
     properties:
@@ -2343,7 +2524,6 @@ definitions:
         items:
           $ref: '#/definitions/Task'
       apiOperation:
-        type: string
         $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
@@ -2355,9 +2535,7 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
       Task:
-        type: array
-        items:
-          $ref: '#/definitions/TaskSearch'
+        $ref: '#/definitions/TaskSearch'
     required:
       - RequestInfo
       - Task
@@ -2387,8 +2565,18 @@ definitions:
         items:
           $ref: '#/definitions/ProjectStaff'
       apiOperation:
-        type: string
         $ref: '#/definitions/apiOperation'
+    required:
+      - RequestInfo
+      - ProjectStaff
+  ProjectStaffSearchRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      ProjectStaff:
+        $ref: '#/definitions/ProjectStaffSearch'
     required:
       - RequestInfo
       - ProjectStaff
@@ -2417,8 +2605,18 @@ definitions:
         items:
           $ref: '#/definitions/ProjectFacility'
       apiOperation:
-        type: string
         $ref: '#/definitions/apiOperation'
+    required:
+      - RequestInfo
+      - ProjectFacility
+  ProjectFacilitySearchRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      ProjectFacility:
+        $ref: '#/definitions/ProjectFacilitySearch'
     required:
       - RequestInfo
       - ProjectFacility
@@ -2447,8 +2645,18 @@ definitions:
         items:
           $ref: '#/definitions/ProjectResource'
       apiOperation:
-        type: string
         $ref: '#/definitions/apiOperation'
+    required:
+      - RequestInfo
+      - ProjectResource
+  ProjectResourceSearchRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      ProjectResource:
+        $ref: '#/definitions/ProjectResourceSearch'
     required:
       - RequestInfo
       - ProjectResource
@@ -2478,11 +2686,23 @@ definitions:
         items:
           $ref: '#/definitions/Individual'
       apiOperation:
-        type: string
         $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
       - Individual
+
+  IndividualSearchRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      Individual:
+        $ref: '#/definitions/IndividualSearch'
+    required:
+      - RequestInfo
+      - Individual
+
   IndividualResponse:
     type: object
     properties:
@@ -2507,11 +2727,23 @@ definitions:
         items:
           $ref: '#/definitions/Household'
       apiOperation:
-        type: string
         $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
       - Household
+
+  HouseholdSearchRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      Household:
+        $ref: '#/definitions/HouseholdSearch'
+    required:
+      - RequestInfo
+      - Household
+
   HouseholdResponse:
     type: object
     properties:
@@ -2536,11 +2768,23 @@ definitions:
         items:
           $ref: '#/definitions/HouseholdMember'
       apiOperation:
-        type: string
         $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
       - HouseholdMember
+
+  HouseholdMemberSearchRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      HouseholdMember:
+        $ref: '#/definitions/HouseholdMemberSearch'
+    required:
+      - RequestInfo
+      - HouseholdMember
+
   HouseholdMemberResponse:
     type: object
     properties:
@@ -2565,11 +2809,23 @@ definitions:
         items:
           $ref: '#/definitions/Facility'
       apiOperation:
-        type: string
         $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
       - Facility
+
+  FacilitySearchRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      Facility:
+        $ref: '#/definitions/FacilitySearch'
+    required:
+      - RequestInfo
+      - Facility
+
   FacilityResponse:
     type: object
     properties:
@@ -2583,8 +2839,6 @@ definitions:
     required:
       - ResponseInfo
 
-
-
   ProductRequest:
     type: object
     properties:
@@ -2596,8 +2850,19 @@ definitions:
         items:
           $ref: '#/definitions/Product'
       apiOperation:
-        type: string
         $ref: '#/definitions/apiOperation'
+    required:
+      - RequestInfo
+      - Product
+
+  ProductSearchRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      Product:
+        $ref: '#/definitions/ProductSearch'
     required:
       - RequestInfo
       - Product
@@ -2627,8 +2892,19 @@ definitions:
         items:
           $ref: '#/definitions/ProductVariant'
       apiOperation:
-        type: string
         $ref: '#/definitions/apiOperation'
+    required:
+      - RequestInfo
+      - ProductVariant
+
+  ProductVariantSearchRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      ProductVariant:
+        $ref: '#/definitions/ProductVariantSearch'
     required:
       - RequestInfo
       - ProductVariant
@@ -2658,8 +2934,19 @@ definitions:
         items:
           $ref: '#/definitions/StockTransaction'
       apiOperation:
-        type: string
         $ref: '#/definitions/apiOperation'
+    required:
+      - RequestInfo
+      - StockTransaction
+
+  StockTransactionSearchRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      StockTransaction:
+        $ref: '#/definitions/StockTransactionSearch'
     required:
       - RequestInfo
       - StockTransaction
