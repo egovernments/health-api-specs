@@ -1590,7 +1590,7 @@ definitions:
         type: array
         description: Reference to physical documents that have been attached via file upload
         items:
-          $ref: 'https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/Document'
+          $ref: 'https://raw.githubusercontent.com/egovernments/DIGIT-OSS/master/core-services/docs/worfklow-2.0.yml#/definitions/Document'
       additionalFields:
         $ref: '#/definitions/additionalFields'
       isDeleted:
