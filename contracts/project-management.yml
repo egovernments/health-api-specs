@@ -1245,6 +1245,9 @@ definitions:
 
   Field:
     type: object
+    required:
+      - key
+      - value
     properties:
       key:
         type: string
@@ -1292,6 +1295,10 @@ definitions:
 
   Target:
     type: object
+    required:
+      - beneficiaryType
+      - baseline
+      - target
     properties:
       id:
         type: string
@@ -1304,9 +1311,9 @@ definitions:
         minLength: 2
         maxLength: 64
         example: 'ID-1'
-      totalNo:
+      baseline:
         type: integer
-      targetNo:
+      target:
         type: integer
       isDeleted:
         $ref: '#/definitions/isDeleted'
@@ -1317,6 +1324,11 @@ definitions:
 
   TaskResource:
     type: object
+    required:
+      - tenantId
+      - productVariantId
+      - quantity
+      - isDelivered
     properties:
       id:
         type: string
@@ -1526,6 +1538,9 @@ definitions:
   Project:
     description: The purpose of this object to define the Project for a geography and period
     type: object
+    required:
+      - tenantId
+      - projectTypeId
     properties:
       id:
         type: string
@@ -1628,8 +1643,12 @@ definitions:
         $ref: '#/definitions/boundaryCode'
 
   ProjectBeneficiary:
-    description: A representation of Individual Registration to a Project.
+    description: A representation of the registration of an entity to a Project.
     type: object
+    required:
+      - tenantId
+      - projectId
+      - beneficiaryId
     properties:
       id:
         type: string
@@ -1679,6 +1698,11 @@ definitions:
 
   Task:
     type: object
+    required:
+      - tenantId
+      - projectId
+      - projectBeneficiaryId
+      - resources
     properties:
       id:
         type: string
@@ -1777,6 +1801,10 @@ definitions:
   ProjectStaff:
     description: This object defines the mapping of a system staff user to a project for a certain period.
     type: object
+    required:
+      - tenantId
+      - userId
+      - projectId
     properties:
       id:
         type: string
@@ -1843,6 +1871,10 @@ definitions:
   ProjectFacility:
     description: This object defines the mapping of a facility to a project.
     type: object
+    required:
+      - tenantId
+      - facilityId
+      - projectId
     properties:
       id:
         type: string
@@ -1890,6 +1922,10 @@ definitions:
   ProjectResource:
     description: This object defines the mapping of a resource to a project.
     type: object
+    required:
+      - tenantId
+      - projectId
+      - resources
     properties:
       id:
         type: string
@@ -1908,7 +1944,7 @@ definitions:
         description: Unique Project Id defined in Project Service
         minLength: 2
         maxLength: 64
-      resource:
+      resources:
         type: array
         items:
           $ref: '#/definitions/ProjectProductVariant'
@@ -1938,6 +1974,8 @@ definitions:
   Individual:
     description: A representation of an Individual.
     type: object
+    required:
+      - name
     properties:
       id:
         type: string
@@ -2003,6 +2041,9 @@ definitions:
 
   Identifier:
     type: object
+    required:
+      - type
+      - id
     properties:
       type:
         type: string
@@ -2018,6 +2059,8 @@ definitions:
   Household:
     description: A representation of Household.
     type: object
+    required:
+      - memberCount
     properties:
       id:
         type: string
@@ -2067,6 +2110,9 @@ definitions:
   HouseholdMember:
     description: A representation of a household member (already registered as an individual)
     type: object
+    required:
+      - householdId
+      - individualId
     properties:
       id:
         type: string
@@ -2179,6 +2225,9 @@ definitions:
 
   Product:
     type: object
+    required:
+      - type
+      - name
     properties:
       id:
         type: string
@@ -2186,12 +2235,6 @@ definitions:
         maxLength: 64
         description: Unique system generated GUID
         readOnly: true
-      tenantId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique tenant of the system
-        example: 'tenantA'
       type:
         type: string
         description: Define the type of product
@@ -2236,6 +2279,9 @@ definitions:
 
   ProductVariant:
     type: object
+    required:
+      - productId
+      - variation
     properties:
       id:
         type: string
@@ -2243,12 +2289,6 @@ definitions:
         maxLength: 64
         description: Unique system generated GUID
         readOnly: true
-      tenantId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique tenant of the system
-        example: 'tenantA'
       productId:
         type: string
         minLength: 2
@@ -2313,6 +2353,8 @@ definitions:
     #Master Data MDMS
     #Required to map projects to product variants and define the type and if the variant is considered as a base unit within this project
     type: object
+    required:
+      - productVariantId
     properties:
       productVariantId:
         type: string
@@ -2326,6 +2368,14 @@ definitions:
 
   StockTransaction:
     type: object
+    required:
+      - tenantId
+      - facilityId
+      - productVariantId
+      - quantity
+      - transactionType
+      - transactingPartyId
+      - transactingPartyType
     properties:
       id:
         type: string
