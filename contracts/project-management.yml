@@ -1541,12 +1541,12 @@ definitions:
         example: 'tenantA'
       projectTypeId:
         type: string
-        description: Unique id of Project type master data
+        description: Unique id of Project type from master data
         minLength: 2
         maxLength: 64
       subProjectTypeId:
         type: string
-        description: Unique id of subproject type master data
+        description: Unique id of subproject type from master data
         minLength: 2
         maxLength: 64
       address:
@@ -1574,16 +1574,23 @@ definitions:
           $ref: '#/definitions/Target'
       department:
         type: string
-        minLength: 2
-        maxLength: 64
-      referenceNumber:
-        type: string
+        description: Unique department ID as defined in master data
         minLength: 2
         maxLength: 64
       description:
         type: string
+        description: Description of project
         minLength: 2
-        maxLength: 1000
+      referenceID:
+        type: string
+        description: Reference number to a physical file or docket or some other artifact of which this project is representative of.
+        minLength: 2
+        maxLength: 100
+      documents:
+        type: array
+        description: Reference to physical documents that have been attached via file upload
+        items:
+          $ref: 'https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml#/definitions/Document'
       additionalFields:
         $ref: '#/definitions/additionalFields'
       isDeleted:
