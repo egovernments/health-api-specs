@@ -1581,7 +1581,7 @@ definitions:
         type: string
         description: Description of project
         minLength: 2
-      referenceID:
+      referenceId:
         type: string
         description: Reference number to a physical file or docket or some other artifact of which this project is representative of.
         minLength: 2
@@ -1622,8 +1622,8 @@ definitions:
         $ref: '#/definitions/Project/properties/subProjectTypeId'
       department:
         $ref: '#/definitions/Project/properties/department'
-      referenceNumber:
-        $ref: '#/definitions/Project/properties/referenceNumber'
+      referenceId:
+        $ref: '#/definitions/Project/properties/referenceId'
       boundaryCode:
         $ref: '#/definitions/boundaryCode'
 
