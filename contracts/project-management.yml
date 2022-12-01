@@ -1281,6 +1281,13 @@ definitions:
     minLength: 0
     maxLength: 64
 
+  tenantId:
+    type: string
+    minLength: 2
+    maxLength: 1000
+    description: Unique tenant of the system
+    example: 'tenantA'
+
   eventTimestamp:
     type: integer
     format: int64
@@ -1417,11 +1424,7 @@ definitions:
         description: Unique system generated GUID
         readOnly: true
       tenantId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique tenant of the system
-        example: 'tenantA'
+        $ref: '#/definitions/tenantId'
       productVariantId:
         type: string
         minLength: 2
@@ -1453,11 +1456,7 @@ definitions:
         description: Unique system generated GUID
         readOnly: true
       tenantId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique tenant of the system
-        example: 'tenantA'
+        $ref: '#/definitions/tenantId'
       doorNo:
         type: string
         minLength: 2
@@ -1540,11 +1539,7 @@ definitions:
         description: Unique system generated GUID
         readOnly: true
       tenantId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique tenant of the system
-        example: 'tenantA'
+        $ref: '#/definitions/tenantId'
       name:
         type: string
         description: Name of Project type
@@ -1629,11 +1624,7 @@ definitions:
         description: Unique system generated GUID
         readOnly: True
       tenantId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique tenant of the system
-        example: 'tenantA'
+        $ref: '#/definitions/tenantId'
       projectTypeId:
         type: string
         description: Unique id of Project type from master data
@@ -1737,8 +1728,7 @@ definitions:
         description: Unique system generated GUID
         readOnly: true
       tenantId:
-        type: string
-        example: 'tenantA'
+        $ref: '#/definitions/tenantId'
       projectId:
         type: string
         minLength: 2
@@ -1791,11 +1781,7 @@ definitions:
         description: Unique system generated GUID
         readOnly: true
       tenantId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique tenant of the system
-        example: 'tenantA'
+        $ref: '#/definitions/tenantId'
       projectId:
         type: string
         minLength: 2
@@ -1893,11 +1879,7 @@ definitions:
         description: Unique system generated GUID
         readOnly: True
       tenantId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique tenant of the system
-        example: 'tenantA'
+        $ref: '#/definitions/tenantId'
       userId:
         type: string
         description: Unique userId defined using user service
@@ -1963,11 +1945,7 @@ definitions:
         description: Unique system generated GUID
         readOnly: True
       tenantId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique tenant of the system
-        example: 'tenantA'
+        $ref: '#/definitions/tenantId'
       facilityId:
         type: string
         description: Unique facilityId defined using facility service
@@ -2014,11 +1992,7 @@ definitions:
         description: Unique system generated GUID
         readOnly: True
       tenantId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique tenant of the system
-        example: 'tenantA'
+        $ref: '#/definitions/tenantId'
       projectId:
         type: string
         description: Unique Project Id defined in Project Service
@@ -2063,6 +2037,8 @@ definitions:
         maxLength: 64
         description: Unique system generated GUID
         readOnly: true
+      tenantId:
+        $ref: '#/definitions/tenantId'
       clientReferenceId:
         type: string
         minLength: 2
@@ -2106,6 +2082,8 @@ definitions:
     properties:
       id:
         $ref: '#/definitions/Individual/properties/id'
+      tenantId:
+        $ref: '#/definitions/Individual/properties/tenantId'
       clientReferenceId:
         $ref: '#/definitions/Individual/properties/clientReferenceId'
       name:
@@ -2148,6 +2126,8 @@ definitions:
         maxLength: 64
         description: Unique system generated GUID
         readOnly: true
+      tenantId:
+        $ref: '#/definitions/tenantId'
       clientReferenceId:
         type: string
         minLength: 2
@@ -2180,6 +2160,8 @@ definitions:
     properties:
       id:
         $ref: '#/definitions/Household/properties/id'
+      tenantId:
+        $ref: '#/definitions/Individual/properties/tenantId'
       clientReferenceId:
         $ref: '#/definitions/Household/properties/clientReferenceId'
       memberCount:
@@ -2224,8 +2206,7 @@ definitions:
         type: boolean
         default: false
       tenantId:
-        type: string
-        example: 'tenantA'
+        $ref: '#/definitions/tenantId'
       additionalFields:
         $ref: '#/definitions/additionalFields'
       isDeleted:
@@ -2264,6 +2245,8 @@ definitions:
         maxLength: 64
         description: Unique system generated GUID
         readOnly: true
+      tenantId:
+        $ref: '#/definitions/tenantId'
       isPermanent:
         type: boolean
         default: true
@@ -2294,6 +2277,8 @@ definitions:
     properties:
       id:
         $ref: '#/definitions/Facility/properties/id'
+      tenantId:
+        $ref: '#/definitions/Facility/properties/tenantId'
       isPermanent:
         $ref: '#/definitions/Facility/properties/isPermanent'
       usage:
@@ -2315,6 +2300,8 @@ definitions:
         maxLength: 64
         description: Unique system generated GUID
         readOnly: true
+      tenantId:
+        $ref: '#/definitions/tenantId'
       type:
         type: string
         description: Define the type of product
@@ -2348,6 +2335,8 @@ definitions:
     properties:
       id:
         $ref: '#/definitions/Product/properties/id'
+      tenantId:
+        $ref: '#/definitions/Product/properties/tenantId'
       type:
         $ref: '#/definitions/Product/properties/type'
       name:
@@ -2367,6 +2356,8 @@ definitions:
         maxLength: 64
         description: Unique system generated GUID
         readOnly: true
+      tenantId:
+        $ref: '#/definitions/tenantId'
       productId:
         type: string
         minLength: 2
@@ -2401,6 +2392,8 @@ definitions:
     properties:
       id:
         $ref: '#/definitions/ProductVariant/properties/id'
+      tenantId:
+        $ref: '#/definitions/ProductVariant/properties/tenantId'
       productId:
         $ref: '#/definitions/ProductVariant/properties/productId'
       sku:
@@ -2465,11 +2458,7 @@ definitions:
         maxLength: 64
         description: Unique client generated GUID
       tenantId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique tenant of the system
-        example: 'tenantA'
+        $ref: '#/definitions/tenantId'
       facilityId:
         type: string
         minLength: 2
@@ -2580,11 +2569,7 @@ definitions:
         maxLength: 64
         description: Unique client generated GUID
       tenantId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique tenant of the system
-        example: 'tenantA'
+        $ref: '#/definitions/tenantId'
       facilityId:
         type: string
         minLength: 2
