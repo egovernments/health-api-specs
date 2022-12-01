@@ -1055,19 +1055,19 @@ paths:
       description: >-
         Create/Add a new record for transfer of product variant stock
       parameters:
-        - name: StockTransaction
+        - name: Stock
           in: body
           description: Capture details of stock transaction.
           required: true
           schema:
-            $ref: '#/definitions/StockTransactionRequest'
+            $ref: '#/definitions/StockRequest'
       tags:
         - Stock
       responses:
         '202':
           description: Stock Transaction request has been accepted.
           schema:
-            $ref: '#/definitions/StockTransactionResponse'
+            $ref: '#/definitions/StockResponse'
         '400':
           description: Invalid Input body.
           schema:
@@ -1080,19 +1080,19 @@ paths:
       description: >-
         Update record for transfer of a stock transaction
       parameters:
-        - name: StockTransaction
+        - name: Stock
           in: body
           description: Capture details of stock transaction
           required: true
           schema:
-            $ref: '#/definitions/StockTransactionRequest'
+            $ref: '#/definitions/StockRequest'
       tags:
         - Stock
       responses:
         '202':
           description: Stock Transaction request has been accepted.
           schema:
-            $ref: '#/definitions/StockTransactionResponse'
+            $ref: '#/definitions/StockResponse'
         '400':
           description: Invalid Input body.
           schema:
@@ -1105,12 +1105,12 @@ paths:
       description: >-
         Search for stock transaction
       parameters:
-        - name: StockTransaction
+        - name: Stock
           in: body
           description: Capture details of Stock Transfer.
           required: true
           schema:
-            $ref: '#/definitions/StockTransactionSearchRequest'
+            $ref: '#/definitions/StockSearchRequest'
         - $ref: '#/parameters/limit'
         - $ref: '#/parameters/offset'
         - $ref: '#/parameters/tenantId'
@@ -1122,13 +1122,93 @@ paths:
         '200':
           description: Stock transfer.
           schema:
-            $ref: '#/definitions/StockTransactionResponse'
+            $ref: '#/definitions/StockResponse'
         '400':
           description: Invalid Input body.
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
 
+  /stock/reconciliation/v1/_create:
+    post:
+      summary: >-
+        Create/Add a new stock reconciliation record for a product variant
+      description: >-
+        Create/Add a new stock reconciliation record for a product variant
+      parameters:
+        - name: StockReconciliation
+          in: body
+          description: Capture details of stock transaction.
+          required: true
+          schema:
+            $ref: '#/definitions/StockReconciliationRequest'
+      tags:
+        - Stock
+      responses:
+        '202':
+          description: Accepted.
+          schema:
+            $ref: '#/definitions/StockReconciliationResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /stock/reconciliation/v1/_update:
+    post:
+      summary: >-
+        Update stock reconciliation record
+      description: >-
+        Update stock reconciliation record
+      parameters:
+        - name: StockReconciliation
+          in: body
+          description: Capture details of stock transaction
+          required: true
+          schema:
+            $ref: '#/definitions/StockReconciliationRequest'
+      tags:
+        - Stock
+      responses:
+        '202':
+          description: Stock Reconciliation request has been accepted.
+          schema:
+            $ref: '#/definitions/StockReconciliationResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /stock/reconciliation/v1/_search:
+    post:
+      summary: >-
+        Search for stock reconciliation record
+      description: >-
+        Search for stock reconciliation record
+      parameters:
+        - name: Stock
+          in: body
+          description: Capture details of Stock Reconciliation.
+          required: true
+          schema:
+            $ref: '#/definitions/StockReconciliationSearchRequest'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/tenantId'
+        - $ref: '#/parameters/lastChangedSince'
+        - $ref: '#/parameters/includeDeleted'
+      tags:
+        - Stock
+      responses:
+        '200':
+          description: Stock reconciliations.
+          schema:
+            $ref: '#/definitions/StockReconciliationResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
 
 #####################################################################
 
@@ -2366,7 +2446,7 @@ definitions:
         type: boolean
         description: Denotes if a variant is a base unit variant. Useful to filter variants applicable for tasks within a project.
 
-  StockTransaction:
+  Stock:
     type: object
     required:
       - tenantId
@@ -2455,31 +2535,114 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
 
-  StockTransactionSearch:
+  StockSearch:
     type: object
     properties:
       id:
-        $ref: '#/definitions/StockTransaction/properties/id'
+        $ref: '#/definitions/Stock/properties/id'
       clientReferenceId:
-        $ref: '#/definitions/StockTransaction/properties/clientReferenceId'
+        $ref: '#/definitions/Stock/properties/clientReferenceId'
       tenantId:
-        $ref: '#/definitions/StockTransaction/properties/tenantId'
+        $ref: '#/definitions/Stock/properties/tenantId'
       facilityId:
-        $ref: '#/definitions/StockTransaction/properties/facilityId'
+        $ref: '#/definitions/Stock/properties/facilityId'
       productVariantId:
-        $ref: '#/definitions/StockTransaction/properties/productVariantId'
+        $ref: '#/definitions/Stock/properties/productVariantId'
       referenceId:
-        $ref: '#/definitions/StockTransaction/properties/referenceId'
+        $ref: '#/definitions/Stock/properties/referenceId'
       referenceIdType:
-        $ref: '#/definitions/StockTransaction/properties/referenceIdType'
+        $ref: '#/definitions/Stock/properties/referenceIdType'
       transactionType:
-        $ref: '#/definitions/StockTransaction/properties/transactionType'
+        $ref: '#/definitions/Stock/properties/transactionType'
       transactionReason:
-        $ref: '#/definitions/StockTransaction/properties/transactionReason'
+        $ref: '#/definitions/Stock/properties/transactionReason'
       transactingPartyId:
-        $ref: '#/definitions/StockTransaction/properties/transactingPartyId'
+        $ref: '#/definitions/Stock/properties/transactingPartyId'
       transactingPartyType:
-        $ref: '#/definitions/StockTransaction/properties/transactingPartyType'
+        $ref: '#/definitions/Stock/properties/transactingPartyType'
+
+  StockReconciliation:
+    type: object
+    required:
+      - tenantId
+      - facilityId
+      - productVariantId
+      - quantity
+      - transactionType
+      - transactingPartyId
+      - transactingPartyType
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: true
+      clientReferenceId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique client generated GUID
+      tenantId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique tenant of the system
+        example: 'tenantA'
+      facilityId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Id of the facility where stock of the product variant are being transferred
+        example: 'FacilityA'
+      productVariantId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Product variant that is being transferred
+      referenceId:
+        type: string
+        example: "C-1"
+        description: Reference entity for which the stock transfer is occuring
+      referenceIdType:
+        type: string
+        example: "PROJECT"
+        minLength: 2
+        maxLength: 64
+        description: Entity type that referenceId refers to
+      physicalCount:
+        type: integer
+        format: int64
+        description: Count of units of the product variant as a result of a physical count
+      calculatedCount:
+        type: integer
+        format: int64
+        description: Count of units of the product variant calculated from stock movements
+      eventTimestamp:
+        $ref: '#/definitions/eventTimestamp'
+      additionalFields:
+        $ref: '#/definitions/additionalFields'
+      isDeleted:
+        $ref: '#/definitions/isDeleted'
+      rowVersion:
+        $ref: '#/definitions/rowVersion'
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+
+  StockReconciliationSearch:
+    type: object
+    properties:
+      id:
+        $ref: '#/definitions/StockReconciliation/properties/id'
+      clientReferenceId:
+        $ref: '#/definitions/StockReconciliation/properties/clientReferenceId'
+      tenantId:
+        $ref: '#/definitions/StockReconciliation/properties/tenantId'
+      facilityId:
+        $ref: '#/definitions/StockReconciliation/properties/facilityId'
+      productVariantId:
+        $ref: '#/definitions/StockReconciliation/properties/productVariantId'
 
   #########################################
 
@@ -2980,48 +3143,89 @@ definitions:
       - ResponseInfo
       - ProductVariant
 
-  StockTransactionRequest:
+  StockRequest:
     type: object
     properties:
       RequestInfo:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
-      StockTransaction:
+      Stock:
         type: array
         items:
-          $ref: '#/definitions/StockTransaction'
+          $ref: '#/definitions/Stock'
       apiOperation:
         $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
-      - StockTransaction
+      - Stock
 
-  StockTransactionSearchRequest:
+  StockSearchRequest:
     type: object
     properties:
       RequestInfo:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
-      StockTransaction:
-        $ref: '#/definitions/StockTransactionSearch'
+      Stock:
+        $ref: '#/definitions/StockSearch'
     required:
       - RequestInfo
-      - StockTransaction
+      - Stock
 
-  StockTransactionResponse:
+  StockResponse:
     type: object
     properties:
       ResponseInfo:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
-      StockTransaction:
+      Stock:
         type: array
         items:
-          $ref: '#/definitions/StockTransaction'
+          $ref: '#/definitions/Stock'
     required:
       - ResponseInfo
-      - StockTransaction
+      - Stock
 
+  StockReconciliationRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      StockReconciliation:
+        type: array
+        items:
+          $ref: '#/definitions/StockReconciliation'
+      apiOperation:
+        $ref: '#/definitions/apiOperation'
+    required:
+      - RequestInfo
+      - StockReconciliation
+
+  StockReconciliationSearchRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      StockReconciliation:
+        $ref: '#/definitions/StockReconciliationSearch'
+    required:
+      - RequestInfo
+      - StockReconciliation
+
+  StockReconciliationResponse:
+    type: object
+    properties:
+      ResponseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
+      StockReconciliation:
+        type: array
+        items:
+          $ref: '#/definitions/StockReconciliation'
+    required:
+      - ResponseInfo
+      - StockReconciliation
   #########################################
 
 
