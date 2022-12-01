@@ -2348,8 +2348,6 @@ definitions:
     properties:
       id:
         $ref: '#/definitions/Product/properties/id'
-      tenantId:
-        $ref: '#/definitions/Product/properties/tenantId'
       type:
         $ref: '#/definitions/Product/properties/type'
       name:
@@ -2403,8 +2401,6 @@ definitions:
     properties:
       id:
         $ref: '#/definitions/ProductVariant/properties/id'
-      tenantId:
-        $ref: '#/definitions/ProductVariant/properties/tenantId'
       productId:
         $ref: '#/definitions/ProductVariant/properties/productId'
       sku:
