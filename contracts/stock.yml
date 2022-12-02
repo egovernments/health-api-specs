@@ -234,6 +234,12 @@ parameters:
     required: false
 
 definitions:
+  id:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/id'
+  idForSearch:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/idForSearch'
+  clientReferenceId:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/clientReferenceId'
   boundaryCode:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/boundaryCode'
   tenantId:
@@ -251,6 +257,67 @@ definitions:
   Address:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/Address'
 
+  facilityId:
+    type: string
+    minLength: 2
+    maxLength: 64
+    description: Id of the facility where stock of the product variant are being transferred
+    example: 'FacilityA'
+  productVariantId:
+    type: string
+    minLength: 2
+    maxLength: 64
+    description: Product variant that is being transferred
+  quantity:
+    type: integer
+    format: int64
+    description: Number/Quantity/Count of units of the product variant that are being transacted
+  referenceId:
+    type: string
+    example: "C-1"
+    description: Reference entity for which the stock transfer is occuring
+  referenceIdType:
+    type: string
+    example: "PROJECT"
+    minLength: 2
+    maxLength: 64
+    description: Entity type that referenceId refers to
+  transactionType:
+    type: string
+    minLength: 2
+    maxLength: 64
+    enum:
+      - RECEIVED
+      - DISPATCHED
+  transactionReason:
+    type: string
+    minLength: 2
+    maxLength: 64
+    enum:
+      - RECEIVED
+      - RETURNED
+      - LOSS
+  transactingPartyId:
+    type: string
+    minLength: 2
+    maxLength: 64
+    description: Id of the party from/to which the product variant stock is being transferred
+  transactingPartyType:
+    type: string
+    minLength: 2
+    maxLength: 64
+    description: Type of entity that transactingPartyId refers to
+    example: 'WAREHOUSE'
+  physicalCount:
+    type: integer
+    format: int64
+    description: Count of units of the product variant as a result of a physical count
+  calculatedCount:
+    type: integer
+    format: int64
+    description: Count of units of the product variant calculated from stock movements
+
+
 
   Stock:
     type: object
@@ -264,69 +331,29 @@ definitions:
       - transactingPartyType
     properties:
       id:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique system generated GUID
-        readOnly: true
+        $ref: '#/definitions/id'
       clientReferenceId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique client generated GUID
+        $ref: '#/definitions/clientReferenceId'
       tenantId:
         $ref: '#/definitions/tenantId'
       facilityId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Id of the facility where stock of the product variant are being transferred
-        example: 'FacilityA'
+        $ref: '#/definitions/facilityId'
       productVariantId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Product variant that is being transferred
+        $ref: '#/definitions/productVariantId'
       quantity:
-        type: integer
-        format: int64
-        description: Number/Quantity/Count of units of the product variant that are being transacted
+        $ref: '#/definitions/quantity'
       referenceId:
-        type: string
-        example: "C-1"
-        description: Reference entity for which the stock transfer is occuring
+        $ref: '#/definitions/referenceId'
       referenceIdType:
-        type: string
-        example: "PROJECT"
-        minLength: 2
-        maxLength: 64
-        description: Entity type that referenceId refers to
+        $ref: '#/definitions/referenceIdType'
       transactionType:
-        type: string
-        minLength: 2
-        maxLength: 64
-        enum:
-          - RECEIVED
-          - DISPATCHED
+        $ref: '#/definitions/transactionType'
       transactionReason:
-        type: string
-        minLength: 2
-        maxLength: 64
-        enum:
-          - RECEIVED
-          - RETURNED
-          - LOSS
+        $ref: '#/definitions/transactionReason'
       transactingPartyId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Id of the party from/to which the product variant stock is being transferred
+        $ref: '#/definitions/transactingPartyId'
       transactingPartyType:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Type of entity that transactingPartyId refers to
-        example: 'WAREHOUSE'
+        $ref: '#/definitions/transactingPartyType'
       additionalFields:
         $ref: '#/definitions/additionalFields'
       isDeleted:
@@ -341,27 +368,27 @@ definitions:
     type: object
     properties:
       id:
-        $ref: '#/definitions/Stock/properties/id'
+        $ref: '#/definitions/idForSearch'
       clientReferenceId:
-        $ref: '#/definitions/Stock/properties/clientReferenceId'
+        $ref: '#/definitions/clientReferenceId'
       tenantId:
-        $ref: '#/definitions/Stock/properties/tenantId'
+        $ref: '#/definitions/tenantId'
       facilityId:
-        $ref: '#/definitions/Stock/properties/facilityId'
+        $ref: '#/definitions/facilityId'
       productVariantId:
-        $ref: '#/definitions/Stock/properties/productVariantId'
+        $ref: '#/definitions/productVariantId'
       referenceId:
-        $ref: '#/definitions/Stock/properties/referenceId'
+        $ref: '#/definitions/referenceId'
       referenceIdType:
-        $ref: '#/definitions/Stock/properties/referenceIdType'
+        $ref: '#/definitions/referenceIdType'
       transactionType:
-        $ref: '#/definitions/Stock/properties/transactionType'
+        $ref: '#/definitions/transactionType'
       transactionReason:
-        $ref: '#/definitions/Stock/properties/transactionReason'
+        $ref: '#/definitions/transactionReason'
       transactingPartyId:
-        $ref: '#/definitions/Stock/properties/transactingPartyId'
+        $ref: '#/definitions/transactingPartyId'
       transactingPartyType:
-        $ref: '#/definitions/Stock/properties/transactingPartyType'
+        $ref: '#/definitions/transactingPartyType'
 
   StockReconciliation:
     type: object
@@ -375,47 +402,23 @@ definitions:
       - transactingPartyType
     properties:
       id:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique system generated GUID
-        readOnly: true
+        $ref: '#/definitions/id'
       clientReferenceId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique client generated GUID
+        $ref: '#/definitions/clientReferenceId'
       tenantId:
         $ref: '#/definitions/tenantId'
       facilityId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Id of the facility where stock of the product variant are being transferred
-        example: 'FacilityA'
+        $ref: '#/definitions/facilityId'
       productVariantId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Product variant that is being transferred
+        $ref: '#/definitions/productVariantId'
       referenceId:
-        type: string
-        example: "C-1"
-        description: Reference entity for which the stock transfer is occuring
+        $ref: '#/definitions/referenceId'
       referenceIdType:
-        type: string
-        example: "PROJECT"
-        minLength: 2
-        maxLength: 64
-        description: Entity type that referenceId refers to
+        $ref: '#/definitions/referenceIdType'
       physicalCount:
-        type: integer
-        format: int64
-        description: Count of units of the product variant as a result of a physical count
+        $ref: '#/definitions/physicalCount'
       calculatedCount:
-        type: integer
-        format: int64
-        description: Count of units of the product variant calculated from stock movements
+        $ref: '#/definitions/calculatedCount'
       eventTimestamp:
         $ref: '#/definitions/eventTimestamp'
       additionalFields:
@@ -432,16 +435,15 @@ definitions:
     type: object
     properties:
       id:
-        $ref: '#/definitions/StockReconciliation/properties/id'
+        $ref: '#/definitions/idForSearch'
       clientReferenceId:
-        $ref: '#/definitions/StockReconciliation/properties/clientReferenceId'
+        $ref: '#/definitions/clientReferenceId'
       tenantId:
-        $ref: '#/definitions/StockReconciliation/properties/tenantId'
+        $ref: '#/definitions/tenantId'
       facilityId:
-        $ref: '#/definitions/StockReconciliation/properties/facilityId'
+        $ref: '#/definitions/facilityId'
       productVariantId:
-        $ref: '#/definitions/StockReconciliation/properties/productVariantId'
-
+        $ref: '#/definitions/productVariantId'
 
 
   StockRequest:
