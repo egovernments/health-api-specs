@@ -571,6 +571,10 @@ parameters:
 definitions:
   boundaryCode:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/boundaryCode'
+  id:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/id'
+  idForSearch:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/idForSearch'
   tenantId:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/tenantId'
   eventTimestamp:
@@ -585,18 +589,22 @@ definitions:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/additionalFields'
   Address:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/Address'
-
-
+  projectTypeId:
+    type: string
+    description: Unique id of Project type from master data
+    minLength: 2
+    maxLength: 64
+  subProjectTypeId:
+    type: string
+    description: Unique id of subproject type from master data
+    minLength: 2
+    maxLength: 64
   ProjectType:
     description: This is the master data to capture the metadata of Project
     type: object
     properties:
       id:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique system generated GUID
-        readOnly: true
+        $ref: '#/definitions/id'
       tenantId:
         $ref: '#/definitions/tenantId'
       name:
@@ -677,23 +685,13 @@ definitions:
       - projectTypeId
     properties:
       id:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique system generated GUID
-        readOnly: True
+        $ref: '#/definitions/id'
       tenantId:
         $ref: '#/definitions/tenantId'
       projectTypeId:
-        type: string
-        description: Unique id of Project type from master data
-        minLength: 2
-        maxLength: 64
+        $ref: '#/definitions/projectTypeId'
       subProjectTypeId:
-        type: string
-        description: Unique id of subproject type from master data
-        minLength: 2
-        maxLength: 64
+        $ref: '#/definitions/subProjectTypeId'
       address:
         $ref: '#/definitions/Address'
       startDate:
@@ -750,25 +748,40 @@ definitions:
     type: object
     properties:
       id:
-        $ref: '#/definitions/Project/properties/id'
+        $ref: '#/definitions/idForSearch'
       tenantId:
-        $ref: '#/definitions/Project/properties/tenantId'
+        $ref: '#/definitions/tenantId'
       startDate:
-        $ref: '#/definitions/Project/properties/startDate'
+        type: integer
+        format: int64
+        description: Project start date
       endDate:
-        $ref: '#/definitions/Project/properties/endDate'
+        type: integer
+        format: int64
+        description: Project end date
       isTaskEnabled:
-        $ref: '#/definitions/Project/properties/isTaskEnabled'
+        type: boolean
+        default: false
+        description: Task can be created if this is 'True'
       parent:
-        $ref: '#/definitions/Project/properties/parent'
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Parent Project id
       projectTypeId:
-        $ref: '#/definitions/Project/properties/projectTypeId'
+        $ref: '#/definitions/projectTypeId'
       subProjectTypeId:
-        $ref: '#/definitions/Project/properties/subProjectTypeId'
+        $ref: '#/definitions/subProjectTypeId'
       department:
-        $ref: '#/definitions/Project/properties/department'
+        type: string
+        description: Unique department ID as defined in master data
+        minLength: 2
+        maxLength: 64
       referenceId:
-        $ref: '#/definitions/Project/properties/referenceId'
+        type: string
+        description: Reference number to a physical file or docket or some other artifact of which this project is representative of.
+        minLength: 2
+        maxLength: 100
       boundaryCode:
         $ref: '#/definitions/boundaryCode'
 
@@ -781,18 +794,14 @@ definitions:
       - beneficiaryId
     properties:
       id:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique system generated GUID
-        readOnly: true
+        $ref: '#/definitions/id'
       tenantId:
         $ref: '#/definitions/tenantId'
       projectId:
         type: string
         minLength: 2
         maxLength: 64
-        description: Unique ID form Project
+        description: Unique ID of Project
       beneficiaryId:
         type: string
         minLength: 2
@@ -815,15 +824,21 @@ definitions:
     type: object
     properties:
       id:
-        $ref: '#/definitions/ProjectBeneficiary/properties/id'
+        $ref: '#/definitions/idForSearch'
       tenantId:
-        $ref: '#/definitions/ProjectBeneficiary/properties/tenantId'
+        $ref: '#/definitions/tenantId'
       projectId:
-        $ref: '#/definitions/ProjectBeneficiary/properties/projectId'
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique ID form Project
       beneficiaryId:
-        $ref: '#/definitions/ProjectBeneficiary/properties/beneficiaryId'
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique ID form Project registration
       dateOfRegistration:
-        $ref: '#/definitions/ProjectBeneficiary/properties/dateOfRegistration'
+        $ref: '#/definitions/eventTimestamp'
 
   Task:
     type: object
@@ -834,11 +849,7 @@ definitions:
       - resources
     properties:
       id:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique system generated GUID
-        readOnly: true
+        $ref: '#/definitions/id'
       tenantId:
         $ref: '#/definitions/tenantId'
       projectId:
@@ -901,25 +912,40 @@ definitions:
     type: object
     properties:
       id:
-        $ref: '#/definitions/Task/properties/id'
+        $ref: '#/definitions/idForSearch'
       tenantId:
-        $ref: '#/definitions/Task/properties/tenantId'
+        $ref: '#/definitions/tenantId'
       projectId:
-        $ref: '#/definitions/Task/properties/projectId'
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique ProjectId
       projectBeneficiaryId:
-        $ref: '#/definitions/Task/properties/projectBeneficiaryId'
+        type: string
+        example: "R-ID-1"
       plannedStartDate:
-        $ref: '#/definitions/Task/properties/plannedStartDate'
+        type: integer
+        format: int64
+        description: Task planned start date
       plannedEndDate:
-        $ref: '#/definitions/Task/properties/plannedEndDate'
+        type: integer
+        format: int64
+        description: Task planned end date
       actualStartDate:
-        $ref: '#/definitions/Task/properties/actualStartDate'
+        type: integer
+        format: int64
+        description: Task planned start date
       actualEndDate:
-        $ref: '#/definitions/Task/properties/actualEndDate'
+        type: integer
+        format: int64
+        description: Task planned end date
       createdBy:
-        $ref: '#/definitions/Task/properties/createdBy'
+        type: string
+        example: "UUID"
       status:
-        $ref: '#/definitions/Task/properties/status'
+        type: string
+        description: It is a master data from mdms
+        example: 'DELIVERED'
       boundaryCode:
         $ref: '#/definitions/boundaryCode'
 
@@ -977,17 +1003,27 @@ definitions:
     type: object
     properties:
       id:
-        $ref: '#/definitions/ProjectStaff/properties/id'
+        $ref: '#/definitions/idForSearch'
       tenantId:
-        $ref: '#/definitions/ProjectStaff/properties/tenantId'
+        $ref: '#/definitions/tenantId'
       userId:
-        $ref: '#/definitions/ProjectStaff/properties/userId'
+        type: string
+        description: Unique userId defined using user service
+        minLength: 2
+        maxLength: 64
       projectId:
-        $ref: '#/definitions/ProjectStaff/properties/projectId'
+        type: string
+        description: Project Id
+        minLength: 2
+        maxLength: 64
       startDate:
-        $ref: '#/definitions/ProjectStaff/properties/startDate'
+        type: integer
+        format: int64
+        description: Start date of user operations against this project
       endDate:
-        $ref: '#/definitions/ProjectStaff/properties/endDate'
+        type: integer
+        format: int64
+        description: End date of user operations against this project
 
   ProjectFacility:
     description: This object defines the mapping of a facility to a project.
@@ -998,11 +1034,7 @@ definitions:
       - projectId
     properties:
       id:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique system generated GUID
-        readOnly: True
+        $ref: '#/definitions/id'
       tenantId:
         $ref: '#/definitions/tenantId'
       facilityId:
@@ -1028,13 +1060,19 @@ definitions:
     type: object
     properties:
       id:
-        $ref: '#/definitions/ProjectFacility/properties/id'
+        $ref: '#/definitions/idForSearch'
       tenantId:
-        $ref: '#/definitions/ProjectFacility/properties/tenantId'
+        $ref: '#/definitions/tenantId'
       facilityId:
-        $ref: '#/definitions/ProjectFacility/properties/facilityId'
+        type: string
+        description: Unique facilityId defined using facility service
+        minLength: 2
+        maxLength: 64
       projectId:
-        $ref: '#/definitions/ProjectFacility/properties/projectId'
+        type: string
+        description: Project Id
+        minLength: 2
+        maxLength: 64
 
   ProjectResource:
     description: This object defines the mapping of a resource to a project.
@@ -1045,11 +1083,7 @@ definitions:
       - resources
     properties:
       id:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique system generated GUID
-        readOnly: True
+        $ref: '#/definitions/id'
       tenantId:
         $ref: '#/definitions/tenantId'
       projectId:
@@ -1078,11 +1112,14 @@ definitions:
     type: object
     properties:
       id:
-        $ref: '#/definitions/ProjectResource/properties/id'
+        $ref: '#/definitions/idForSearch'
       tenantId:
-        $ref: '#/definitions/ProjectResource/properties/tenantId'
+        $ref: '#/definitions/tenantId'
       projectId:
-        $ref: '#/definitions/ProjectResource/properties/projectId'
+        type: string
+        description: Unique Project Id defined in Project Service
+        minLength: 2
+        maxLength: 64
 
 
   ProjectProductVariant:
