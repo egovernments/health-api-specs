@@ -1435,8 +1435,10 @@ definitions:
       isDelivered:
         type: boolean
         example: true
-      reasonIfNotDelivered:
+      deliveryComment:
         type: string
+        minLength: 0
+        maxLength: 1000
       isDeleted:
         $ref: '#/definitions/isDeleted'
       auditDetails:
