@@ -272,6 +272,12 @@ parameters:
 definitions:
   boundaryCode:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/boundaryCode'
+  id:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/id'
+  idForSearch:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/idForSearch'
+  clientReferenceId:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/clientReferenceId'
   tenantId:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/tenantId'
   eventTimestamp:
@@ -287,6 +293,13 @@ definitions:
   Address:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/Address'
 
+  memberCount:
+    type: integer
+    example: 4
+    minimum: 0
+    maximum: 1000
+    description: Total no of individuals in a household. Could be different from the count of members as all members may not be enumerated individually.
+
   Household:
     description: A representation of Household.
     type: object
@@ -294,24 +307,13 @@ definitions:
       - memberCount
     properties:
       id:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique system generated GUID
-        readOnly: true
+        $ref: '#/definitions/id'
       tenantId:
         $ref: '#/definitions/tenantId'
       clientReferenceId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique client generated GUID
+        $ref: '#/definitions/clientReferenceId'
       memberCount:
-        type: integer
-        example: 4
-        minimum: 0
-        maximum: 1000
-        description: Total no of individuals in a household. Could be different from the count of members as all members may not be enumerated individually.
+        $ref: '#/definitions/memberCount'
       address:
         $ref: '#/definitions/Address'
       #      members:
@@ -332,13 +334,13 @@ definitions:
     type: object
     properties:
       id:
-        $ref: '#/definitions/Household/properties/id'
+        $ref: '#/definitions/idForSearch'
       tenantId:
-        $ref: '#/definitions/Household/properties/tenantId'
+        $ref: '#/definitions/tenantId'
       clientReferenceId:
-        $ref: '#/definitions/Household/properties/clientReferenceId'
+        $ref: '#/definitions/clientReferenceId'
       memberCount:
-        $ref: '#/definitions/Household/properties/memberCount'
+        $ref: '#/definitions/memberCount'
       boundaryCode:
         $ref: '#/definitions/boundaryCode'
 
@@ -350,31 +352,15 @@ definitions:
       - individualId
     properties:
       id:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique system generated GUID
-        readOnly: true
+        $ref: '#/definitions/id'
       householdId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Id of the household
+        $ref: '#/definitions/id'
       householdClientReferenceId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Client reference id of the household
+        $ref: '#/definitions/clientReferenceId'
       individualId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Id of the individual
+        $ref: '#/definitions/id'
       individualClientReferenceId:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Client reference Id of the individual
+        $ref: '#/definitions/clientReferenceId'
       isHeadOfHousehold:
         type: boolean
         default: false
@@ -395,17 +381,17 @@ definitions:
     type: object
     properties:
       id:
-        $ref: '#/definitions/HouseholdMember/properties/id'
+        $ref: '#/definitions/idForSearch'
       householdId:
-        $ref: '#/definitions/HouseholdMember/properties/householdId'
+        $ref: '#/definitions/idForSearch'
       householdClientReferenceId:
-        $ref: '#/definitions/HouseholdMember/properties/householdClientReferenceId'
+        $ref: '#/definitions/clientReferenceId'
       individualId:
-        $ref: '#/definitions/HouseholdMember/properties/individualId'
+        $ref: '#/definitions/idForSearch'
       individualClientReferenceId:
-        $ref: '#/definitions/HouseholdMember/properties/individualClientReferenceId'
+        $ref: '#/definitions/clientReferenceId'
       isHeadOfHousehold:
-        $ref: '#/definitions/HouseholdMember/properties/isHeadOfHousehold'
+        type: boolean
       tenantId:
         $ref: '#/definitions/HouseholdMember/properties/tenantId'
 
