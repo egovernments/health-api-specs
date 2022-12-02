@@ -278,3 +278,44 @@ definitions:
         example: 'ABCD-1212'
         minLength: 2
         maxLength: 64
+
+  IndividualRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      Individual:
+        type: array
+        items:
+          $ref: '#/definitions/Individual'
+      apiOperation:
+        $ref: '#/definitions/apiOperation'
+    required:
+      - RequestInfo
+      - Individual
+
+  IndividualSearchRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      Individual:
+        $ref: '#/definitions/IndividualSearch'
+    required:
+      - RequestInfo
+      - Individual
+
+  IndividualResponse:
+    type: object
+    properties:
+      ResponseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
+      Individual:
+        type: array
+        items:
+          $ref: '#/definitions/Individual'
+    required:
+      - ResponseInfo
