@@ -163,8 +163,8 @@ Table stock {
   id varchar [pk]
   clientReferenceId varchar(64)
   tenantId varchar(1000)
-  facilityId varchar(64) [ref: > facility.id]
-  productVariantId varchar(64) [ref: > product_variant.id]
+  facilityId varchar(64) //[ref: > facility.id]
+  productVariantId varchar(64) //[ref: > product_variant.id]
   quantity bigint
   referenceId varchar(200)
   referenceIdType varchar(100)
@@ -282,7 +282,7 @@ Table project_facility {
   id varchar [pk]
   tenantId varchar(1000)
   projectId varchar(64) [ref: > project.id]
-  facilityId varchar(64) [ref: > facility.id]
+  facilityId varchar(64) //[ref: > facility.id]
   startDate bigint
   endDate bigint
   createdBy varchar(64)
@@ -297,7 +297,7 @@ Table project_resource {
   id varchar [pk]
   tenantId varchar(1000)
   projectId varchar(64) [ref: > project.id]
-  productVariantId varchar(64) [ref: > product_variant.id]
+  productVariantId varchar(64) //[ref: > product_variant.id]
   isBaseUnitVariant bool
   startDate bigint
   endDate bigint
