@@ -237,6 +237,10 @@ parameters:
 definitions:
   boundaryCode:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/boundaryCode'
+  id:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/id'
+  idForSearch:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/idForSearch'
   tenantId:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/tenantId'
   eventTimestamp:
@@ -260,11 +264,7 @@ definitions:
       - name
     properties:
       id:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique system generated GUID
-        readOnly: true
+        $ref: '#/definitions/id'
       tenantId:
         $ref: '#/definitions/tenantId'
       type:
@@ -281,10 +281,14 @@ definitions:
         type: string
         description: Capture name of the product
         example: Paracetamol
+        minLength: 2
+        maxLength: 1000
       manufacturer:
         type: string
         description: Capture manufacturer of product
         example: 'J&J'
+        minLength: 0
+        maxLength: 1000
       additionalFields:
         $ref: '#/definitions/additionalFields'
       isDeleted:
@@ -299,15 +303,21 @@ definitions:
     type: object
     properties:
       id:
-        $ref: '#/definitions/Product/properties/id'
+        $ref: '#/definitions/idForSearch'
       tenantId:
-        $ref: '#/definitions/Product/properties/tenantId'
+        $ref: '#/definitions/tenantId'
       type:
-        $ref: '#/definitions/Product/properties/type'
+        type: string
+        description: Define the type of product
+        example: 'DRUG'
       name:
-        $ref: '#/definitions/Product/properties/name'
+        type: string
+        description: Capture name of the product
+        example: Paracetamol
       manufacturer:
-        $ref: '#/definitions/Product/properties/manufacturer'
+        type: string
+        description: Capture manufacturer of product
+        example: 'J&J'
 
   ProductVariant:
     type: object
@@ -316,11 +326,7 @@ definitions:
       - variation
     properties:
       id:
-        type: string
-        minLength: 2
-        maxLength: 64
-        description: Unique system generated GUID
-        readOnly: true
+        $ref: '#/definitions/id'
       tenantId:
         $ref: '#/definitions/tenantId'
       productId:
@@ -332,10 +338,14 @@ definitions:
         type: string
         description: Capture sku code of the variant
         example: 'PAR-200'
+        minLength: 0
+        maxLength: 1000
       variation:
         type: string
         description: Capture name of the variant
         example: Paracetamol 200mg white color
+        minLength: 0
+        maxLength: 1000
       #      variant:
       #        #A variant is a combination of 1 or more variations for a product
       #        type: array
@@ -356,15 +366,26 @@ definitions:
     type: object
     properties:
       id:
-        $ref: '#/definitions/ProductVariant/properties/id'
+        $ref: '#/definitions/idForSearch'
       tenantId:
-        $ref: '#/definitions/ProductVariant/properties/tenantId'
+        $ref: '#/definitions/tenantId'
       productId:
-        $ref: '#/definitions/ProductVariant/properties/productId'
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Product for which this variant is being created
       sku:
-        $ref: '#/definitions/ProductVariant/properties/sku'
+        type: string
+        description: Capture sku code of the variant
+        example: 'PAR-200'
+        minLength: 0
+        maxLength: 1000
       variation:
-        $ref: '#/definitions/ProductVariant/properties/variation'
+        type: string
+        description: Capture name of the variant
+        example: Paracetamol 200mg white color
+        minLength: 0
+        maxLength: 1000
 
   #  Variation:
   #    type: object
