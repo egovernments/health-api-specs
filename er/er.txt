@@ -9,6 +9,7 @@
 Table individual {
   id varchar [pk]
   clientReferenceId varchar(64)
+  tenantId varchar
   // firstName varchar
   // middleName varchar
   // lastName varchar
@@ -71,6 +72,7 @@ Table address {
 
 Table household {
   id varchar [pk]
+  tenantId varchar
   clientReferenceId varchar(64)
   numberOfMembers int
   addressId varchar [ref: > address.id]
@@ -111,6 +113,7 @@ Table household_individual_mapping {
 
 Table facility {
   id varchar [pk]
+  tenantId varchar
   clientReferenceId varchar(64)
   isPermanent bool
   usage varchar(200)
@@ -127,6 +130,7 @@ Table facility {
 
 Table product {
   id varchar [pk]
+  tenantId varchar
   clientReferenceId varchar(64)
   type varchar(200)
   name varchar(1000)
