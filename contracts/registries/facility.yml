@@ -1,0 +1,265 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Facility Registry
+  description: >
+    This module facilitates maintenance of a Facility registry.
+  contact:
+    name: Digit
+    email: info@egovernments.org
+schemes:
+  - https
+x-common-path: >-
+  https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml
+paths:
+  /facility/v1/_create:
+    post:
+      summary: >-
+        Create/Add a new facility
+      description: >-
+        Create a new facility
+      parameters:
+        - name: Facility
+          in: body
+          description: Capture details of Facility.
+          required: true
+          schema:
+            $ref: '#/definitions/FacilityRequest'
+      tags:
+        - Facility
+      responses:
+        '202':
+          description: Facility request has been accepted.
+          schema:
+            $ref: '#/definitions/FacilityResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /facility/v1/_update:
+    post:
+      summary: >-
+        Update the details of a existing facility
+      description: >-
+        Update the details of a existing facility
+      parameters:
+        - name: Facility
+          in: body
+          description: Details for existing facility.
+          required: true
+          schema:
+            $ref: '#/definitions/FacilityRequest'
+      tags:
+        - Facility
+      responses:
+        '202':
+          description: Facility request accepted.
+          schema:
+            $ref: '#/definitions/FacilityResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /facility/v1/_search:
+    post:
+      summary: >-
+        Search existing facility
+      description: >-
+        Search existing facility
+      parameters:
+        - name: Facility
+          in: body
+          description: Details for existing facility.
+          required: true
+          schema:
+            $ref: '#/definitions/FacilitySearchRequest'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/tenantId'
+        - $ref: '#/parameters/lastChangedSince'
+        - $ref: '#/parameters/includeDeleted'
+      tags:
+        - Facility
+      responses:
+        '200':
+          description: Facilities.
+          schema:
+            $ref: '#/definitions/FacilityResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+parameters:
+  #TODO is tenantId required as a query param if it can be determine from requestInfo->userInfo
+  tenantId:
+    name: tenantId
+    in: query
+    description: Unique id for a tenant.
+    required: true
+    type: string
+    format: varchar
+
+  lastChangedSince:
+    name: lastChangedSince
+    description: |
+      epoch of the time since when the changes on the object should be picked up. Search results from this parameter should include both newly created objects since this time as well as any modified objects since this time. This criterion is included to help polling clients to get the changes in system since a last time they synchronized with the platform.
+    in: query
+    required: false
+    type: integer
+    format: int64
+
+  echoResource:
+    name: echoResource
+    in: query
+    type: boolean
+    required: false
+    default: true
+    description: Client can specify if the resource in request body needs to be sent back in the response. This is being used to limit amount of data that needs to flow back from the server to the client in low bandwidth scenarios. Server will always send the server generated id for validated requests.
+
+  serverHandlesErrors:
+    name: serverHandlesErrors
+    in: query
+    type: boolean
+    required: false
+    default: false
+    description: Client can specify that it is incapable of handling any errors with the requests and server should route these for manual intervention if required.
+
+  limit:
+    name: limit
+    description: Pagination - limit records in response
+    in: query
+    type: integer
+    minimum: 0
+    maximum: 1000 #TODO review
+    required: true
+
+  offset:
+    name: offset
+    description: Pagination - offset from which records should be returned in response
+    in: query
+    type: integer
+    minimum: 0
+    required: true
+
+  includeDeleted:
+    name: includeDeleted
+    description: Used in search APIs to specify if (soft) deleted records should be included in search results.
+    in: query
+    type: boolean
+    default: false
+    required: false
+
+definitions:
+  boundaryCode:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/boundaryCode'
+  tenantId:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/tenantId'
+  eventTimestamp:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/eventTimestamp'
+  isDeleted:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/isDeleted'
+  rowVersion:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/rowVersion'
+  apiOperation:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/apiOperation'
+  additionalFields:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/additionalFields'
+  Address:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/Address'
+
+  Facility:
+    type: object
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: true
+      tenantId:
+        $ref: '#/definitions/tenantId'
+      isPermanent:
+        type: boolean
+        default: true
+      usage:
+        type: string
+        example: 'STORAGE_WAREHOUSE'
+      #        enum:
+      #          - STORAGE_WAREHOUSE
+      #          - MEDICAL_FACILITY
+      #          - SEWAGE_TREATMENT_PLANT
+      storageCapacity:
+        type: integer
+        description: Physical storage capacity of the facility in cubic meters
+      address:
+        $ref: '#/definitions/Address'
+      additionalFields:
+        $ref: '#/definitions/additionalFields'
+      isDeleted:
+        $ref: '#/definitions/isDeleted'
+      rowVersion:
+        $ref: '#/definitions/rowVersion'
+      auditDetails:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails
+
+  FacilitySearch:
+    type: object
+    properties:
+      id:
+        $ref: '#/definitions/Facility/properties/id'
+      tenantId:
+        $ref: '#/definitions/Facility/properties/tenantId'
+      isPermanent:
+        $ref: '#/definitions/Facility/properties/isPermanent'
+      usage:
+        $ref: '#/definitions/Facility/properties/usage'
+      storageCapacity:
+        $ref: '#/definitions/Facility/properties/storageCapacity'
+      boundaryCode:
+        $ref: '#/definitions/boundaryCode'
+
+  FacilityRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      Facility:
+        type: array
+        items:
+          $ref: '#/definitions/Facility'
+      apiOperation:
+        $ref: '#/definitions/apiOperation'
+    required:
+      - RequestInfo
+      - Facility
+
+  FacilitySearchRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      Facility:
+        $ref: '#/definitions/FacilitySearch'
+    required:
+      - RequestInfo
+      - Facility
+
+  FacilityResponse:
+    type: object
+    properties:
+      ResponseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
+      Facility:
+        type: array
+        items:
+          $ref: '#/definitions/Facility'
+    required:
+      - ResponseInfo
