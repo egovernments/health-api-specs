@@ -7,6 +7,30 @@ host: www
 schemes:
   - https
 paths:
+  /dummy:
+    post:
+      summary: >-
+        Dummy
+      description: >-
+        Dummy
+      parameters:
+        - name: Dummy
+          in: body
+          description: Dummy
+          required: true
+          schema:
+            type: string
+      tags:
+        - Dummy
+      responses:
+        '202':
+          description: Accepted
+          schema:
+            type: string
+        '400':
+          description: Bad Request
+          schema:
+            type: string
 
 parameters:
   #TODO is tenantId required as a query param if it can be determine from requestInfo->userInfo
