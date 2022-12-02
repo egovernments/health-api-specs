@@ -1,0 +1,280 @@
+swagger: '2.0'
+info:
+  version: 1.0.0
+  title: Individual Registry
+  description: >
+    This module facilitates maintenance of an Individual registry.
+  contact:
+    name: Digit
+    email: info@egovernments.org
+schemes:
+  - https
+x-common-path: >-
+  https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-0-0.yml
+paths:
+  /individual/v1/_create:
+    post:
+      summary: >-
+        Create/Add a new Individual
+      description: >-
+        Create a new Individual
+      parameters:
+        - name: Individual
+          in: body
+          description: Capture details of Individual.
+          required: true
+          schema:
+            $ref: '#/definitions/IndividualRequest'
+        - $ref: '#/parameters/echoResource'
+      tags:
+        - Individual
+      responses:
+        '202':
+          description: Accepted
+          schema:
+            $ref: '#/definitions/IndividualResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /individual/v1/_update:
+    post:
+      summary: >-
+        Update the details of a existing Individual
+      description: >-
+        Update the details of a existing Individual
+      parameters:
+        - name: Individual
+          in: body
+          description: Details for the Individual.
+          required: true
+          schema:
+            $ref: '#/definitions/IndividualRequest'
+        - $ref: '#/parameters/echoResource'
+      tags:
+        - Individual
+      responses:
+        '202':
+          description: Accepted
+          schema:
+            $ref: '#/definitions/IndividualResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /individual/v1/_search:
+    post:
+      summary: >-
+        Search existing Individual
+      description: >-
+        Search existing Individual
+      parameters:
+        - name: Individual
+          in: body
+          description: Individual details.
+          required: true
+          schema:
+            $ref: '#/definitions/IndividualSearchRequest'
+        - $ref: '#/parameters/limit'
+        - $ref: '#/parameters/offset'
+        - $ref: '#/parameters/tenantId'
+        - $ref: '#/parameters/lastChangedSince'
+        - $ref: '#/parameters/includeDeleted'
+      tags:
+        - Individual
+      responses:
+        '200':
+          description: Ok
+          schema:
+            $ref: '#/definitions/IndividualResponse'
+        '400':
+          description: Bad Request
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+        '500':
+          description: Internal Server Error
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+parameters:
+  #TODO is tenantId required as a query param if it can be determine from requestInfo->userInfo
+  tenantId:
+    name: tenantId
+    in: query
+    description: Unique id for a tenant.
+    required: true
+    type: string
+    format: varchar
+
+  lastChangedSince:
+    name: lastChangedSince
+    description: |
+      epoch of the time since when the changes on the object should be picked up. Search results from this parameter should include both newly created objects since this time as well as any modified objects since this time. This criterion is included to help polling clients to get the changes in system since a last time they synchronized with the platform.
+    in: query
+    required: false
+    type: integer
+    format: int64
+
+  echoResource:
+    name: echoResource
+    in: query
+    type: boolean
+    required: false
+    default: true
+    description: Client can specify if the resource in request body needs to be sent back in the response. This is being used to limit amount of data that needs to flow back from the server to the client in low bandwidth scenarios. Server will always send the server generated id for validated requests.
+
+  serverHandlesErrors:
+    name: serverHandlesErrors
+    in: query
+    type: boolean
+    required: false
+    default: false
+    description: Client can specify that it is incapable of handling any errors with the requests and server should route these for manual intervention if required.
+
+  limit:
+    name: limit
+    description: Pagination - limit records in response
+    in: query
+    type: integer
+    minimum: 0
+    maximum: 1000 #TODO review
+    required: true
+
+  offset:
+    name: offset
+    description: Pagination - offset from which records should be returned in response
+    in: query
+    type: integer
+    minimum: 0
+    required: true
+
+  includeDeleted:
+    name: includeDeleted
+    description: Used in search APIs to specify if (soft) deleted records should be included in search results.
+    in: query
+    type: boolean
+    default: false
+    required: false
+
+definitions:
+  boundaryCode:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/boundaryCode'
+  tenantId:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/tenantId'
+  eventTimestamp:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/eventTimestamp'
+  isDeleted:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/isDeleted'
+  rowVersion:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/rowVersion'
+  apiOperation:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/apiOperation'
+  additionalFields:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/additionalFields'
+  Address:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/Address'
+
+  Individual:
+    description: A representation of an Individual.
+    type: object
+    required:
+      - name
+    properties:
+      id:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique system generated GUID
+        readOnly: true
+      tenantId:
+        $ref: '#/definitions/tenantId'
+      clientReferenceId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Unique client generated GUID
+      name:
+        #TODO: shouldn't we split this into familyName, givenName, otherNames like in https://schema.org/Person
+        type: string
+        minLength: 2
+        maxLength: 200
+        description: Name of individual
+      dateOfBirth:
+        type: string
+        example: 'YYYYMMDD'
+        maxLength: 6
+      address:
+        $ref: '#/definitions/Address'
+      gender:
+        type: string
+        example: 'MALE'
+        enum:
+          - MALE
+          - FEMALE
+          - OTHER
+      identifiers:
+        type: array
+        items:
+          $ref: '#/definitions/Identifier'
+      additionalFields:
+        $ref: '#/definitions/additionalFields'
+      isDeleted:
+        $ref: '#/definitions/isDeleted'
+      rowVersion:
+        $ref: '#/definitions/rowVersion'
+      auditDetails:
+        $ref: 'https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/AuditDetails'
+
+  IndividualSearch:
+    description: A representation of an Individual.
+    type: object
+    properties:
+      id:
+        $ref: '#/definitions/Individual/properties/id'
+      tenantId:
+        $ref: '#/definitions/Individual/properties/tenantId'
+      clientReferenceId:
+        $ref: '#/definitions/Individual/properties/clientReferenceId'
+      name:
+        $ref: '#/definitions/Individual/properties/name'
+      dateOfBirth:
+        $ref: '#/definitions/Individual/properties/dateOfBirth'
+      gender:
+        $ref: '#/definitions/Individual/properties/gender'
+      identifier:
+        $ref: '#/definitions/Identifier'
+      boundaryCode:
+        $ref: '#/definitions/boundaryCode'
+
+  Identifier:
+    type: object
+    required:
+      - type
+      - id
+    properties:
+      type:
+        type: string
+        example: 'SYSTEM_GENERATED'
+        minLength: 2
+        maxLength: 64
+      id:
+        type: string
+        example: 'ABCD-1212'
+        minLength: 2
+        maxLength: 64
