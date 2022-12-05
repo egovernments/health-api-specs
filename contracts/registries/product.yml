@@ -271,6 +271,8 @@ definitions:
         type: string
         description: Define the type of product
         example: 'DRUG'
+        minLength: 2
+        maxLength: 100
       #        enum:
       #          - MEDICINE
       #          - VACCINE
