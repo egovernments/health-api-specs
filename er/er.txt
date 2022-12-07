@@ -19,7 +19,7 @@ Table individual {
   latitude double
   longitude double
   addressId varchar [ref: > address.id]
-  additionalDetails longtext
+  additionalDetails json
   createdBy varchar(64)
   createdTime bigint
   lastModifiedBy varchar(64)
@@ -59,7 +59,7 @@ Table address {
   pincode varchar(64)
   buildingName varchar(256)
   street varchar(256)
-  additionalDetails longtext
+  additionalDetails json
   localityCode varchar //Reference to master data
   createdBy varchar(64)
   createdTime bigint
@@ -76,7 +76,7 @@ Table household {
   clientReferenceId varchar(64)
   numberOfMembers int
   addressId varchar [ref: > address.id]
-  additionalDetails longtext
+  additionalDetails json
   createdBy varchar(64)
   createdTime bigint
   lastModifiedBy varchar(64)
@@ -103,7 +103,7 @@ Table household_individual_mapping {
 //   resourceId varchar //refer to MDMS
 //   quantityProcured bigint
 //   quantityProcuredUnit varchar // MDMS
-//   additionalDetails longtext
+//   additionalDetails json
 //   createdAt bigint
 //   modifiedAt bigint
 //   createdBy varchar
@@ -135,7 +135,7 @@ Table product {
   type varchar(200)
   name varchar(1000)
   manufacturer varchar(1000)
-  additionalDetails longtext
+  additionalDetails json
   createdBy varchar(64)
   createdTime bigint
   lastModifiedBy varchar(64)
@@ -150,7 +150,7 @@ Table product_variant {
   productId varchar(64) [ref: > product.id]
   sku varchar(1000)
   variation varchar(1000)
-  additionalDetails longtext
+  additionalDetails json
   createdBy varchar(64)
   createdTime bigint
   lastModifiedBy varchar(64)
@@ -172,7 +172,7 @@ Table stock {
   transactionReason varchar(100)
   transactingPartyId varchar(64)
   transactingPartyType varchar(100)
-  additionalDetails longtext
+  additionalDetails json
   createdBy varchar(64)
   createdTime bigint
   lastModifiedBy varchar(64)
@@ -191,7 +191,7 @@ Table project {
   isTaskEnabled bool
   parent varchar(64)
 
-  additionalDetails longtext
+  additionalDetails json
   createdBy varchar(64)
   createdTime bigint
   lastModifiedBy varchar(64)
@@ -238,7 +238,7 @@ Table project_task {
   actualStartDate bigint
   actualEndDate bigint
   addressId varchar
-  additionalDetails longtext
+  additionalDetails json
   createdBy varchar(64)
   createdTime bigint
   lastModifiedBy varchar(64)
@@ -325,7 +325,7 @@ Table project_resource {
 //     // desiredPopulationTarget bigint
 //     // status varchar
 //   disease varchar
-//   additionalDetails longtext
+//   additionalDetails json
 //   createdAt bigint
 //   modifiedAt bigint
 //   createdBy varchar
@@ -363,7 +363,7 @@ Table project_resource {
 //   achievedTargets json //achievedTeamTarget, achievedCoverageTarget, achievedPopulationTarget
 //   status varchar //MDMS
 //   boundaryId varchar // refer to Boundary config
-//   additionalDetails longtext
+//   additionalDetails json
 //   createdAt bigint
 //   modifiedAt bigint
 //   createdBy varchar
