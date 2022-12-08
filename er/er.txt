@@ -190,7 +190,7 @@ Table project {
   endDate bigint
   isTaskEnabled bool
   parent varchar(64)
-
+  projectHierarchy varchar
   additionalDetails json
   createdBy varchar(64)
   createdTime bigint

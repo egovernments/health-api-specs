@@ -79,6 +79,9 @@ paths:
         - $ref: '#/parameters/tenantId'
         - $ref: '#/parameters/lastChangedSince'
         - $ref: '#/parameters/includeDeleted'
+        - $ref: '#/parameters/includeEnded'
+        - $ref: '#/parameters/includePrecedingHierarchy'
+        - $ref: '#/parameters/includeFollowingHierarchy'
       tags:
         - Project
       responses:
@@ -568,6 +571,30 @@ parameters:
     default: false
     required: false
 
+  includeEnded:
+    name: includeEnded
+    description: Used in project search API to specify if records past end date should be included in search results.
+    in: query
+    type: boolean
+    default: false
+    required: false
+
+  includePrecedingHierarchy:
+    name: includePrecedingHierarchy
+    description: Used in project search API to specify if response should include project elements that are in the preceding hierarchy of matched projects.
+    in: query
+    type: boolean
+    default: false
+    required: false
+
+  includeFollowingHierarchy:
+    name: includeFollowingHierarchy
+    description: Used in project search API to specify if response should include project elements that are in the following hierarchy of matched projects.
+    in: query
+    type: boolean
+    default: false
+    required: false
+
 definitions:
   boundaryCode:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/boundaryCode'
@@ -734,6 +761,10 @@ definitions:
         description: Reference to physical documents that have been attached via file upload
         items:
           $ref: 'https://raw.githubusercontent.com/egovernments/DIGIT-OSS/master/core-services/docs/worfklow-2.0.yml#/definitions/Document'
+      projectHierarchy:
+        type: "string"
+        description: "Materialized Path of the hierarchy that this project element belongs to"
+        readOnly: true
       additionalFields:
         $ref: '#/definitions/additionalFields'
       isDeleted:
@@ -875,11 +906,11 @@ definitions:
       actualStartDate:
         type: integer
         format: int64
-        description: Task planned start date
+        description: Task actual start date
       actualEndDate:
         type: integer
         format: int64
-        description: Task planned end date
+        description: Task actual end date
       createdBy:
         type: string
         example: "UUID"
