@@ -80,8 +80,8 @@ paths:
         - $ref: '#/parameters/lastChangedSince'
         - $ref: '#/parameters/includeDeleted'
         - $ref: '#/parameters/includeEnded'
-        - $ref: '#/parameters/includePrecedingHierarchy'
-        - $ref: '#/parameters/includeFollowingHierarchy'
+        - $ref: '#/parameters/includeAncestors'
+        - $ref: '#/parameters/includeDescendants'
       tags:
         - Project
       responses:
@@ -579,16 +579,16 @@ parameters:
     default: false
     required: false
 
-  includePrecedingHierarchy:
-    name: includePrecedingHierarchy
+  includeAncestors:
+    name: includeAncestors
     description: Used in project search API to specify if response should include project elements that are in the preceding hierarchy of matched projects.
     in: query
     type: boolean
     default: false
     required: false
 
-  includeFollowingHierarchy:
-    name: includeFollowingHierarchy
+  includeDescendants:
+    name: includeDescendants
     description: Used in project search API to specify if response should include project elements that are in the following hierarchy of matched projects.
     in: query
     type: boolean
