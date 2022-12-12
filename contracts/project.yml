@@ -1243,6 +1243,7 @@ definitions:
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
       Project:
         type: array
+        minItems: 1
         items:
           $ref: '#/definitions/Project'
       apiOperation:
@@ -1287,6 +1288,7 @@ definitions:
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
       ProjectBeneficiary:
         type: array
+        minItems: 1
         items:
           $ref: '#/definitions/ProjectBeneficiary'
       apiOperation:
@@ -1330,6 +1332,7 @@ definitions:
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
       Task:
         type: array
+        minItems: 1
         items:
           $ref: '#/definitions/Task'
       apiOperation:
@@ -1371,6 +1374,7 @@ definitions:
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
       ProjectStaff:
         type: array
+        minItems: 1
         items:
           $ref: '#/definitions/ProjectStaff'
       apiOperation:
@@ -1411,6 +1415,7 @@ definitions:
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
       ProjectFacility:
         type: array
+        minItems: 1
         items:
           $ref: '#/definitions/ProjectFacility'
       apiOperation:
@@ -1451,6 +1456,7 @@ definitions:
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
       ProjectResource:
         type: array
+        minItems: 1
         items:
           $ref: '#/definitions/ProjectResource'
       apiOperation:
