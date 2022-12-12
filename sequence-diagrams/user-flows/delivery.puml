@@ -1,33 +1,33 @@
-@startuml Delivary 
+@startuml Delivery
 !function $my_code($fgcolor, $bgcolor)
 !return "<color:"+$fgcolor+"><back:"+$bgcolor+"><size:14><b><font:monospaced>"
 !endfunction
 actor Actor
 participant Application as client
-participant "Delivary Page" as delivary
+participant "Delivery Page" as delivery
 participant Bloc
 participant Repository as repository
-participant Delivary as delivary_service
-participant Project as project_serivce
-participant Household as house_hold_service
+participant Delivery as delivery_service
+participant Project as project_service
+participant Household as household_service
 participant Individual as individual_service
 
 Actor -> client: onInit
 group  Added New Individual
     autoactivate on
 
-    client -> delivary: Client Pushes View Delivary Page with household id (or) individual id  as path params.
+    client -> delivery: Client Pushes View Delivery Page with household id (or) individual id  as path params.
     hnote over Bloc : Registration Bloc.
-    delivary -> Bloc: Oninit() trigger a function to fetch additional fields + project details and .
+    delivery -> Bloc: Oninit() trigger a function to fetch additional fields + project details and .
     Bloc -> client :  get the stored schema data (Additional Fields) + Project details.
-    client -->delivary: Additional Fields + Project details + household id (or) individual id.
-    delivary -> Bloc: Enter all the required field details and submit.
+    client -->delivery: Additional Fields + Project details + household id (or) individual id.
+    delivery -> Bloc: Enter all the required field details and submit.
     Bloc -> repository : passing the tenant id and fields + household id (or) individual id
-    hnote over repository : Delivary Repository.
-    repository -> project_serivce : (/project/task/v1/_create)  create a task against the beneficiary.
-    project_serivce --> repository : task details as response.
+    hnote over repository : Delivery Repository.
+    repository -> project_service : (/project/task/v1/_create)  create a task against the beneficiary.
+    project_service --> repository : task details as response.
     repository --> Bloc :  task details.
-    Bloc --> delivary : navigate the user to Benificiary view Screen after showing a tost message.
+    Bloc --> delivery : navigate the user to Beneficiary view Screen after showing a toast message.
 
     autoactivate off
 end

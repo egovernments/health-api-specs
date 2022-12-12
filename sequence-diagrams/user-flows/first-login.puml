@@ -4,28 +4,28 @@ client -> Page:  Client Pushes Language selection Screen
 hnote over Page : Language Screen. 
 
 
-Page -> Bloc: onLoad() fuction invoked
+Page -> Bloc: onLoad() function invoked
 Bloc -> Client_Connection_Check : check the client internet connection.
-Client_Connection_Check --> Bloc: return bloolean value (true/false) as response.
+Client_Connection_Check --> Bloc: return boolean value (true/false) as response.
 Bloc --> Page: Display a message if it returns false.  
 
-hnote over Bloc : mdms Bloc
+hnote over Bloc : MDMS Bloc
 
 group MDMS data StateInfo
 Bloc -> Repository: Pass tenant &  egov-local module
-hnote over Repository : mdms Repository
-Repository ->mdms_Service: API call to MDMS serive to fetch egov-local 
-mdms_Service -->Bloc: MDMS data with consist of stateInfo.
-Bloc-->client: Store the respose MDMS data in client-Side
+hnote over Repository : MDMS Repository
+Repository ->MDMS_Service: API call to MDMS service to fetch egov-local
+MDMS_Service -->Bloc: MDMS data with consist of stateInfo.
+Bloc-->client: Store the response MDMS data in client-Side
 end
 
 
 
 group Localization
 Bloc -> Repository: Pass Locale & tenant  & modules (login-module)
-Repository ->localization_Service: API call to Localization serive to fetch Localization  
-mdms_Service -->Bloc:  data  consist of Localiztion 
-Bloc--> Page: Store the respose data in client-Side
+Repository ->localization_Service: API call to Localization service to fetch Localization
+MDMS_Service -->Bloc:  data  consist of Localization
+Bloc--> Page: Store the response data in client-Side
 end
 
 client -> Page: Client Pushes Language selection Screen 
@@ -37,12 +37,12 @@ Page o\\-- Page: Auth Model
 
 Page ->Bloc: On submitting userId, Password (auth Model)
 hnote over Bloc : Auth Bloc
-Bloc -> Repository: Data modeling for AuthSerive
+Bloc -> Repository: Data modeling for AuthService
 hnote over Repository : Auth Repository
 Repository -> Auth_service: API call to Auth service to fetch token
 Auth_service -->Bloc: auth response data with consist of token and user Roles.
 Bloc-->client: Store the token and user Roles in client-Side
-Bloc-->Page: Naviagte to home screen
+Bloc-->Page: Navigate to home screen
 end
 
 ==Home Screen ==
@@ -58,21 +58,21 @@ end note
 
 group MDMS data 
 Bloc -> Repository: Pass tenant & field-app-configuration, project-task-configuration, project-types, service-registry, additional-field-schemas
-hnote over Repository : mdms Repository
-Repository ->mdms_Service: API call to MDMS serive to fetch 
-mdms_Service -->Bloc: MDMS data.
+hnote over Repository : MDMS Repository
+Repository ->MDMS_Service: API call to MDMS service to fetch
+MDMS_Service -->Bloc: MDMS data.
 hnote over client : Client Storage.
-Bloc-->client: Store the respose MDMS data in client-Side
+Bloc-->client: Store the response MDMS data in client-Side
 end
 
 
 
 group Localization
 Bloc -> Repository: Pass Locale & tenant & modules (all the modules)
-Repository ->localization_Service: API call to Localization serive to fetch Localization (all the modules)
-mdms_Service -->Bloc:  data  consist of Localiztion 
+Repository ->localization_Service: API call to Localization service to fetch Localization (all the modules)
+MDMS_Service -->Bloc:  data  consist of Localization
 hnote over client : Client Storage.
-Bloc--> client: Store the respose data in client-Side
+Bloc--> client: Store the response data in client-Side
 end
 
 
@@ -82,12 +82,12 @@ Page -> Bloc: onLoad()function invoked.
 hnote over Bloc : Project Bloc
 Bloc -> Repository : user id & tenant
 hnote over Repository : Projects Repository
-Repository ->project_Service: API call to Project serive to fetch attached projects. (/project/staff/v1/_search)
+Repository ->project_Service: API call to Project service to fetch attached projects. (/project/staff/v1/_search)
 project_Service -->Repository: project response data with consist of  assigned projects data.
 Repository ->  project_Service : API call to Project service to fetch the details of projects (/project/v1/_search).
 project_Service --> Bloc : project response data with consist of assigned projects details data.
 hnote over client : Client Storage.
-Bloc-->client: Store the respose projects data in client-Side.  
+Bloc-->client: Store the response projects data in client-Side.
 end
 
 
@@ -97,10 +97,10 @@ Page -> Bloc: onLoad()function invoked.
 hnote over Bloc : Project Bloc
 Bloc -> Repository : Pass user id & tenant & project id
 hnote over Repository :Project Repository
-Repository ->project_Service: API call to Project serive to fetch attached beneficiary.
+Repository ->project_Service: API call to Project service to fetch attached beneficiary.
 project_Service -->Bloc: Assigned beneficiary response data. 
 hnote over client : Client Storage
-Bloc-->client: Store the respose beneficiary data in client-Side  
+Bloc-->client: Store the response beneficiary data in client-Side
 end
 
 
@@ -113,18 +113,18 @@ hnote over Repository : Registration Repository
 
 Repository  -> individual_service : (/individual/v1/_search) by passing boundary code.
 individual_service --> Bloc: push response to List of Individuals. 
-Repository  -> house_hold_service : (/household/v1/_search) by passing boundary code
+Repository  -> household_service : (/household/v1/_search) by passing boundary code
 individual_service --> Bloc: push to  List of HouseHold. 
-Repository -> house_hold_service : (/household/member/v1/_search) pass the boundary code and get all the household members.
-house_hold_service --> Bloc: push to  List of HouseHold Members. 
+Repository -> household_service : (/household/member/v1/_search) pass the boundary code and get all the household members.
+household_service --> Bloc: push to  List of HouseHold Members.
 hnote over client : Client Storage
-Bloc-->client: Store the respose Individuals + HouseHold + HouseHold Members:  data in client-Side  
-hnote over Repository : Indiviual Repository
+Bloc-->client: Store the response Individuals + HouseHold + HouseHold Members:  data in client-Side
+hnote over Repository : Individual Repository
 end
 
 
 
-group Fetching Task agaisnt  beneficiary ids
+group Fetching Task against  beneficiary ids
 Page -> Bloc: onLoad()function invoked.
 hnote over Bloc : Project Bloc
 Bloc -> Repository : Pass tenant & each beneficiary id.
@@ -132,18 +132,18 @@ hnote over Repository :  Project Repository
 Repository  -> individual_service : (/project/task/v1/_search) by passing tenant,project id & each beneficiary id.
 individual_service --> Bloc: assigned Task . 
 hnote over client : Client Storage
-Bloc-->client: Store the respose  of Task in client-Side  
+Bloc-->client: Store the response  of Task in client-Side
 hnote over Repository : Project Repository
 end
 
 group  Display Home cards by Role and access
-Page -> Bloc: loadStaticData() function inovked
+Page -> Bloc: loadStaticData() function invoked
 hnote over Bloc : Home Walkthrough Bloc
 Bloc -> client : Trigger to read Roles and Access from Client Store.
 hnote over client : Client Storage
 client --> Page : Roles and Access passed to Page. 
 Bloc --> Page : return list of home cards.
-Page o\\-- Page: Filter the Cards based on Roles and Acsess and Display.
+Page o\\-- Page: Filter the Cards based on Roles and Access and Display.
 end
 
 

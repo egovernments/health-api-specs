@@ -11,8 +11,8 @@ alt localSync  false
 note right
 
 
-fetch  service registary from MDMS service and make the api call's similar 
+fetch  service  registry from MDMS service and make the api call's similar
 done in login sequence.  
 
 end note
-end
+@enduml

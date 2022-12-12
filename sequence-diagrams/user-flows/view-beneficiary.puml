@@ -6,28 +6,28 @@ participant "Beneficiary Page" as beneficiary
 participant Bloc
 participant Repository as repository
 participant Individual as individual_service
-participant Household as house_hold_service
+participant Household as household_service
 
 Actor -> client: onInit
-group  View Benificiary
+group  View Beneficiary
 
     autoactivate on
 
 
-    client -> beneficiary: Client Pushes View Benificiary Page
-    hnote over Bloc : Benificiary Bloc.
+    client -> beneficiary: Client Pushes View Beneficiary Page
+    hnote over Bloc : Beneficiary Bloc.
     beneficiary -> Bloc : On entering the name and submit.
     Bloc -> repository : passing the Boundary code and name
-    hnote over repository : Benificiary Repository.
+    hnote over repository : Beneficiary Repository.
 
 alt project_type=household
     repository -> individual_service : (/individual/v1/_search)  with Boundary code and name
     return List of individuals.
 
-    repository -> house_hold_service : (/household/v1/_search) pass the householdId and get all the houshold details.
-    return render houshold details to ui
+    repository -> household_service : (/household/v1/_search) pass the householdId and get all the household details.
+    return render household details to ui
 
-    repository -> house_hold_service : (/household/member/v1/_search) pass the householdId and get all the household members.
+    repository -> household_service : (/household/member/v1/_search) pass the householdId and get all the household members.
     return All household members
 
     repository --> Bloc: Household members
@@ -35,14 +35,14 @@ alt project_type=household
 end
 
 alt project_type=individual 
- repository -> individual_service : (/individual/v1/_search)  with Boundary code and name and filter if the benficiary belows.
+ repository -> individual_service : (/individual/v1/_search)  with Boundary code and name and filter if the beneficiary belows.
     return List of individuals.
-        repository -> house_hold_service: (/household/member/v1/_search) Pass the each individual id and Boundary code to fetch household members and filter with benficiary ids (houseHold Id).
+        repository -> household_service: (/household/member/v1/_search) Pass each individual id and Boundary code to fetch household members and filter with beneficiary ids (Household Id).
     return get household member as response and make next api call by passing householdId.
-      repository -> house_hold_service : (/household/v1/_search) pass the householdId and get all the houshold details.
-    return render houshold details to ui
+      repository -> household_service : (/household/v1/_search) pass the householdId and get all the household details.
+    return render household details to ui
 
-    repository -> house_hold_service : (/household/member/v1/_search) pass the householdId and get all the household members.
+    repository -> household_service : (/household/member/v1/_search) pass the householdId and get all the household members.
     return All household members
 
     repository --> Bloc: Household members
