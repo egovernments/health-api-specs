@@ -153,7 +153,7 @@ parameters:
     in: query
     type: integer
     minimum: 0
-    maximum: 1000 #TODO review
+    maximum: 1000
     required: true
 
   offset:
@@ -200,12 +200,23 @@ definitions:
   Address:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/Address'
   name:
-    #TODO: shouldn't we split this into familyName, givenName, otherNames like in https://schema.org/Person
-    type: string
-    minLength: 2
-    maxLength: 200
-    description: Name of individual
-
+    type: object
+    properties:
+      givenName:
+        type: string
+        minLength: 2
+        maxLength: 200
+        description: Given name of individual
+      familyName:
+        type: string
+        minLength: 2
+        maxLength: 200
+        description: Family name of individual
+      otherNames:
+        type: string
+        minLength: 0
+        maxLength: 200
+        description: Other names of individual
   Individual:
     description: A representation of an Individual.
     type: object
@@ -218,18 +229,61 @@ definitions:
         $ref: '#/definitions/tenantId'
       clientReferenceId:
         $ref: '#/definitions/clientReferenceId'
+      userId: #reference to user service id for this individual
+        $ref: '#/definitions/id'
       name:
         $ref: '#/definitions/name'
       dateOfBirth:
         $ref: '#/definitions/dateOfBirth'
-      address:
-        $ref: '#/definitions/Address'
       gender:
         $ref: '#/definitions/gender'
+      bloodGroup:
+        type: string
+        description: Blood group of the user.
+        maxLength: 3
+        items:
+          type: string
+          enum:
+            - A+
+            - B+
+            - O+
+            - AB+
+            - A-
+            - B-
+            - AB-
+            - O-
+      mobileNumber:
+        type: string
+        description: Mobile number of the user
+        maxLength: 20
+      altContactNumber:
+        type: string
+        description: Alternate contact number of the user
+        maxLength: 16
+      email:
+        type: string
+        format: email
+        minLength: 5
+        maxLength: 200
+      address:
+        type: array
+        items:
+          $ref: '#/definitions/Address'
+      fatherName:
+        type: string
+        description: Individual's father's name - if available
+        maxLength: 100
+      husbandName:
+        type: string
+        description: Individual's husband's name - if applicable
+        maxLength: 100
       identifiers:
         type: array
         items:
           $ref: '#/definitions/Identifier'
+      photo:
+        type: string
+        description : Filestore service uuid holding individual's photograph
       additionalFields:
         $ref: '#/definitions/additionalFields'
       isDeleted:
