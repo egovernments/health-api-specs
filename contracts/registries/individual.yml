@@ -252,6 +252,7 @@ definitions:
             - B-
             - AB-
             - O-
+          example: AB+
       mobileNumber:
         type: string
         description: Mobile number of the user

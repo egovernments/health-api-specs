@@ -8,17 +8,23 @@
 
 Table individual {
   id varchar [pk]
+  userId varchar(64)
   clientReferenceId varchar(64)
   tenantId varchar
-  // firstName varchar
-  // middleName varchar
-  // lastName varchar
-  name varchar(200)
+  givenName varchar(200)
+  familyName varchar(200)
+  otherNames varchar(200)
   dateOfBirth bigint //YYYYMMDD. Do not store time and timezone in this field.
   gender varchar(10)
+  bloodGroup varchar(10)
   latitude double
   longitude double
-  addressId varchar [ref: > address.id]
+  mobileNumber varchar(20)
+  altContactNumber varchar(20)
+  email varchar(200)
+  fatherName varchar(100)
+  husbandName varchar(100)
+  photo varchar
   additionalDetails json
   createdBy varchar(64)
   createdTime bigint
@@ -36,6 +42,17 @@ Table individual_identifier {
   // status varchar(64) // ACTIVE, EXPIRED etc
   // validityStart bigint
   // validityEnd bigint
+  createdBy varchar(64)
+  createdTime bigint
+  lastModifiedBy varchar(64)
+  lastModifiedTime bigint
+  rowVersion bigint
+  isDeleted bool
+}
+
+Table individual_address {
+  individualId varchar [ref: > individual.id]
+  addressId varchar [ref: > address.id]
   createdBy varchar(64)
   createdTime bigint
   lastModifiedBy varchar(64)
