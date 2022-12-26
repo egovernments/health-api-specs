@@ -837,7 +837,12 @@ definitions:
         type: string
         minLength: 2
         maxLength: 64
-        description: Unique ID form Project registration
+        description: Unique ID of Household/Individual being added as beneficiary
+      beneficiaryClientReferenceId:
+        type: string
+        minLength: 2
+        maxLength: 64
+        description: Client maintained unique ID of Household/Individual being added as beneficiary
       dateOfRegistration:
         $ref: '#/definitions/eventTimestamp'
       additionalFields:
@@ -867,7 +872,7 @@ definitions:
         type: string
         minLength: 2
         maxLength: 64
-        description: Unique ID form Project registration
+        description: Unique ID of Household/Individual being added as beneficiary
       dateOfRegistration:
         $ref: '#/definitions/eventTimestamp'
 
@@ -891,6 +896,11 @@ definitions:
       projectBeneficiaryId:
         type: string
         example: "R-ID-1"
+        description: Unique Beneficiary Id
+      projectBeneficiaryClientReferenceId:
+        type: string
+        example: "R-ID-1"
+        description: Unique client maintained Beneficiary Id
       resources:
         type: array
         items:

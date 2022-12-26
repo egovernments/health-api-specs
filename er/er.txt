@@ -237,6 +237,7 @@ Table project_beneficiary {
   tenantId varchar(1000)
   projectId varchar(64) [ref: > project.id]
   beneficiaryId varchar(64)
+  beneficiaryClientReferenceId varchar(64)
   createdBy varchar(64)
   createdTime bigint
   lastModifiedBy varchar(64)
@@ -250,6 +251,7 @@ Table project_task {
   tenantId varchar(1000)
   projectId varchar(64) [ref: > project.id]
   projectBeneficiaryId varchar(64)
+  projectBeneficiaryClientReferenceId varchar(64)
   plannedStartDate bigint
   plannedEndDate bigint
   actualStartDate bigint
