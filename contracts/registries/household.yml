@@ -339,8 +339,6 @@ definitions:
         $ref: '#/definitions/tenantId'
       clientReferenceId:
         $ref: '#/definitions/clientReferenceId'
-      memberCount:
-        $ref: '#/definitions/memberCount'
       boundaryCode:
         $ref: '#/definitions/boundaryCode'
 
