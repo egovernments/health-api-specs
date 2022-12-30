@@ -125,6 +125,11 @@ definitions:
     example: 'YYYYMMDD'
     maxLength: 6
 
+  dateDDMMYYYY:
+    type: string
+    format: date
+    example: '14/10/2022'
+
   boundaryCode:
     description: Reference to boundary code.
     type: string
