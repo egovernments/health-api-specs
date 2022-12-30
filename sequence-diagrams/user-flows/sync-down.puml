@@ -1,0 +1,59 @@
+@startuml
+!theme vibrant
+title Sync Down
+actor "Field Worker" as a
+participant Client as c
+participant NetworkManager as nm
+participant LocalStore as l
+participant RemoteStore as r
+
+activate c
+a -> c: User login OR user triggered sync
+c -> nm: Sync down
+nm -> l: Read PERSISTENCE_MODE from field-app-configuration
+alt PERSISTENCE_MODE is ONLINE
+  l --> nm: PERSISTENCE_MODE is ONLINE
+  nm -> c: Success. No sync required.
+end
+l --> nm: PERSISTENCE_MODE is OFFLINE_FIRST
+group metadata download
+  nm -> r: fetch non login modules from LOCALIZATION service
+  nm -> r: Fetch project-types, additional-field-schemas, role-actions MDMS configs
+  nm -> r: Project Staff search with user id
+  'kick user out here if no projects linked?
+  nm -> r: Project search with project id(s)
+  nm -> r: Project resources search with project id(s)
+  nm -> r: Project facility search with project id(s)
+  'what if role is warehouse manager but no facilities are assigned?
+end
+alt data sync down is enabled
+  alt user role has registrar
+    nm -> r: Project Beneficiary Search
+    alt project beneficiary type is household
+      nm -> r: Household search with beneficiary id(s) and boundary ids(s)
+      nm -> r: Household Member search
+      nm -> r: Individual search
+    end
+    alt project beneficiary type is individual
+      nm -> r: Individual Search
+      nm -> r: Household Member search with individual id
+      nm -> r: Household search with household id
+      nm -> r: Household member search with household id
+    end
+  end
+  alt user role has distributor
+    nm -> r: Project Task search with beneficiary id(s)
+  end
+  alt user role has warehouse manager
+    nm -> r: Stock search
+    nm -> r: Stock reconciliation search
+  end
+end
+alt error in any of the calls
+  r -> nm: error in call
+  nm -> c: Error while performing sync.
+  c -> a: Error while performing sync. Please retry.
+end
+nm -> c: Sync complete
+c -> a: Display home screen
+@enduml
