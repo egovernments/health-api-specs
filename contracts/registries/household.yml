@@ -335,8 +335,6 @@ definitions:
     properties:
       id:
         $ref: '#/definitions/idForSearch'
-      tenantId:
-        $ref: '#/definitions/tenantId'
       clientReferenceId:
         $ref: '#/definitions/clientReferenceId'
       boundaryCode:
@@ -390,8 +388,6 @@ definitions:
         $ref: '#/definitions/clientReferenceId'
       isHeadOfHousehold:
         type: boolean
-      tenantId:
-        $ref: '#/definitions/HouseholdMember/properties/tenantId'
 
   HouseholdRequest:
     type: object

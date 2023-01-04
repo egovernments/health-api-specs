@@ -212,8 +212,6 @@ definitions:
     properties:
       id:
         $ref: '#/definitions/idForSearch'
-      tenantId:
-        $ref: '#/definitions/tenantId'
       isPermanent:
         type: boolean
       usage:

@@ -780,8 +780,6 @@ definitions:
     properties:
       id:
         $ref: '#/definitions/idForSearch'
-      tenantId:
-        $ref: '#/definitions/tenantId'
       startDate:
         type: integer
         format: int64
@@ -861,8 +859,6 @@ definitions:
     properties:
       id:
         $ref: '#/definitions/idForSearch'
-      tenantId:
-        $ref: '#/definitions/tenantId'
       projectId:
         type: string
         minLength: 2
@@ -954,8 +950,6 @@ definitions:
     properties:
       id:
         $ref: '#/definitions/idForSearch'
-      tenantId:
-        $ref: '#/definitions/tenantId'
       projectId:
         type: string
         minLength: 2
@@ -1045,8 +1039,6 @@ definitions:
     properties:
       id:
         $ref: '#/definitions/idForSearch'
-      tenantId:
-        $ref: '#/definitions/tenantId'
       userId:
         type: string
         description: Unique userId defined using user service
@@ -1102,8 +1094,6 @@ definitions:
     properties:
       id:
         $ref: '#/definitions/idForSearch'
-      tenantId:
-        $ref: '#/definitions/tenantId'
       facilityId:
         type: string
         description: Unique facilityId defined using facility service
@@ -1154,8 +1144,6 @@ definitions:
     properties:
       id:
         $ref: '#/definitions/idForSearch'
-      tenantId:
-        $ref: '#/definitions/tenantId'
       projectId:
         type: string
         description: Unique Project Id defined in Project Service

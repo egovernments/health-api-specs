@@ -300,8 +300,6 @@ definitions:
     properties:
       id:
         $ref: '#/definitions/idForSearch'
-      tenantId:
-        $ref: '#/definitions/tenantId'
       clientReferenceId:
         $ref: '#/definitions/clientReferenceId'
       name:

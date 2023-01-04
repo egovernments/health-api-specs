@@ -371,8 +371,6 @@ definitions:
         $ref: '#/definitions/idForSearch'
       clientReferenceId:
         $ref: '#/definitions/clientReferenceId'
-      tenantId:
-        $ref: '#/definitions/tenantId'
       facilityId:
         $ref: '#/definitions/facilityId'
       productVariantId:
@@ -438,8 +436,6 @@ definitions:
         $ref: '#/definitions/idForSearch'
       clientReferenceId:
         $ref: '#/definitions/clientReferenceId'
-      tenantId:
-        $ref: '#/definitions/tenantId'
       facilityId:
         $ref: '#/definitions/facilityId'
       productVariantId:
