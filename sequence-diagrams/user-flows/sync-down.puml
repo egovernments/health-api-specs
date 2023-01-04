@@ -10,21 +10,57 @@ participant RemoteStore as r
 activate c
 a -> c: User login OR user triggered sync
 c -> nm: Sync down
+nm -> r: Fetch field-app-configuration MDMS config
+r --> nm: field-app-configuration response
+nm -> l: Update field-app-configuration MDMS in local store
 nm -> l: Read PERSISTENCE_MODE from field-app-configuration
 alt PERSISTENCE_MODE is ONLINE
   l --> nm: PERSISTENCE_MODE is ONLINE
   nm -> c: Success. No sync required.
 end
 l --> nm: PERSISTENCE_MODE is OFFLINE_FIRST
-group metadata download
-  nm -> r: fetch non login modules from LOCALIZATION service
-  nm -> r: Fetch project-types, additional-field-schemas, role-actions MDMS configs
-  nm -> r: Project Staff search with user id
-  'kick user out here if no projects linked?
-  nm -> r: Project search with project id(s)
-  nm -> r: Project resources search with project id(s)
-  nm -> r: Project facility search with project id(s)
-  'what if role is warehouse manager but no facilities are assigned?
+group metadata download (perform each of below if local store age is more than configuration)
+  nm -> l: Check age of all local store configs
+  alt age of config in local store is > than configuration
+    nm -> r: Fetch service-registry MDMS configs
+    r --> nm: service-registry MDMS config
+    nm -> l: Update service-registry MDMS in local store
+    nm -> r: fetch login and non login modules from LOCALIZATION service
+    r --> nm: LOCALIZATION response
+    nm -> l: Update login and non login modules in local store
+    nm -> r: Fetch project-types, additional-field-schemas, role-actions MDMS configs
+    r --> nm: MDMS response
+    nm -> l: Update MDMS configs in local store
+    nm -> r: Project Staff search with user id
+    r --> nm: Project Staff response
+    nm -> l: Update Project Staff in local store
+    nm -> l: Read Project Staff from local store
+    alt Project staff linkage has changed
+      alt no projects linked to user any more
+        l --> nm: No projects linked
+        nm -> c: no projects linked error
+        c -> a: show error and log user out
+      end
+      alt projects exist but are do not include the hierarchy that user had previously selected
+        l --> nm: project list
+        nm -> c: project hierarchy selection required
+        c -> a: show project hierarchy selection screen
+      end
+      alt projects exist and include the hierarchy that user had previously selected
+        l --> nm: project list
+        nm -> nm: continue sync down
+      end
+    end
+    nm -> r: Project search with project id(s)
+    nm -> l: Update Project local store
+    nm -> r: Project resources search with project id(s)
+    nm -> l: Update Project resources local store
+    alt user role has warehouse manager
+      nm -> r: Project facility search with project id(s)
+      nm -> l: Update Project facility local store
+    end
+  end
+  'what if role is warehouse manager but no facilities are available in the boundary that the user is assigned to?
 end
 alt data sync down is enabled
   alt user role has registrar

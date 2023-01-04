@@ -1222,7 +1222,7 @@ definitions:
         type: string
         minLength: 2
         maxLength: 64
-        example: 'ID-1'
+        example: 'HOUSEHOLD'
       baseline:
         type: integer
       target:
