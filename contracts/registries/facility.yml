@@ -134,7 +134,7 @@ parameters:
     in: query
     type: integer
     minimum: 0
-    maximum: 1000 #TODO review
+    maximum: 1000
     required: true
 
   offset:
@@ -185,6 +185,12 @@ definitions:
       isPermanent:
         type: boolean
         default: true
+      name:
+        type: string
+        minLength: 2
+        maxLength: 2000
+        description: Name of the facility
+        example: 'Facility XYZ'
       usage:
         type: string
         example: 'STORAGE_WAREHOUSE'
