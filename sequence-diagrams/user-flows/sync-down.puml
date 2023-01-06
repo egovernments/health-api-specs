@@ -10,8 +10,10 @@ participant RemoteStore as r
 activate c
 a -> c: User login OR user triggered sync
 c -> nm: Sync down
-'Fetch field app config every sync without any conditions so any changes take effect immediately
 nm -> r: Fetch field-app-configuration MDMS config
+note left
+  Fetch field app config every sync without any conditions so any changes take effect immediately
+end note
 r --> nm: field-app-configuration response
 nm -> l: Update field-app-configuration MDMS in local store
 nm -> l: Read PERSISTENCE_MODE from field-app-configuration
@@ -21,14 +23,31 @@ alt PERSISTENCE_MODE is ONLINE
 end
 l --> nm: PERSISTENCE_MODE is OFFLINE_FIRST
 nm -> r: Fetch service-registry MDMS configs
+note left
+  Fetch service-registry config
+  so any changes to endpoints reflect in this sync
+end note
 r --> nm: service-registry MDMS config
 nm -> l: Update service-registry MDMS in local store
-nm -> r: Fetch role, role-actions MDMS configs
+nm -> r: Fetch role, actions MDMS configs
+note left
+  Fetch role, actions config so access to APIs can be determined
+  (during sync and in other user flows)
+end note
 r --> nm: MDMS response
 nm -> l: Update MDMS configs in local store
-group metadata download (perform each of below if user has access to endpoint and local store age is more than configuration)
-  nm -> l: Check age of all local store configs
+group metadata download
   nm -> r: Fetch project-types, additional-field-schemas MDMS configs
+  note left
+    1. Get following configs from field-app-configuration->BACKEND_INTERFACE
+        MDMS_MODULES
+        LOCALIZATION_MODULES
+        METADATA_SERVICES
+    2. Determine fetch/search endpoints for each of the above
+    3. Check which endpoints logged in user's roles have access to (based on role action mapping)
+    4. Call the endpoints if local store has metadata older than localStoreTTL configuration
+    5. Resultant calls will look something like this
+  end note
   r --> nm: MDMS response
   nm -> l: Update MDMS configs in local store
   nm -> r: fetch login and non login modules from LOCALIZATION service for all supported locales
@@ -75,6 +94,14 @@ group metadata download (perform each of below if user has access to endpoint an
 end
 alt data sync down is enabled
   nm -> r: Project Beneficiary Search (boundaryCode(s), lastModifiedSince)
+  note left
+    1. Get following configs from field-app-configuration->BACKEND_INTERFACE
+        DATA_SERVICES
+    2. Determine fetch/search endpoints for each of the above
+    3. Check which endpoints logged in user's roles have access to (based on role action mapping)
+    4. Call the endpoints with boundaryCode(s) and lastModifiedSince for each entity (based on last sync)
+    5. Resultant calls will look something like this
+  end note
   r --> nm: Project Beneficiaries
   nm -> l: Update Project Beneficiaries local store
   nm -> r: Household Search (boundaryCode(s), lastModifiedSince)
