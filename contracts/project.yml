@@ -1190,7 +1190,8 @@ definitions:
         maxLength: 64
         example: 'ID-1'
       quantity:
-        type: string
+        type: integer
+        format: int64
       isDelivered:
         type: boolean
         example: true
