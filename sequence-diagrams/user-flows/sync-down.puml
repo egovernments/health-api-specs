@@ -14,6 +14,10 @@ nm -> r: Fetch field-app-configuration MDMS config
 note left
   Fetch field app config every sync without any conditions so any changes take effect immediately
 end note
+note right
+  For any calls to remote store, network manager
+  will refresh user token if required
+end note
 r --> nm: field-app-configuration response
 nm -> l: Update field-app-configuration MDMS in local store
 nm -> l: Read PERSISTENCE_MODE from field-app-configuration

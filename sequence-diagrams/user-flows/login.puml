@@ -20,7 +20,7 @@ alt incorrect credentials
 end
 group credentials validated
   nm --> c: Valid credentials
-  c -> c: Update local store with response (user id, roles etc)
+  c -> c: Update local store with response (token, user id, roles etc)
   c -> nm: Project Staff search with user id
   alt no projects linked to staff
     nm --> c: no projects linked
