@@ -106,6 +106,7 @@ Table household_individual_mapping {
   individualId varchar [ref: > individual.id]
   householdId varchar [ref: > household.id]
   isHeadOfHousehold bool
+  additionalDetails json
   createdBy varchar(64)
   createdTime bigint
   lastModifiedBy varchar(64)
@@ -234,6 +235,7 @@ Table project_target {
 
 Table project_beneficiary {
   id varchar [pk]
+  clientReferenceId varchar(64)
   tenantId varchar(1000)
   projectId varchar(64) [ref: > project.id]
   beneficiaryId varchar(64)
