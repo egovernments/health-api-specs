@@ -61,6 +61,20 @@ Table individual_address {
   isDeleted bool
 }
 
+Table individual_skill {
+  id varchar [pk]
+  individualId varchar [ref: > individual.id]
+  type varchar(64)
+  level varchar(64)
+  experience varchar(64)
+  createdBy varchar(64)
+  createdTime bigint
+  lastModifiedBy varchar(64)
+  lastModifiedTime bigint
+  rowVersion bigint
+  isDeleted bool
+}
+
 Table address {
   id varchar [pk]
   tenantId varchar

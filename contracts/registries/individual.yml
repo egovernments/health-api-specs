@@ -282,6 +282,10 @@ definitions:
         type: array
         items:
           $ref: '#/definitions/Identifier'
+      skills:
+        type: array
+        items:
+          $ref: '#/definitions/Skill'
       photo:
         type: string
         description : Filestore service uuid holding individual's photograph
@@ -371,3 +375,25 @@ definitions:
           $ref: '#/definitions/Individual'
     required:
       - ResponseInfo
+
+  Skill:
+    type: object
+    properties:
+      id:
+        $ref: '#/definitions/id'
+      type:
+        type: string
+        description: skill type of the individual
+        required: true
+        minLength: 2
+        maxLength: 64
+      level:
+        type: string
+        description: skill level of the individual
+        minLength: 2
+        maxLength: 64
+      experience:
+        type: string
+        description: experience of the individual
+        minLength: 2
+        maxLength: 64
