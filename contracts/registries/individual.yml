@@ -378,13 +378,13 @@ definitions:
 
   Skill:
     type: object
+    required: [type]
     properties:
       id:
         $ref: '#/definitions/id'
       type:
         type: string
         description: skill type of the individual
-        required: true
         minLength: 2
         maxLength: 64
       level:
