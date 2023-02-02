@@ -101,10 +101,12 @@ definitions:
     readOnly: True
 
   idForSearch:
-    type: string
-    minLength: 2
-    maxLength: 64
-    description: Unique system generated GUID
+    type: array
+    items:
+      type: string
+      minLength: 2
+      maxLength: 64
+      description: Unique system generated GUID
 
   clientReferenceId:
     type: string
