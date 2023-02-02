@@ -15,46 +15,22 @@ activate s
 s -> s: Validate request body
 alt request validation fails
     s -> s: Request validation failed
-    s -> k: Individual Data /error_topic
-    note left
-        This will be marked as unrecoverable right away 
-        and require manual intervention
-    end note
-    activate k
-    group async
-        es -> k: Consume Individual Data
-        activate es
-        deactivate k
-        es -> db: Persist Individual Data /error_table
-        activate db
-        deactivate db
-        deactivate es
-    end
     s -> c: HttpStatus: 400 with appropriate error code
     note left
       Error Code: REQUEST_VALIDATION_FAILED
     end note
+
 end
 s -> s: Request validation successful
 alt record doesn't exist
-    s -> rc: Search record based on clientReferenceId/serverGeneratedId
+    s -> rc: Search record based on serverGeneratedId
     activate rc
     rc -> s: 0 rows
     deactivate rc
-    s -> db: Search record based on clientReferenceId/serverGeneratedId
+    s -> db: Search record based on serverGeneratedId
     activate db
     db -> s: 0 row
     deactivate db
-    s -> k: Individual Data /error_topic
-    group async
-        es -> k: Consume Individual Data
-        activate es
-        deactivate k
-        es -> db: Persist Individual Data /error_table
-        activate db
-        deactivate db
-        deactivate es
-    end
     s -> c: HttpStatus: 400 with appropriate error code
     note left
       Error Code: RECORD_NOT_FOUND
@@ -80,16 +56,6 @@ deactivate rc
 alt incorrect rowVersion
     s -> s: Compare rowVersion between request and db
     s -> s: Incorrect rowVersion [request: should be +1 only]
-    s -> k: Individual Data /error_topic
-    group async
-        es -> k: Consume Individual Data
-        activate es
-        deactivate k
-        es -> db: Persist Individual Data /error_table
-        activate db
-        deactivate db
-        deactivate es
-    end
     s -> c: HttpStatus: 400 with appropriate error code
     note left
       Error Code: BAD_REQUEST
