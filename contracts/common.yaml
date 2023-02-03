@@ -108,6 +108,14 @@ definitions:
       maxLength: 64
       description: Unique system generated GUID
 
+  clientReferenceIdForSearch:
+    type: array
+    items:
+      type: string
+      minLength: 2
+      maxLength: 64
+      description: Unique client generated GUID
+
   clientReferenceId:
     type: string
     minLength: 2

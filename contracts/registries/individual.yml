@@ -307,6 +307,8 @@ definitions:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/id'
   idForSearch:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/idForSearch'
+  clientReferenceIdForSearch:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/clientReferenceIdForSearch'
   clientReferenceId:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/clientReferenceId'
   gender:
@@ -433,7 +435,7 @@ definitions:
       id:
         $ref: '#/definitions/idForSearch'
       clientReferenceId:
-        $ref: '#/definitions/clientReferenceId'
+        $ref: '#/definitions/clientReferenceIdForSearch'
       name:
         $ref: '#/definitions/name'
       dateOfBirth:
