@@ -121,6 +121,30 @@ paths:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
 
+  /project/beneficiary/v1/bulk/_create:
+    post:
+      summary: >-
+        Add beneficiaries for project
+      description: >-
+        Add beneficiaries for project
+      parameters:
+        - name: Beneficiary
+          in: body
+          description: Capture details of benificiary type.
+          required: true
+          schema:
+            $ref: '#/definitions/BeneficiaryBulkRequest'
+      tags:
+        - Project
+      responses:
+        '202':
+          description: add beneficiary request has been accepted for creation.
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
   /project/beneficiary/v1/_update:
     post:
       summary: >-
@@ -142,6 +166,32 @@ paths:
           description: Project Beneficiary request has been accepted.
           schema:
             $ref: '#/definitions/BeneficiaryResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+              
+
+  /project/beneficiary/v1/bulk/_update:
+    post:
+      summary: >-
+        Update beneficiaries registration for project
+      description: >-
+        Update beneficiaries registration for project
+      parameters:
+        - name: Beneficiary
+          in: body
+          description: Project Beneficiary Registration.
+          required: true
+          schema:
+            $ref: '#/definitions/BeneficiaryBulkRequest'
+        - $ref: '#/parameters/echoResource'
+      tags:
+        - Project
+      responses:
+        '202':
+          description: Project Beneficiary request has been accepted.
         '400':
           description: Invalid Input body.
           schema:
@@ -173,7 +223,7 @@ paths:
         '200':
           description: Project Beneficaries.
           schema:
-            $ref: '#/definitions/BeneficiaryResponse'
+            $ref: '#/definitions/BeneficiaryBulkResponse'
         '400':
           description: Invalid Input body.
           schema:
@@ -602,6 +652,8 @@ definitions:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/id'
   idForSearch:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/idForSearch'
+  clientReferenceIdForSearch:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/clientReferenceIdForSearch'
   clientReferenceId:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/clientReferenceId'
   tenantId:
@@ -864,7 +916,7 @@ definitions:
       id:
         $ref: '#/definitions/idForSearch'
       clientReferenceId:
-        $ref: '#/definitions/clientReferenceId'
+        $ref: '#/definitions/clientReferenceIdForSearch'
       projectId:
         type: string
         minLength: 2
@@ -1296,12 +1348,23 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
       ProjectBeneficiary:
+        type: object
+        $ref: '#/definitions/ProjectBeneficiary'
+    required:
+      - RequestInfo
+      - Beneficiary
+
+  BeneficiaryBulkRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      ProjectBeneficiary:
         type: array
         minItems: 1
         items:
           $ref: '#/definitions/ProjectBeneficiary'
-      apiOperation:
-        $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
       - Beneficiary
@@ -1319,6 +1382,20 @@ definitions:
       - Beneficiary
 
   BeneficiaryResponse:
+    type: object
+    properties:
+      ResponseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
+      ProjectBeneficiary:
+        type: object
+        $ref: '#/definitions/ProjectBeneficiary'
+    required:
+      - ResponseInfo
+      - Beneficiary
+
+
+  BeneficiaryBulkResponse:
     type: object
     properties:
       ResponseInfo:
