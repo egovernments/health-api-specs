@@ -297,6 +297,7 @@ definitions:
       - RECEIVED
       - RETURNED
       - LOSS
+      - DAMAGED
   transactingPartyId:
     type: string
     minLength: 2
@@ -417,6 +418,9 @@ definitions:
         $ref: '#/definitions/physicalCount'
       calculatedCount:
         $ref: '#/definitions/calculatedCount'
+      commentsOnReconciliation:
+        type: string
+        description: Comments regarding reconciliation
       eventTimestamp:
         $ref: '#/definitions/eventTimestamp'
       additionalFields:

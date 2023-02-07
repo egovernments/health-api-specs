@@ -213,6 +213,24 @@ Table stock {
   isDeleted bool
 }
 
+Table stock_reconciliation_log {
+   id varchar [pk]
+   clientReferenceId varchar //store id provided by frontend
+   tenantId varchar(1000)
+   facilityId varchar(64) //[ref: > facility.id]
+   dateOfReconciliation bigint
+   calculatedCount int
+   physicalRecordedCount int
+   commentsOnReconciliation varchar
+   createdAt bigint
+   modifiedAt bigint
+   createdBy varchar
+   modifiedBy varchar
+   additionalFields json
+   tenantId varchar
+   isDeleted bool
+}
+
 Table project {
   id varchar [pk]
   tenantId varchar(1000)

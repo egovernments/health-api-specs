@@ -178,6 +178,24 @@ definitions:
       - UPDATE
       - DELETE
 
+  AuditDetails:
+    type: object
+    properties:
+      createdBy:
+        type: string
+        description: Id of the user who created the record.
+      createdDate:
+        type: integer
+        format: int64
+        description: Epoch Date on which the user master data was added into the system.
+      lastModifiedBy:
+        type: string
+        description: Id of the user who last modified the record.
+      lastModifiedDate:
+        type: integer
+        format: int64
+        description: Epoch Date on which the user master data was last modified.
+
   additionalFields:
     type: object
     properties:

@@ -453,12 +453,12 @@ definitions:
       - type
       - id
     properties:
-      type:
+      identifierType:
         type: string
         example: 'SYSTEM_GENERATED'
         minLength: 2
         maxLength: 64
-      id:
+      identifierId:
         type: string
         example: 'ABCD-1212'
         minLength: 2
