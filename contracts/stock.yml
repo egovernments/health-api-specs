@@ -1,6 +1,6 @@
 swagger: '2.0'
 info:
-  version: 1.0.0
+  version: 1.0.1
   title: Stock Service
   description: >
     This module facilitates operations on Stock.
@@ -61,6 +61,33 @@ paths:
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /stock/v1/_delete:
+    post:
+      summary: >-
+        Soft delete record for transfer of a stock transaction
+      description: >-
+        Soft delete record for transfer of a stock transaction
+      parameters:
+        - name: Stock
+          in: body
+          description: Capture details of stock transaction
+          required: true
+          schema:
+            $ref: '#/definitions/StockRequest'
+      tags:
+        - Stock
+      responses:
+        '202':
+          description: Stock Transaction delete request has been accepted.
+          schema:
+            $ref: '#/definitions/StockResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
   /stock/v1/_search:
     post:
       summary: >-
@@ -142,6 +169,33 @@ paths:
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /stock/reconciliation/v1/_delete:
+    post:
+      summary: >-
+        Soft delete stock reconciliation record
+      description: >-
+        Soft delete stock reconciliation record
+      parameters:
+        - name: StockReconciliation
+          in: body
+          description: Capture details of stock transaction
+          required: true
+          schema:
+            $ref: '#/definitions/StockReconciliationRequest'
+      tags:
+        - Stock
+      responses:
+        '202':
+          description: Stock Reconciliation delete request has been accepted.
+          schema:
+            $ref: '#/definitions/StockReconciliationResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
   /stock/reconciliation/v1/_search:
     post:
       summary: >-
@@ -240,6 +294,8 @@ definitions:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/idForSearch'
   clientReferenceId:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/clientReferenceId'
+  clientReferenceIdForSearch:
+    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/clientReferenceIdForSearch'
   boundaryCode:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/boundaryCode'
   tenantId:
@@ -250,8 +306,6 @@ definitions:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/isDeleted'
   rowVersion:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/rowVersion'
-  apiOperation:
-    $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/apiOperation'
   additionalFields:
     $ref: 'https://raw.githubusercontent.com/digit-egov/health-api-specs/main/contracts/common.yaml#/definitions/additionalFields'
   Address:
@@ -371,7 +425,7 @@ definitions:
       id:
         $ref: '#/definitions/idForSearch'
       clientReferenceId:
-        $ref: '#/definitions/clientReferenceId'
+        $ref: '#/definitions/clientReferenceIdForSearch'
       facilityId:
         $ref: '#/definitions/facilityId'
       productVariantId:
@@ -439,7 +493,7 @@ definitions:
       id:
         $ref: '#/definitions/idForSearch'
       clientReferenceId:
-        $ref: '#/definitions/clientReferenceId'
+        $ref: '#/definitions/clientReferenceIdForSearch'
       facilityId:
         $ref: '#/definitions/facilityId'
       productVariantId:
@@ -457,8 +511,6 @@ definitions:
         minItems: 1
         items:
           $ref: '#/definitions/Stock'
-      apiOperation:
-        $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
       - Stock
@@ -500,8 +552,6 @@ definitions:
         minItems: 1
         items:
           $ref: '#/definitions/StockReconciliation'
-      apiOperation:
-        $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
       - StockReconciliation
