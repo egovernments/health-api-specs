@@ -563,7 +563,7 @@ paths:
           description: Invalid Input body.
           schema:
             $ref: >-
-              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes 
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
 
   /project/staff/v1/_delete:
     post:
