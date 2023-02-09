@@ -109,7 +109,7 @@ paths:
           schema:
             $ref: '#/definitions/BeneficiaryRequest'
       tags:
-        - Project
+        - Project Beneficiary
       responses:
         '202':
           description: add beneficiary request has been accepted for creation.
@@ -130,12 +130,12 @@ paths:
       parameters:
         - name: Beneficiary
           in: body
-          description: Capture details of benificiary type.
+          description: Capture details of beneficiary type.
           required: true
           schema:
             $ref: '#/definitions/BeneficiaryBulkRequest'
       tags:
-        - Project
+        - Project Beneficiary
       responses:
         '202':
           description: add beneficiary request has been accepted for creation.
@@ -160,7 +160,7 @@ paths:
             $ref: '#/definitions/BeneficiaryRequest'
         - $ref: '#/parameters/echoResource'
       tags:
-        - Project
+        - Project Beneficiary
       responses:
         '202':
           description: Project Beneficiary request has been accepted.
@@ -188,7 +188,59 @@ paths:
             $ref: '#/definitions/BeneficiaryBulkRequest'
         - $ref: '#/parameters/echoResource'
       tags:
-        - Project
+        - Project Beneficiary
+      responses:
+        '202':
+          description: Project Beneficiary request has been accepted.
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /project/beneficiary/v1/_delete:
+    post:
+      summary: >-
+        Soft delete beneficiary registration for project
+      description: >-
+        Soft delete registration for project
+      parameters:
+        - name: Beneficiary
+          in: body
+          description: Soft Delete Project Beneficiary Registration.
+          required: true
+          schema:
+            $ref: '#/definitions/BeneficiaryRequest'
+        - $ref: '#/parameters/echoResource'
+      tags:
+        - Project Beneficiary
+      responses:
+        '202':
+          description: Project Beneficiary request has been accepted.
+          schema:
+            $ref: '#/definitions/BeneficiaryResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /project/beneficiary/v1/bulk/_delete:
+    post:
+      summary: >-
+        Update beneficiaries registration for project
+      description: >-
+        Update beneficiaries registration for project
+      parameters:
+        - name: Beneficiary
+          in: body
+          description: Project Beneficiary Registration.
+          required: true
+          schema:
+            $ref: '#/definitions/BeneficiaryBulkRequest'
+        - $ref: '#/parameters/echoResource'
+      tags:
+        - Project Beneficiary
       responses:
         '202':
           description: Project Beneficiary request has been accepted.
@@ -218,7 +270,7 @@ paths:
         - $ref: '#/parameters/includeDeleted'
 
       tags:
-        - Project
+        - Project Beneficiary
       responses:
         '200':
           description: Project Beneficaries.
@@ -244,12 +296,36 @@ paths:
           schema:
             $ref: '#/definitions/TaskRequest'
       tags:
-        - Project
+        - Project Task
       responses:
         '202':
           description: Create task request has been accepted for creation.
           schema:
             $ref: '#/definitions/TaskResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /project/task/v1/bulk/_create:
+    post:
+      summary: >-
+        Create tasks for the project in bulk
+      description: >-
+        Create tasks for the project in bulk
+      parameters:
+        - name: Task
+          in: body
+          description: Capture details of Task
+          required: true
+          schema:
+            $ref: '#/definitions/TaskBulkRequest'
+      tags:
+        - Project Task
+      responses:
+        '202':
+          description: Create task request has been accepted for creation.
         '400':
           description: Invalid Input body.
           schema:
@@ -270,12 +346,86 @@ paths:
           schema:
             $ref: '#/definitions/TaskRequest'
       tags:
-        - Project
+        - Project Task
       responses:
         '202':
           description: update task request has been accepted for update.
           schema:
             $ref: '#/definitions/TaskResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /project/task/v1/bulk/_update:
+    post:
+      summary: >-
+        Task Request in bulk for a project
+      description: >-
+        Task Request in bulk for a project
+      parameters:
+        - name: Task
+          in: body
+          description: Capture details of Existing tasks
+          required: true
+          schema:
+            $ref: '#/definitions/TaskBulkRequest'
+      tags:
+        - Project Task
+      responses:
+        '202':
+          description: update tasks bulk request has been accepted for update.
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /project/task/v1/_delete:
+    post:
+      summary: >-
+        Soft delete Task for a project
+      description: >-
+        Soft delete Task for a project
+      parameters:
+        - name: Task
+          in: body
+          description: Capture details of Existing task
+          required: true
+          schema:
+            $ref: '#/definitions/TaskRequest'
+      tags:
+        - Project Task
+      responses:
+        '202':
+          description: delete task request has been accepted for deletion.
+          schema:
+            $ref: '#/definitions/TaskResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /project/task/v1/bulk/_delete:
+    post:
+      summary: >-
+        Soft delete Tasks for a project
+      description: >-
+        Soft delete Tasks for a project
+      parameters:
+        - name: Task
+          in: body
+          description: Capture details of Existing task
+          required: true
+          schema:
+            $ref: '#/definitions/TaskBulkRequest'
+      tags:
+        - Project Task
+      responses:
+        '202':
+          description: delete bulk task request has been accepted for deletion.
         '400':
           description: Invalid Input body.
           schema:
@@ -301,12 +451,12 @@ paths:
         - $ref: '#/parameters/lastChangedSince'
         - $ref: '#/parameters/includeDeleted'
       tags:
-        - Project
+        - Project Task
       responses:
         '200':
           description: Project Tasks.
           schema:
-            $ref: '#/definitions/TaskResponse'
+            $ref: '#/definitions/TaskBulkResponse'
         '400':
           description: Invalid Input body.
           schema:
@@ -329,7 +479,7 @@ paths:
           schema:
             $ref: '#/definitions/ProjectStaffRequest'
       tags:
-        - Project
+        - Project Staff
       responses:
         '202':
           description: Project Staff request has been accepted.
@@ -340,6 +490,31 @@ paths:
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /project/staff/v1/bulk/_create:
+    post:
+      summary: >-
+        Link bulk Staff users to Project for a certain time period
+      description: >-
+        Link bulk Staff users to Project for a certain time period
+      parameters:
+        - name: ProjectStaff
+          in: body
+          description: Capture linkage of Project and staff users.
+          required: true
+          schema:
+            $ref: '#/definitions/ProjectStaffBulkRequest'
+      tags:
+        - Project Staff
+      responses:
+        '202':
+          description: Project Staff request has been accepted.
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
   /project/staff/v1/_update:
     post:
       summary: >-
@@ -354,7 +529,7 @@ paths:
           schema:
             $ref: '#/definitions/ProjectStaffRequest'
       tags:
-        - Project
+        - Project Staff
       responses:
         '202':
           description: Project Staff request has been accepted for updation.
@@ -365,6 +540,81 @@ paths:
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /project/staff/v1/bulk/_update:
+    post:
+      summary: >-
+        Update Project Staff users using bulk payload
+      description: >-
+        Update Project Staff users using bulk payload
+      parameters:
+        - name: ProjectStaff
+          in: body
+          description: Capture linkage of Project and staff user.
+          required: true
+          schema:
+            $ref: '#/definitions/ProjectStaffBulkRequest'
+      tags:
+        - Project Staff
+      responses:
+        '202':
+          description: Project Staff bulk request has been accepted for update.
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes 
+
+  /project/staff/v1/_delete:
+    post:
+      summary: >-
+        Soft delete linkage of Project Staff users with project
+      description: >-
+        Soft delete linkage of Project Staff users with project
+      parameters:
+        - name: ProjectStaff
+          in: body
+          description: Capture linkage of Project and staff user.
+          required: true
+          schema:
+            $ref: '#/definitions/ProjectStaffRequest'
+      tags:
+        - Project Staff
+      responses:
+        '202':
+          description: Project Staff request has been accepted for deletion.
+          schema:
+            $ref: '#/definitions/ProjectStaffResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /project/staff/v1/bulk/_delete:
+    post:
+      summary: >-
+        Soft delete linkage of Project Staff users with project in bulk
+      description: >-
+        Soft delete linkage of Project Staff users with project in bulk
+      parameters:
+        - name: ProjectStaff
+          in: body
+          description: Capture linkage of Project and staff user.
+          required: true
+          schema:
+            $ref: '#/definitions/ProjectStaffBulkRequest'
+      tags:
+        - Project Staff
+      responses:
+        '202':
+          description: Project Staff request has been accepted for deletion.
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
   /project/staff/v1/_search:
     post:
       summary: >-
@@ -384,12 +634,12 @@ paths:
         - $ref: '#/parameters/lastChangedSince'
         - $ref: '#/parameters/includeDeleted'
       tags:
-        - Project
+        - Project Staff
       responses:
         '200':
           description: Project Staff.
           schema:
-            $ref: '#/definitions/ProjectStaffResponse'
+            $ref: '#/definitions/ProjectStaffBulkResponse'
         '400':
           description: Invalid Input body.
           schema:
@@ -1011,7 +1261,7 @@ definitions:
       id:
         $ref: '#/definitions/idForSearch'
       clientReferenceId:
-        $ref: '#/definitions/clientReferenceId'
+        $ref: '#/definitions/clientReferenceIdForSearch'
       projectId:
         type: string
         minLength: 2
@@ -1101,6 +1351,8 @@ definitions:
     properties:
       id:
         $ref: '#/definitions/idForSearch'
+      clientReferenceId:
+        $ref: '#/definitions/clientReferenceIdForSearch'
       userId:
         type: string
         description: Unique userId defined using user service
@@ -1417,15 +1669,27 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
       Task:
+        type: object
+        $ref: '#/definitions/Task'
+    required:
+      - RequestInfo
+      - Task
+
+  TaskBulkRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      Task:
         type: array
         minItems: 1
         items:
           $ref: '#/definitions/Task'
-      apiOperation:
-        $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
       - Task
+
   TaskSearchRequest:
     type: object
     properties:
@@ -1444,6 +1708,19 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
       Task:
+        type: object
+        $ref: '#/definitions/Task'
+    required:
+      - ResponseInfo
+      - Task
+
+  TaskBulkResponse:
+    type: object
+    properties:
+      ResponseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
+      Task:
         type: array
         items:
           $ref: '#/definitions/Task'
@@ -1451,8 +1728,20 @@ definitions:
       - ResponseInfo
       - Task
 
-
   ProjectStaffRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      ProjectStaff:
+        type: object
+        $ref: '#/definitions/ProjectStaff'
+    required:
+      - RequestInfo
+      - ProjectStaff
+
+  ProjectStaffBulkRequest:
     type: object
     properties:
       RequestInfo:
@@ -1463,11 +1752,10 @@ definitions:
         minItems: 1
         items:
           $ref: '#/definitions/ProjectStaff'
-      apiOperation:
-        $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
       - ProjectStaff
+
   ProjectStaffSearchRequest:
     type: object
     properties:
@@ -1480,6 +1768,20 @@ definitions:
       - RequestInfo
       - ProjectStaff
   ProjectStaffResponse:
+    type: object
+    properties:
+      ResponseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
+      ProjectStaff:
+        type: object
+        $ref: '#/definitions/ProjectStaff'
+    required:
+      - ResponseInfo
+      - ProjectStaff
+
+
+  ProjectStaffBulkResponse:
     type: object
     properties:
       ResponseInfo:

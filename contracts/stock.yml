@@ -36,6 +36,31 @@ paths:
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /stock/v1/bulk/_create:
+    post:
+      summary: >-
+        Create/Add a new record for transfer of product variant stock in bulk
+      description: >-
+        Create/Add a new record for transfer of product variant stock in bulk
+      parameters:
+        - name: Stock
+          in: body
+          description: Capture details of stock transaction.
+          required: true
+          schema:
+            $ref: '#/definitions/StockBulkRequest'
+      tags:
+        - Stock
+      responses:
+        '202':
+          description: Stock Transaction request has been accepted.
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
   /stock/v1/_update:
     post:
       summary: >-
@@ -56,6 +81,30 @@ paths:
           description: Stock Transaction request has been accepted.
           schema:
             $ref: '#/definitions/StockResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /stock/v1/bulk/_update:
+    post:
+      summary: >-
+        Update records for transfer of a stock transaction in bulk
+      description: >-
+        Update records for transfer of a stock transaction in bulk
+      parameters:
+        - name: Stock
+          in: body
+          description: Capture details of stock transaction
+          required: true
+          schema:
+            $ref: '#/definitions/StockBulkRequest'
+      tags:
+        - Stock
+      responses:
+        '202':
+          description: Stock Transaction request has been accepted.
         '400':
           description: Invalid Input body.
           schema:
@@ -88,6 +137,30 @@ paths:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
 
+  /stock/v1/bulk/_delete:
+    post:
+      summary: >-
+        Soft delete records for transfer of a stock transaction
+      description: >-
+        Soft delete records for transfer of a stock transaction
+      parameters:
+        - name: Stock
+          in: body
+          description: Capture details of stock transaction
+          required: true
+          schema:
+            $ref: '#/definitions/StockBulkRequest'
+      tags:
+        - Stock
+      responses:
+        '202':
+          description: Stock Transaction delete request has been accepted.
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
   /stock/v1/_search:
     post:
       summary: >-
@@ -112,7 +185,7 @@ paths:
         '200':
           description: Stock transfer.
           schema:
-            $ref: '#/definitions/StockResponse'
+            $ref: '#/definitions/StockBulkResponse'
         '400':
           description: Invalid Input body.
           schema:
@@ -133,7 +206,7 @@ paths:
           schema:
             $ref: '#/definitions/StockReconciliationRequest'
       tags:
-        - Stock
+        - Stock Reconciliation
       responses:
         '202':
           description: Accepted.
@@ -144,6 +217,30 @@ paths:
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /stock/reconciliation/v1/bulk/_create:
+    post:
+      summary: >-
+        Create/Add a new stock reconciliation record for a product variant in bulk
+      description: >-
+        Create/Add a new stock reconciliation record for a product variant in bulk
+      parameters:
+        - name: StockReconciliation
+          in: body
+          description: Capture details of stock transaction.
+          required: true
+          schema:
+            $ref: '#/definitions/StockReconciliationBulkRequest'
+      tags:
+        - Stock Reconciliation
+      responses:
+        '202':
+          description: Accepted.
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
   /stock/reconciliation/v1/_update:
     post:
       summary: >-
@@ -158,12 +255,36 @@ paths:
           schema:
             $ref: '#/definitions/StockReconciliationRequest'
       tags:
-        - Stock
+        - Stock Reconciliation
       responses:
         '202':
           description: Stock Reconciliation request has been accepted.
           schema:
             $ref: '#/definitions/StockReconciliationResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+
+  /stock/reconciliation/v1/bulk/_update:
+    post:
+      summary: >-
+        Update stock reconciliation records
+      description: >-
+        Update stock reconciliation records
+      parameters:
+        - name: StockReconciliation
+          in: body
+          description: Capture details of stock transaction
+          required: true
+          schema:
+            $ref: '#/definitions/StockReconciliationBulkRequest'
+      tags:
+        - Stock Reconciliation
+      responses:
+        '202':
+          description: Stock Reconciliation request has been accepted.
         '400':
           description: Invalid Input body.
           schema:
@@ -184,7 +305,7 @@ paths:
           schema:
             $ref: '#/definitions/StockReconciliationRequest'
       tags:
-        - Stock
+        - Stock Reconciliation
       responses:
         '202':
           description: Stock Reconciliation delete request has been accepted.
@@ -196,6 +317,29 @@ paths:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
 
+  /stock/reconciliation/v1/bulk/_delete:
+    post:
+      summary: >-
+        Soft delete stock reconciliation records
+      description: >-
+        Soft delete stock reconciliation records
+      parameters:
+        - name: StockReconciliation
+          in: body
+          description: Capture details of stock transaction
+          required: true
+          schema:
+            $ref: '#/definitions/StockReconciliationBulkRequest'
+      tags:
+        - Stock Reconciliation
+      responses:
+        '202':
+          description: Stock Reconciliation delete request has been accepted.
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
   /stock/reconciliation/v1/_search:
     post:
       summary: >-
@@ -215,12 +359,12 @@ paths:
         - $ref: '#/parameters/lastChangedSince'
         - $ref: '#/parameters/includeDeleted'
       tags:
-        - Stock
+        - Stock Reconciliation
       responses:
         '200':
           description: Stock reconciliations.
           schema:
-            $ref: '#/definitions/StockReconciliationResponse'
+            $ref: '#/definitions/StockReconciliationBulkResponse'
         '400':
           description: Invalid Input body.
           schema:
@@ -507,6 +651,19 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
       Stock:
+        type: object
+        $ref: '#/definitions/Stock'
+    required:
+      - RequestInfo
+      - Stock
+
+  StockBulkRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      Stock:
         type: array
         minItems: 1
         items:
@@ -534,6 +691,19 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
       Stock:
+        type: object
+        $ref: '#/definitions/Stock'
+    required:
+      - ResponseInfo
+      - Stock
+
+  StockBulkResponse:
+    type: object
+    properties:
+      ResponseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
+      Stock:
         type: array
         items:
           $ref: '#/definitions/Stock'
@@ -542,6 +712,19 @@ definitions:
       - Stock
 
   StockReconciliationRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      StockReconciliation:
+        type: object
+        $ref: '#/definitions/StockReconciliation'
+    required:
+      - RequestInfo
+      - StockReconciliation
+
+  StockReconciliationBulkRequest:
     type: object
     properties:
       RequestInfo:
@@ -569,6 +752,19 @@ definitions:
       - StockReconciliation
 
   StockReconciliationResponse:
+    type: object
+    properties:
+      ResponseInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ResponseInfo
+      StockReconciliation:
+        type: object
+        $ref: '#/definitions/StockReconciliation'
+    required:
+      - ResponseInfo
+      - StockReconciliation
+
+  StockReconciliationBulkResponse:
     type: object
     properties:
       ResponseInfo:
