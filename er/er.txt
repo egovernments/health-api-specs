@@ -217,6 +217,7 @@ Table stock_reconciliation_log {
    id varchar [pk]
    clientReferenceId varchar //store id provided by frontend
    tenantId varchar(1000)
+   resourceId varchar //from mdms config
    facilityId varchar(64) //[ref: > facility.id]
    dateOfReconciliation bigint
    calculatedCount int
