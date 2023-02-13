@@ -15,47 +15,18 @@ activate s
 s -> s: Validate request body
 alt request validation fails
     s -> s: Request validation failed
-    s -> k: Household Member Data /error_topic
-    note left
-        This will be marked as unrecoverable right away 
-        and require manual intervention
-    end note
-    activate k
-    group async
-        es -> k: Consume Household Member Data
-        activate es
-        deactivate k
-        es -> db: Persist Household Member Data /error_table
-        activate db
-        deactivate db
-        deactivate es
-    end
     s -> c: HttpStatus: 400 with appropriate error code
     note left
-        Error Code: REQUEST_VALIDATION_FAILED
+      Error Code: REQUEST_VALIDATION_FAILED
     end note
 end
 s -> s: Request validation successful
+loop for each member
 alt mapping record doesn't exist
   s -> db: Get Individual/Household mapping using household and individual clientReferenceId/serverGeneratedId
   activate db
   db -> s: 0 rows
   deactivate db
-  s -> k: Household Member Data /error_topic
-  note left
-      This will be marked as recoverable and will be
-      retried later
-  end note
-  activate k
-  group async
-      es -> k: Consume Household Member Data
-      activate es
-      deactivate k
-      es -> db: Persist Household Member Data /error_table
-      activate db
-      deactivate db
-      deactivate es
-  end
   s -> c: HttpStatus: 400 with appropriate error code
   note left
       Error Code: DEPENDENCY_ERROR
@@ -68,16 +39,6 @@ deactivate db
 alt incorrect rowVersion
     s -> s: Compare rowVersion between request and db
     s -> s: Incorrect rowVersion [request: should be +1 only]
-    s -> k: Household Member Data /error_topic
-    group async
-        es -> k: Consume Household Member Data
-        activate es
-        deactivate k
-        es -> db: Persist Household Member Data /error_table
-        activate db
-        deactivate db
-        deactivate es
-    end
     s -> c: HttpStatus: 400 with appropriate error code
     note left
       Error Code: BAD_REQUEST
@@ -106,5 +67,6 @@ group async
     activate db
     deactivate db
     deactivate prs
+end
 end
 @enduml

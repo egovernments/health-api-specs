@@ -628,13 +628,13 @@ definitions:
       id:
         $ref: '#/definitions/idForSearch'
       householdId:
-        $ref: '#/definitions/idForSearch'
+        $ref: '#/definitions/id'
       householdClientReferenceId:
-        $ref: '#/definitions/clientReferenceIdForSearch'
+        $ref: '#/definitions/clientReferenceId'
       individualId:
-        $ref: '#/definitions/idForSearch'
+        $ref: '#/definitions/id'
       individualClientReferenceId:
-        $ref: '#/definitions/clientReferenceIdForSearch'
+        $ref: '#/definitions/clientReferenceId'
       isHeadOfHousehold:
         type: boolean
 

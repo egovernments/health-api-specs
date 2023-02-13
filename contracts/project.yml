@@ -1351,8 +1351,6 @@ definitions:
     properties:
       id:
         $ref: '#/definitions/idForSearch'
-      clientReferenceId:
-        $ref: '#/definitions/clientReferenceIdForSearch'
       userId:
         type: string
         description: Unique userId defined using user service
