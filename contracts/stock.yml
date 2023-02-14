@@ -494,8 +494,15 @@ definitions:
     enum:
       - RECEIVED
       - RETURNED
-      - LOSS
-      - DAMAGED
+      - LOST_IN_STORAGE
+      - LOST_IN_TRANSIT
+      - DAMAGED_IN_STORAGE
+      - DAMAGED_IN_TRANSIT
+  waybillNumber:
+    type: string
+    minLength: 2
+    maxLength: 200
+    description: Receipt number of the bill
   transactingPartyId:
     type: string
     minLength: 2
@@ -541,6 +548,8 @@ definitions:
         $ref: '#/definitions/productVariantId'
       quantity:
         $ref: '#/definitions/quantity'
+      waybillNumber:
+        $ref: '#/definitions/waybillNumber'
       referenceId:
         $ref: '#/definitions/referenceId'
       referenceIdType:

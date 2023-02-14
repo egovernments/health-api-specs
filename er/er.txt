@@ -198,6 +198,7 @@ Table stock {
   facilityId varchar(64) //[ref: > facility.id]
   productVariantId varchar(64) //[ref: > product_variant.id]
   quantity bigint
+  waybillNUmber varchar(200)
   referenceId varchar(200)
   referenceIdType varchar(100)
   transactionType varchar(100)
