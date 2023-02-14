@@ -1,5 +1,5 @@
 @startuml
-title Project - Task - Create
+title Project - Task - Bulk Create
 !theme vibrant
 participant Client as c
 participant ProjectService as s
@@ -11,6 +11,10 @@ participant IndexerService as idx
 participant ErrorService as es
 participant ElasticSearch as el
 database Database as db
+participant HandleErrorMethod as he
+c -> s : /project/task/v1/bulk/_create
+activate s
+s -> s: Validate request body
 activate s
 s -> s: Validate request body
 alt request validation fails
@@ -21,42 +25,46 @@ alt request validation fails
     end note
 end
 s -> s: Request validation successful
-alt record already exists
-    alt record found in cache
-      s -> rc: Check using clientReferenceId/serverGeneratedId
-      activate rc
-      rc -> s: 1 row
-      deactivate rc
-      s -> c: HttpStatus: 400 with appropriate error code
-      note left
-          Error Code: RECORD_ALREADY_EXISTS
-      end note
+s -> c: HttpStatus: 202 ACCEPTED
+loop for each task
+    alt record already exists
+        alt record found in cache
+          s -> rc: Check using clientReferenceId/serverGeneratedId
+          activate rc
+          rc -> s: 1 row
+          deactivate rc
+          s -> he: call handleError HandleErrorMethod
+          note left
+              Error Code: RECORD_ALREADY_EXISTS
+          end note
+        end
+        s -> rc: Check using clientReferenceId/serverGeneratedId
+        activate rc
+        rc -> s: 0 rows
+        deactivate rc
+        s -> db: Check if record already exists
+        activate db
+        db -> s: 1 row
+        deactivate db
+        s -> rc: Put data in cache using clientReferenceId/serverGeneratedId
+        activate rc
+        deactivate rc
+        s -> he: call handleError HandleErrorMethod
+        note left
+            Error Code: RECORD_ALREADY_EXISTS
+        end note
     end
-    s -> rc: Check using clientReferenceId/serverGeneratedId
-    activate rc
-    rc -> s: 0 rows
-    deactivate rc
-    s -> db: Check if record already exists
-    activate db
-    db -> s: 1 row
-    deactivate db
-    s -> rc: Put data in cache using clientReferenceId/serverGeneratedId
-    activate rc
-    deactivate rc
-    s -> c: HttpStatus: 400 with appropriate error code
-    note left
-        Error Code: RECORD_ALREADY_EXISTS
-    end note
-end
-alt projectId invalid
+    alt projectId invalid
     s -> db: Check if projectId exists
     activate db
     db -> s: 0 rows
     deactivate db
-     s -> c: HttpStatus: 400 with appropriate error code
-    note left
-      Error Code: BAD_REQUEST
-    end note
+    s -> he: call handleError HandleErrorMethod
+        note left
+            This will be marked as unrecoverable right away
+            and require manual intervention
+            Error Code: BAD_REQUEST
+        end note
 end
 s -> db: Check if projectId exists
 activate db
@@ -67,10 +75,12 @@ alt projectBeneficiaryId invalid
     activate db
     db -> s: 0 rows
     deactivate db
-   s -> c: HttpStatus: 400 with appropriate error code
-   note left
-       Error Code: DEPENDENCY_ERROR
-   end note
+    s -> he: call handleError HandleErrorMethod
+    note left
+        This will be marked as recoverable and will be
+        retried later
+        Error Code: DEPENDENCY_ERROR
+    end note
 end
 s -> db: Check if projectBeneficiaryId exists
 activate db
@@ -81,9 +91,11 @@ alt id generation fails
     activate idgen
     idgen -> s: HttpStatus: 400
     deactivate idgen
-    s -> c: HttpStatus: 500 with appropriate error code
+    s -> he: call handleError HandleErrorMethod
     note left
-      Error Code: ID_GENERATION_FAILED
+        This will be marked as recoverable and
+        will be retried later
+        Error Code: ID_GENERATION_FAILED
     end note
 end
 s -> idgen: Generate ID
@@ -96,7 +108,6 @@ activate k
 s -> rc: Put Project Task Data against clientReferenceId/serverGeneratedId in cache
 activate rc
 deactivate rc
-s -> c: HttpStatus: 202 ACCEPTED
 deactivate s
 group async
     prs -> k: Consume Project Task Data
@@ -113,4 +124,5 @@ group async
     deactivate prs
 end
 deactivate k
+end
 @enduml
