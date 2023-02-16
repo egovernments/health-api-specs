@@ -628,7 +628,7 @@ definitions:
       commentsOnReconciliation:
         type: string
         description: Comments regarding reconciliation
-      eventTimestamp:
+      dateOfReconciliation:
         $ref: '#/definitions/eventTimestamp'
       additionalFields:
         $ref: '#/definitions/additionalFields'
