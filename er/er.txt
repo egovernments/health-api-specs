@@ -220,6 +220,8 @@ Table stock_reconciliation_log {
    tenantId varchar(1000)
    resourceId varchar //from mdms config
    facilityId varchar(64) //[ref: > facility.id]
+   referenceId varchar(64)
+   referenceIdType varchar(64)
    dateOfReconciliation bigint
    calculatedCount int
    physicalRecordedCount int
