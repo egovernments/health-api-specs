@@ -218,7 +218,7 @@ Table stock_reconciliation_log {
    id varchar [pk]
    clientReferenceId varchar //store id provided by frontend
    tenantId varchar(1000)
-   resourceId varchar //from mdms config
+   productVariantId varchar(64)  [ref: > product_variant.id]
    facilityId varchar(64) //[ref: > facility.id]
    referenceId varchar(64)
    referenceIdType varchar(64)
