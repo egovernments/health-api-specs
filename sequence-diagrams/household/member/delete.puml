@@ -1,5 +1,5 @@
 @startuml
-title Household Member - Update
+title Household Member - Delete
 !theme vibrant
 participant Client as c
 participant HouseholdRegistry as s
@@ -10,7 +10,7 @@ participant IndexerService as idx
 participant ErrorService as es
 participant ElasticSearch as el
 database Database as db
-c -> s : /household/member/v1/_update
+c -> s : /household/member/v1/_delete
 activate s
 s -> s: Validate request body
 alt request validation fails
@@ -35,19 +35,9 @@ s -> db: Get Individual/Household mapping using household and individual clientR
 activate db
 db -> s: 1 row
 deactivate db
-alt incorrect rowVersion
-    s -> s: Compare rowVersion between request and db
-    s -> s: Incorrect rowVersion [request: should be +1 only]
-    s -> c: HttpStatus: 400 with appropriate error code
-    note left
-      Error Code: BAD_REQUEST
-    end note
-end
-s -> s: Compare rowVersion between request and db
-s -> s: rowVersion in request = rowVersion in db + 1
-s -> k: Household Member Data /update_topic
+s -> k: Household Member Data /delete_topic
 activate k
-s -> rc: Update new record in cache against clientReferenceId/serverGeneratedId
+s -> rc: Delete record in cache against clientReferenceId/serverGeneratedId
 activate rc
 deactivate rc
 s -> c: HttpStatus: 202 ACCEPTED
@@ -58,13 +48,14 @@ group async
     idx -> k: Consume Household Member Data
     deactivate k
     activate idx
-    idx -> el: Store Household Member Data
+    idx -> el: Delete Household Member Data
     activate el
     deactivate el
     deactivate idx
-    prs -> db: Update Household Member Data
+    prs -> db: Delete Household Member Data
     activate db
     deactivate db
     deactivate prs
 end
+
 @enduml
