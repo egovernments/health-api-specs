@@ -1,0 +1,382 @@
+---
+openapi: 3.0.3
+info:
+  title: Survey Config
+  description: |
+    ### API specs for survey Config ###
+    Survey config will be used by employees to create employee surveys, citizen surveys to make better informed decisions while issuing new policies/ feedback on existing services.`
+  contact:
+    name: Client Placeholder
+    email: client@email.com
+  license:
+    name: Apache 2.0
+    url: http://www.apache.org/licenses/LICENSE-2.0
+  version: '1.0'
+tags:
+  - name: Survey Config
+    description: Survey Configuration
+paths:
+  "/survey/config/v1/_create":
+    post:
+      tags:
+        - survey
+      summary: create
+      operationId: createUsingPOST
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/SurveyRequest"
+      responses:
+        '200':
+          description: OK
+          content:
+            "*/*":
+              schema:
+                "$ref": "#/components/schemas/SurveyResponse"
+        '201':
+          description: Created
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+        '404':
+          description: Not Found
+
+components:
+  schemas:
+    Answer:
+      title: Answer
+      type: object
+      properties:
+        answer:
+          type: array
+          items:
+            type: object
+        auditDetails:
+          "$ref": "#/components/schemas/AuditDetails"
+        employeeId:
+          type: string
+        questionId:
+          type: string
+        additionalComments:
+          type: string
+        uuid:
+          type: string
+    AnswerEntity:
+      title: AnswerEntity
+      type: object
+      properties:
+        answers:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Answer"
+        surveyId:
+          type: string
+        entity:
+          $ref: '#/components/schemas/Entity'
+        tag:
+          type: string
+
+
+    AnswerRequest:
+      title: AnswerRequest
+      type: object
+      properties:
+        AnswerEntity:
+          "$ref": "#/components/schemas/AnswerEntity"
+        RequestInfo:
+          "$ref": "#/components/schemas/RequestInfo"
+        additionalFields:
+          $ref: '#/components/schemas/additionalFields'
+    AnswerResponse:
+      title: AnswerResponse
+      type: object
+      properties:
+        ResponseInfo:
+          "$ref": "#/components/schemas/ResponseInfo"
+        answers:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Answer"
+        description:
+          type: string
+        surveyId:
+          type: string
+        tenantId:
+          type: string
+        title:
+          type: string
+    AuditDetails:
+      title: AuditDetails
+      type: object
+      properties:
+        createdBy:
+          type: string
+        createdTime:
+          type: integer
+          format: int64
+        lastModifiedBy:
+          type: string
+        lastModifiedTime:
+          type: integer
+          format: int64
+    Questionnaire:
+      title: Questionnaire
+      required:
+        - question
+        - type
+      type: object
+      properties:
+        id:
+          type: string
+          description: UUID,primary key of the question
+        auditDetails:
+          "$ref": "#/components/schemas/AuditDetails"
+        options:
+          "$ref": "#/components/schemas/QuestionOptions"
+          type: array
+          items:
+            type: string
+        order:
+          type: integer
+          format: int64
+          description: order in which questions can be shown
+        question:
+          type: string
+          description: actual question which is shown in survey
+          example: "Did you participate in the campaign?"
+        required:
+          type: boolean
+          description: Required question or not
+        status:
+          type: string
+          enum:
+            - active
+            - inactive
+          description: Status - active/inactive
+        isDeleted:
+          type: boolean
+          description: Flag to indicate if question is soft deleted
+          readOnly: true
+        questionType:
+          type: string
+          enum:
+            - CHECKBOX_ANSWER_TYPE
+            - DATE_ANSWER_TYPE
+            - LONG_ANSWER_TYPE
+            - MULTIPLE_ANSWER_TYPE
+            - SHORT_ANSWER_TYPE
+            - TIME_ANSWER_TYPE
+            - STAR_RATING
+
+    RequestInfo:
+      title: RequestInfo
+      type: object
+      properties:
+        action:
+          type: string
+        apiId:
+          type: string
+        authToken:
+          type: string
+        correlationId:
+          type: string
+        did:
+          type: string
+        key:
+          type: string
+        msgId:
+          type: string
+        ts:
+          type: integer
+          format: int64
+        userInfo:
+          "$ref": "#/components/schemas/User"
+        ver:
+          type: string
+
+    ResponseInfo:
+      title: ResponseInfo
+      type: object
+      properties:
+        apiId:
+          type: string
+        msgId:
+          type: string
+        resMsgId:
+          type: string
+        status:
+          type: string
+        ts:
+          type: integer
+          format: int64
+        ver:
+          type: string
+    Role:
+      title: Role
+      type: object
+      properties:
+        code:
+          type: string
+        id:
+          type: integer
+          format: int64
+        name:
+          type: string
+        tenantId:
+          type: string
+    SurveyEntity:
+      title: config
+      required:
+        - questionnaire
+        - tenantIds
+      type: object
+      properties:
+        id:
+          type: string
+          minLength: 2
+          maxLength: 64
+          description: Unique system generated GUID
+        active:
+          type: boolean
+        auditDetails:
+          "$ref": "#/components/schemas/AuditDetails"
+        description:
+          maxLength: 140
+          minLength: 0
+          type: string
+        endDate:
+          type: integer
+          format: int64
+          description: end date for the survey
+        postedBy:
+          maxLength: 128
+          minLength: 0
+          type: string
+        questionnaire:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Questionnaire"
+        startDate:
+          type: integer
+          format: int64
+          description: start date for the survey
+        status:
+          type: string
+          enum:
+            - active
+            - inactive
+          description: survey active or inactive
+        isDeleted:
+          type: boolean
+          description: Flag to indicate if survey is soft deleted
+          readOnly: true
+        tenantId:
+          maxLength: 128
+          minLength: 0
+          type: string
+        title:
+          maxLength: 60
+          minLength: 0
+          type: string
+        surveyType:
+          type: string
+          enum:
+            - EMPLOYEE_SURVEY
+            - CITIZEN_SURVEY
+        allowMultipleSubmission:
+          type: boolean
+          description: A user can submit survey multiple times or not. Default is NO.
+        tags:
+          type: array
+          items:
+            type: string
+            example: 'STATE SUPERVISOR'
+        entity:
+          $ref: '#/components/schemas/Entity'
+    SurveyRequest:
+      title: SurveyRequest
+      type: object
+      properties:
+        RequestInfo:
+          "$ref": "#/components/schemas/RequestInfo"
+        Config:
+          "$ref": "#/components/schemas/SurveyEntity"
+    SurveyResponse:
+      title: SurveyResponse
+      type: object
+      properties:
+        ResponseInfo:
+          "$ref": "#/components/schemas/ResponseInfo"
+        Surveys:
+          type: array
+          items:
+            "$ref": "#/components/schemas/SurveyEntity"
+        TotalCount:
+          type: integer
+          format: int32
+    User:
+      title: User
+      type: object
+      properties:
+        emailId:
+          type: string
+        id:
+          type: integer
+          format: int64
+        mobileNumber:
+          type: string
+        name:
+          type: string
+        roles:
+          type: array
+          items:
+            "$ref": "#/components/schemas/Role"
+        tenantId:
+          type: string
+        type:
+          type: string
+        userName:
+          type: string
+        uuid:
+          type: string
+
+    Entity:
+      type: object
+      required:
+        - type
+        - id
+      properties:
+        type:
+          type: string
+          example: 'WARE_HOUSE'
+    additionalFields:
+      type: object
+      properties:
+        latitude:
+          type: integer
+          format: float
+          example: 18.22
+        longitude:
+          type: integer
+          format: float
+          example: 71.00
+        accuracy:
+          type: integer
+          format: int64
+          example: 9
+
+    QuestionOptions:
+      type: array
+      items:
+        type: object
+        properties:
+          name:
+            type: string
+            description: option name. Incase of yes/no question two option names 1. yes 2. NO
+          extraInfo:
+            type: string
+            description: extra information about the option. if the option is selected or hovered this text can be shown
+
+
