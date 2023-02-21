@@ -37,6 +37,29 @@ paths:
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /facility/v1/bulk/_create:
+    post:
+      summary: >-
+        Create/Add new facilities in bulk
+      description: >-
+        Create a new facilities in bulk
+      parameters:
+        - name: Facility
+          in: body
+          description: Capture details of Facility.
+          required: true
+          schema:
+            $ref: '#/definitions/FacilityBulkRequest'
+      tags:
+        - Facility
+      responses:
+        '202':
+          description: Facility request has been accepted.
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
   /facility/v1/_update:
     post:
       summary: >-
@@ -50,6 +73,81 @@ paths:
           required: true
           schema:
             $ref: '#/definitions/FacilityRequest'
+      tags:
+        - Facility
+      responses:
+        '202':
+          description: Facility request accepted.
+          schema:
+            $ref: '#/definitions/FacilityResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /facility/v1/bulk/_update:
+    post:
+      summary: >-
+        Update the details of  existing facilities in bulk
+      description: >-
+        Update the details of a existing facilities in bulk
+      parameters:
+        - name: Facility
+          in: body
+          description: Details for existing facility.
+          required: true
+          schema:
+            $ref: '#/definitions/FacilityBulkRequest'
+      tags:
+        - Facility
+      responses:
+        '202':
+          description: Facility request accepted.
+          schema:
+            $ref: '#/definitions/FacilityResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /facility/v1/_delete:
+    post:
+      summary: >-
+        Soft delete details of an existing facility
+      description: >-
+        Soft delete details of an existing facility
+      parameters:
+        - name: Facility
+          in: body
+          description: Details for existing facility.
+          required: true
+          schema:
+            $ref: '#/definitions/FacilityRequest'
+      tags:
+        - Facility
+      responses:
+        '202':
+          description: Facility request accepted.
+          schema:
+            $ref: '#/definitions/FacilityResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /facility/v1/bulk/_delete:
+    post:
+      summary: >-
+        Soft delete details of existing facilities in bulk
+      description: >-
+        Soft delete details of an existing facilities in bulk
+      parameters:
+        - name: Facility
+          in: body
+          description: Details for existing facility.
+          required: true
+          schema:
+            $ref: '#/definitions/FacilityBulkRequest'
       tags:
         - Facility
       responses:
@@ -234,12 +332,23 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
       Facility:
+        type: object
+        $ref: '#/definitions/Facility'
+    required:
+      - RequestInfo
+      - Facility
+
+  FacilityBulkRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      Facility:
         type: array
         minItems: 1
         items:
           $ref: '#/definitions/Facility'
-      apiOperation:
-        $ref: '#/definitions/apiOperation'
     required:
       - RequestInfo
       - Facility
