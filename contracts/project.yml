@@ -1376,7 +1376,7 @@ definitions:
     properties:
       id:
         $ref: '#/definitions/idForSearch'
-      userId:
+      staffId:
         type: string
         description: Unique userId defined using user service
         minLength: 2
