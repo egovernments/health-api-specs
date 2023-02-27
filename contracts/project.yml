@@ -651,9 +651,9 @@ paths:
   /project/facility/v1/_create:
     post:
       summary: >-
-        Link Facilities to Project
+        Link Facility to Project
       description: >-
-        Link Facilities to Project
+        Link Facility to Project
       parameters:
         - name: ProjectFacility
           in: body
@@ -668,6 +668,29 @@ paths:
           description: Project Staff request has been accepted.
           schema:
             $ref: '#/definitions/ProjectFacilityResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /project/facility/v1/bulk/_create:
+    post:
+      summary: >-
+        Link Facilities to Project
+      description: >-
+        Link Facilities to Project
+      parameters:
+        - name: ProjectFacility
+          in: body
+          description: Capture linkage of Project and facility.
+          required: true
+          schema:
+            $ref: '#/definitions/ProjectFacilityBulkRequest'
+      tags:
+        - Project
+      responses:
+        '202':
+          description: Project Staff request has been accepted.
         '400':
           description: Invalid Input body.
           schema:
@@ -693,6 +716,79 @@ paths:
           description: Project Facility request has been accepted
           schema:
             $ref: '#/definitions/ProjectFacilityResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /project/facility/v1/bulk/_update:
+    post:
+      summary: >-
+        Update Project Facilities
+      description: >-
+        Update Project Facilities
+      parameters:
+        - name: ProjectFacility
+          in: body
+          description: Capture linkage of Project and facility.
+          required: true
+          schema:
+            $ref: '#/definitions/ProjectFacilityBulkRequest'
+      tags:
+        - Project
+      responses:
+        '202':
+          description: Project Facility request has been accepted
+          schema:
+            $ref: '#/definitions/ProjectFacilityResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /project/facility/v1/_delete:
+    post:
+      summary: >-
+        Soft delete Project Facility
+      description: >-
+        Soft delete Project Facility
+      parameters:
+        - name: ProjectFacility
+          in: body
+          description: Capture linkage of Project and facility.
+          required: true
+          schema:
+            $ref: '#/definitions/ProjectFacilityRequest'
+      tags:
+        - Project
+      responses:
+        '202':
+          description: Project Facility delete request has been accepted
+          schema:
+            $ref: '#/definitions/ProjectFacilityResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /project/facility/v1/bulk/_delete:
+    post:
+      summary: >-
+        Soft delete Project Facilities in bulk
+      description: >-
+        Soft delete Project Facilities in bulk
+      parameters:
+        - name: ProjectFacility
+          in: body
+          description: Capture linkage of Project and facility.
+          required: true
+          schema:
+            $ref: '#/definitions/ProjectFacilityBulkRequest'
+      tags:
+        - Project
+      responses:
+        '202':
+          description: Project Facility delete request has been accepted
         '400':
           description: Invalid Input body.
           schema:
@@ -1825,6 +1921,21 @@ definitions:
         $ref: >-
           https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
       ProjectFacility:
+        type: object
+        $ref: '#/definitions/ProjectFacility'
+      apiOperation:
+        $ref: '#/definitions/apiOperation'
+    required:
+      - RequestInfo
+      - ProjectFacility
+
+  ProjectFacilityBulkRequest:
+    type: object
+    properties:
+      RequestInfo:
+        $ref: >-
+          https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/RequestInfo
+      ProjectFacility:
         type: array
         minItems: 1
         items:
@@ -1834,6 +1945,7 @@ definitions:
     required:
       - RequestInfo
       - ProjectFacility
+      -
   ProjectFacilitySearchRequest:
     type: object
     properties:
