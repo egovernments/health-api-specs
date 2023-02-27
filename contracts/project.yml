@@ -1528,15 +1528,10 @@ definitions:
       id:
         $ref: '#/definitions/idForSearch'
       facilityId:
-        type: string
+        $ref: '#/definitions/idForSearch'
         description: Unique facilityId defined using facility service
-        minLength: 2
-        maxLength: 64
       projectId:
-        type: string
-        description: Project Id
-        minLength: 2
-        maxLength: 64
+        $ref: '#/definitions/idForSearch'
 
   ProjectResource:
     description: This object defines the mapping of a resource to a project.
