@@ -498,7 +498,7 @@ definitions:
       - LOST_IN_TRANSIT
       - DAMAGED_IN_STORAGE
       - DAMAGED_IN_TRANSIT
-  waybillNumber:
+  wayBillNumber:
     type: string
     minLength: 2
     maxLength: 200
@@ -548,8 +548,8 @@ definitions:
         $ref: '#/definitions/productVariantId'
       quantity:
         $ref: '#/definitions/quantity'
-      waybillNumber:
-        $ref: '#/definitions/waybillNumber'
+      wayBillNumber:
+        $ref: '#/definitions/wayBillNumber'
       referenceId:
         $ref: '#/definitions/referenceId'
       referenceIdType:
@@ -595,6 +595,8 @@ definitions:
         $ref: '#/definitions/transactingPartyId'
       transactingPartyType:
         $ref: '#/definitions/transactingPartyType'
+      wayBillNumber:
+        $ref: '#/definitions/wayBillNumber'
 
   StockReconciliation:
     type: object
