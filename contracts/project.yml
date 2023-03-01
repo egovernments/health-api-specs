@@ -662,7 +662,7 @@ paths:
           schema:
             $ref: '#/definitions/ProjectFacilityRequest'
       tags:
-        - Project
+        - Project Facility
       responses:
         '202':
           description: Project Staff request has been accepted.
@@ -687,7 +687,7 @@ paths:
           schema:
             $ref: '#/definitions/ProjectFacilityBulkRequest'
       tags:
-        - Project
+        - Project Facility
       responses:
         '202':
           description: Project Staff request has been accepted.
@@ -710,7 +710,7 @@ paths:
           schema:
             $ref: '#/definitions/ProjectFacilityRequest'
       tags:
-        - Project
+        - Project Facility
       responses:
         '202':
           description: Project Facility request has been accepted
@@ -735,7 +735,7 @@ paths:
           schema:
             $ref: '#/definitions/ProjectFacilityBulkRequest'
       tags:
-        - Project
+        - Project Facility
       responses:
         '202':
           description: Project Facility request has been accepted
@@ -760,7 +760,7 @@ paths:
           schema:
             $ref: '#/definitions/ProjectFacilityRequest'
       tags:
-        - Project
+        - Project Facility
       responses:
         '202':
           description: Project Facility delete request has been accepted
@@ -785,7 +785,7 @@ paths:
           schema:
             $ref: '#/definitions/ProjectFacilityBulkRequest'
       tags:
-        - Project
+        - Project Facility
       responses:
         '202':
           description: Project Facility delete request has been accepted
@@ -813,7 +813,7 @@ paths:
         - $ref: '#/parameters/lastChangedSince'
         - $ref: '#/parameters/includeDeleted'
       tags:
-        - Project
+        - Project Facility
       responses:
         '200':
           description: Project Facilities
@@ -850,6 +850,29 @@ paths:
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /project/resource/v1/bulk/_create:
+    post:
+      summary: >-
+        Link Resources to Project in bulk
+      description: >-
+        Link Resources to Project
+      parameters:
+        - name: ProjectResource
+          in: body
+          description: Capture linkage of Project and resources.
+          required: true
+          schema:
+            $ref: '#/definitions/ProjectResourceBulkRequest'
+      tags:
+        - Project Resource
+      responses:
+        '202':
+          description: Project Resource request has been accepted.
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
   /project/resource/v1/_update:
     post:
       summary: >-
@@ -875,6 +898,29 @@ paths:
           schema:
             $ref: >-
               https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /project/resource/v1/bulk/_update:
+    post:
+      summary: >-
+        Update Project Resource linkage in bulk
+      description: >-
+        Update Project Resource linkage in bulk
+      parameters:
+        - name: ProjectResource
+          in: body
+          description: Capture linkage of Project and Resource.
+          required: true
+          schema:
+            $ref: '#/definitions/ProjectResourceBulkRequest'
+      tags:
+        - Project Resource
+      responses:
+        '202':
+          description: Project Resource request has been accepted
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
   /project/resource/v1/_delete:
     post:
       summary: >-
@@ -895,6 +941,29 @@ paths:
           description: Project Resource deletion request has been accepted
           schema:
             $ref: '#/definitions/ProjectResourceResponse'
+        '400':
+          description: Invalid Input body.
+          schema:
+            $ref: >-
+              https://raw.githubusercontent.com/egovernments/egov-services/master/docs/common/contracts/v1-1-1.yml#/definitions/ErrorRes
+  /project/resource/v1/bulk/_delete:
+    post:
+      summary: >-
+        Delete Project Resource linkage in bulk
+      description: >-
+        Delete Project Resource linkage in bulk
+      parameters:
+        - name: ProjectResource
+          in: body
+          description: Delete linkage of Project and Resource.
+          required: true
+          schema:
+            $ref: '#/definitions/ProjectResourceBulkRequest'
+      tags:
+        - Project Resource
+      responses:
+        '202':
+          description: Project Resource deletion request has been accepted
         '400':
           description: Invalid Input body.
           schema:
@@ -1550,10 +1619,10 @@ definitions:
         description: Unique Project Id defined in Project Service
         minLength: 2
         maxLength: 64
-      resources:
-        type: array
-        items:
-          $ref: '#/definitions/ProjectProductVariant'
+      resource:
+        type: object
+
+        $ref: '#/definitions/ProjectProductVariant'
       #        type: string
       #        description: Unique productVariantId defined in Product service
       #        minLength: 2
