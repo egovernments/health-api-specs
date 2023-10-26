@@ -732,18 +732,27 @@ definitions:
     required:
       - ResponseInfo
       - Downsync
-  
   DownsyncCriteria:  
     type: object
     properties:
         locality:
           type: string
           description: locality/boundary code from which all beneficiary has to be downloaded
-        Pagination:
-          $ref: ''
+        tenantId:
+          $ref: '#/parameters/tenantId'
+        offset:
+          $ref: '#/parameters/offset'
+        limit:
+          $ref: '#/parameters/limit'
+        lastSyncedTime:
+          $ref: '#/parameters/lastChangedSince'
+        includeDeleted:  
+          $ref: '#/parameters/includeDeleted'
   Downsync:
     type: object
     properties:
+      DownsyncCriteria:
+        $ref: '#/definitions/DownsyncCriteria'
       Households:
         type: array
         items:
@@ -751,7 +760,7 @@ definitions:
       HouseholdMembers:
         type: array
         items:
-          $ref: https://raw.githubusercontent.com/egovernments/health-api-specs/main/contracts/registries/household.yml#/definitions/HouseholdMemeber
+          $ref: https://raw.githubusercontent.com/egovernments/health-api-specs/main/contracts/registries/household.yml#/definitions/HouseholdMember
       Individuals:
         type: array
         items:
@@ -759,16 +768,16 @@ definitions:
       ProjectBeneficiaries:
         type: array
         items:
-          $ref: https://raw.githubusercontent.com/egovernments/health-api-specs/main/contracts/registries/household.yml#/definitions/ProjectBeneficiary
-      ProejctTasks:
+          $ref: https://raw.githubusercontent.com/egovernments/health-api-specs/main/contracts/project.yml#/definitions/ProjectBeneficiary
+      Tasks:
         type: array
         items:
-          $ref: https://raw.githubusercontent.com/egovernments/health-api-specs/main/contracts/registries/household.yml#/definitions/Task
+          $ref: https://raw.githubusercontent.com/egovernments/health-api-specs/main/contracts/project.yml#/definitions/Task
       SideEffects:
         type: array
         items:
           $ref: '#/definitions/SideEffect'
-      referrals:
+      Referrals:
         type: array
         items:
           $ref: '#/definitions/Referral'
